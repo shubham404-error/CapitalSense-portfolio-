@@ -1,0 +1,3 @@
+'use client';
+import {useTheme} from 'next-themes';import {Monitor,Moon,Sun} from 'lucide-react';import {useEffect,useState} from 'react';
+export function ThemeToggle(){const {theme,setTheme}=useTheme();const [ready,setReady]=useState(false);useEffect(()=>setReady(true),[]);if(!ready)return <span className="theme-placeholder"/>;const Icon=theme==='light'?Sun:theme==='dark'?Moon:Monitor;const next=theme==='light'?'dark':theme==='dark'?'system':'light';return <button className="icon-button" aria-label="Change colour theme" title={'Theme: '+theme+'. Click to change'} onClick={()=>setTheme(next)}><Icon size={17}/></button>;}
