@@ -113,3 +113,7 @@
 
 /* Mobile fail-safe: never hide page content behind scroll-reveal JS. */
 @media(max-width:680px){.motion-ready [data-reveal],.motion-ready [data-reveal="left"],.motion-ready [data-reveal="right"]{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}}
+
+
+/* Paisaan illustration . hand-drawn financial learning visual */
+.paisaan-illustration{flex:1;display:flex;align-items:center;justify-content:center;min-height:230px;margin:14px -8px 20px;overflow:hidden}.paisaan-illustration svg{display:block;width:100%;max-width:520px;height:auto;max-height:270px}.paisaan .paisaan-illustration{background:radial-gradient(ellipse at 50% 72%,#d7e4ff 0,transparent 67%);border-radius:8px}.paisaan-illustration svg g{vector-effect:non-scaling-stroke}
