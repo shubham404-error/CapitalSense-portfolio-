@@ -1,3 +1,74 @@
-'use client';import Link from 'next/link';import {useState} from 'react';import {ArrowUpRight,Menu,X} from 'lucide-react';import {ThemeToggle} from './theme-toggle';
-const links=[['/services','How we help'],['/research','Our approach'],['/insights','Insights'],['/about','About']];
-export function SiteHeader(){const [open,setOpen]=useState(false);return <header className="site-header"><div className="nav-wrap"><Link href="/" className="wordmark"><span>Capital</span><b>Sense</b><i>.</i></Link><nav className="desktop-nav">{links.map(([href,label])=><Link key={href} href={href}>{label}</Link>)}</nav><div className="nav-actions"><ThemeToggle/><Link className="nav-cta" href="/connect">Start a conversation <ArrowUpRight size={15}/></Link><button className="mobile-menu icon-button" onClick={()=>setOpen(!open)} aria-label="Toggle menu" aria-expanded={open}>{open?<X/>:<Menu/>}</button></div></div>{open&&<nav className="mobile-nav">{links.map(([href,label])=><Link onClick={()=>setOpen(false)} key={href} href={href}>{label}</Link>)}<Link onClick={()=>setOpen(false)} href="/connect">Start a conversation</Link></nav>}</header>;}
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ThemeToggle } from './theme-toggle';
+
+const links = [
+  ['/services', 'How we help'],
+  ['/research', 'Our approach'],
+  ['/insights', 'Insights'],
+  ['/about', 'About'],
+];
+
+export function SiteHeader() {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => setOpen(false), [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    document.body.classList.add('menu-open');
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.classList.remove('menu-open');
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [open]);
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+
+  return (
+    <header className="site-header">
+      <div className="nav-wrap">
+        <Link href="/" className="wordmark" aria-label="CapitalSense home">
+          <span>Capital</span><b>Sense</b><i>.</i>
+        </Link>
+        <nav className="desktop-nav" aria-label="Primary navigation">
+          {links.map(([href, label]) => (
+            <Link key={href} href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</Link>
+          ))}
+        </nav>
+        <div className="nav-actions">
+          <ThemeToggle />
+          <Link className="nav-cta" href="/connect" aria-current={pathname === '/connect' ? 'page' : undefined}>
+            Start a conversation <ArrowUpRight size={15} aria-hidden="true" />
+          </Link>
+          <button
+            className="mobile-menu icon-button"
+            onClick={() => setOpen((value) => !value)}
+            aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+          >
+            {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+          </button>
+        </div>
+      </div>
+      {open && (
+        <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobile navigation">
+          {links.map(([href, label]) => (
+            <Link key={href} href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</Link>
+          ))}
+          <Link href="/connect" aria-current={pathname === '/connect' ? 'page' : undefined}>Start a conversation</Link>
+        </nav>
+      )}
+    </header>
+  );
+}
