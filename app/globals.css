@@ -1379,31 +1379,31 @@ main{isolation:isolate}
 
 /* Final cascade authority for typography, spacing and restrained surfaces. */
 :root{--font:"Manrope Variable",Manrope,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-body{font-family:var(--font);font-size:16px;font-weight:440;line-height:1.65;letter-spacing:-.012em}
-h1,h2,h3{font-family:var(--font);text-wrap:balance}
+body{font-family:var(--font);font-size:16px;font-weight:400;line-height:1.65;letter-spacing:-.012em}
+h1,h2,h3{font-family:var(--font);font-weight:480;text-wrap:balance}
 p{text-wrap:pretty}
 .wordmark{font-weight:720}
-.desktop-nav a,.mobile-nav a{font-size:13px;font-weight:560}
-.kicker,.eyebrow{font-size:10px;font-weight:700;letter-spacing:.14em}
-.cinematic-hero h1{max-width:860px;font-size:clamp(58px,7.4vw,102px);font-weight:520;line-height:.96;letter-spacing:-.06em}
-.cinematic-hero h1 span{font-weight:420}
-.cinematic-hero h1 em{font-weight:720;letter-spacing:-.062em}
+.desktop-nav a,.mobile-nav a{font-size:13px;font-weight:500}
+.kicker,.eyebrow{font-size:10px;font-weight:600;letter-spacing:.14em}
+.cinematic-hero h1{max-width:860px;font-size:clamp(58px,7.4vw,102px);font-weight:430;line-height:.96;letter-spacing:-.06em}
+.cinematic-hero h1 span{font-weight:360}
+.cinematic-hero h1 em{font-weight:590;letter-spacing:-.062em}
 .hero-copy{max-width:560px;font-size:17px;line-height:1.65}
-.intro h2,.section-heading h2,.section-top h2,.service-layout h2,.newsletter h2,.final-cta h2{font-size:clamp(38px,4.6vw,60px);font-weight:590;line-height:1.06;letter-spacing:-.045em}
+.intro h2,.section-heading h2,.section-top h2,.service-layout h2,.newsletter h2,.final-cta h2{font-size:clamp(38px,4.6vw,60px);font-weight:480;line-height:1.06;letter-spacing:-.045em}
 .section-heading p,.intro-grid p,.section-top>p,.service-layout>div>p{max-width:66ch;font-size:16px;line-height:1.72}
-.inner-page h1{max-width:940px;margin:18px 0 28px;font-size:clamp(48px,6.1vw,78px);font-weight:590;line-height:1.02;letter-spacing:-.052em}
-.inner-page h1 em{font-weight:720}
+.inner-page h1{max-width:940px;margin:18px 0 28px;font-size:clamp(48px,6.1vw,78px);font-weight:470;line-height:1.02;letter-spacing:-.052em}
+.inner-page h1 em{font-weight:590}
 .page-lead{max-width:720px;margin:0;font-size:clamp(17px,1.5vw,20px);line-height:1.66}
 .inner-block{max-width:1100px;grid-template-columns:minmax(220px,300px) minmax(0,700px);column-gap:clamp(48px,7vw,96px);padding-top:clamp(70px,8vw,106px)}
-.inner-block>h2{max-width:13ch;font-size:clamp(27px,2.7vw,37px);font-weight:620;line-height:1.12;letter-spacing:-.04em}
+.inner-block>h2{max-width:13ch;font-size:clamp(27px,2.7vw,37px);font-weight:500;line-height:1.12;letter-spacing:-.04em}
 .inner-block>p{max-width:66ch;margin:0 0 16px;font-size:16px;line-height:1.72}
-.inner-block>p strong{font-weight:700}
+.inner-block>p strong,strong{font-weight:600}
 .inner-cards:not(:has(.journal-card)){gap:0 34px;margin-top:38px;border:0;background:transparent}
 .inner-cards:not(:has(.journal-card)) article,
 .inner-cards:not(:has(.journal-card)) article:nth-child(odd),
 .inner-cards:not(:has(.journal-card)) article:nth-child(even){min-height:auto;padding:28px 0 32px;border:0;border-top:1px solid var(--border);border-radius:0;background:transparent;box-shadow:none}
 .inner-cards:not(:has(.journal-card)) article:hover{background:transparent}
-.inner-cards:not(:has(.journal-card)) article h2{margin:16px 0 10px;font-size:clamp(22px,2.1vw,29px);font-weight:640;line-height:1.18;letter-spacing:-.035em}
+.inner-cards:not(:has(.journal-card)) article h2{margin:16px 0 10px;font-size:clamp(22px,2.1vw,29px);font-weight:500;line-height:1.18;letter-spacing:-.035em}
 .inner-cards:not(:has(.journal-card)) article p{max-width:50ch;font-size:15px;line-height:1.7}
 .service-choice-grid{gap:16px}
 .service-choice-grid article,
@@ -1416,7 +1416,9 @@ p{text-wrap:pretty}
 .inner-cards.process-flow article:nth-child(odd),
 .inner-cards.process-flow article:nth-child(even){min-height:210px;padding:24px 28px 20px 0;border-radius:0;border-top:1px solid var(--border);background:transparent}
 .inner-cards.process-flow article+article{padding-left:28px}
-.button,.nav-cta,.mobile-whatsapp,.footer-whatsapp{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--font);font-size:13px;font-weight:650}
+.cap-grid h3,.two-cards h3,.articles h3,.journal-card-copy h2,.article-section h2,.article-takeaways h2,.article-sources h2{font-weight:500}
+.text-link{font-weight:550}
+.button,.nav-cta,.mobile-whatsapp,.footer-whatsapp{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--font);font-size:13px;font-weight:550}
 .mobile-whatsapp{margin-top:12px;padding:13px 15px;background:var(--text);color:var(--bg)}
 .footer-whatsapp{justify-content:flex-start;color:#a8b7ca!important}
 .footer-whatsapp:hover{color:#fff!important}
