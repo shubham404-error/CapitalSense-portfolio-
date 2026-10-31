@@ -109,3 +109,7 @@
 .journal-empty p{color:var(--muted);font-size:13px}
 .journal-empty button{padding:0}
 @media(max-width:680px){.journal-controls{padding:16px 0}.journal-filter{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin}.journal-filter button{white-space:nowrap}.journal-search{max-width:none}}
+
+
+/* Mobile fail-safe: never hide page content behind scroll-reveal JS. */
+@media(max-width:680px){.motion-ready [data-reveal],.motion-ready [data-reveal="left"],.motion-ready [data-reveal="right"]{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}}
