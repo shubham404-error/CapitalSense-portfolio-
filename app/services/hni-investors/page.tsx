@@ -5,7 +5,7 @@ const reviewAreas = [
  ['Concentration and overlap', 'Look through scheme labels to identify repeated holdings, sector concentration and exposure to similar market drivers. Overlap is a prompt for analysis, not automatically a problem.'],
  ['Risk and liquidity', 'Consider equity and debt allocation, credit quality, duration, liquidity terms and the timing of planned cash flows.'],
  ['Costs and structure', 'Review expense ratios, direct or regular plan status, exit loads and whether the service arrangement is understood.'],
- ['Goal alignment', 'Check whether the portfolio structure still relates to the investor's objectives, time horizon, liquidity needs and ability to absorb losses.'],
+ ['Goal alignment', 'Check whether the portfolio structure still relates to the investor’s objectives, time horizon, liquidity needs and ability to absorb losses.'],
  ['Ongoing servicing', 'Keep track of scheme communications, portfolio disclosures, changes in circumstances and service requests.'],
 ];
 export default function Page(){return <main className="inner-page"><div className="container">
