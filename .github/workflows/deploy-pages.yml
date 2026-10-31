@@ -1,5 +1,7 @@
 name: Deploy CapitalSense website to GitHub Pages
 on:
+  push:
+    branches: [feature/website-v1]
   workflow_dispatch:
 permissions:
   contents: read
