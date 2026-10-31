@@ -1,1 +1,34 @@
-import Link from 'next/link';export function SiteFooter(){return <footer className="site-footer"><div className="footer-main"><div><Link href="/" className="wordmark footer-wordmark"><span>Capital</span><b>Sense</b><i>.</i></Link><p>Clarity before action.<br/>Research behind the process.<br/>Investing with purpose.</p></div><div className="footer-col"><strong>For investors</strong><Link href="/services">How we help</Link><Link href="/research">Our approach</Link><Link href="/insights">Insights</Link><Link href="/connect">Start a conversation</Link></div><div className="footer-col"><strong>CapitalSense</strong><Link href="/about">About</Link><Link href="/ecosystem">Technology</Link></div><div className="footer-col"><strong>Information</strong><Link href="/disclosures">Disclosures</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms of use</Link></div></div><div className="footer-bottom">© 2026 CapitalSense. All rights reserved. <span>Mutual fund investments are subject to market risks. Read all scheme related documents carefully.</span></div></footer>;}
+import Link from 'next/link';
+import { WhatsAppCta } from './whatsapp-cta';
+
+export function SiteFooter() {
+  return (
+    <footer className="site-footer">
+      <div className="footer-main">
+        <div>
+          <Link href="/" className="wordmark footer-wordmark"><span>Capital</span><b>Sense</b><i>.</i></Link>
+          <p>Clarity before action.<br />Research behind the process.<br />Investing with purpose.</p>
+        </div>
+        <div className="footer-col">
+          <strong>For investors</strong>
+          <Link href="/services">How we help</Link>
+          <Link href="/research">Our approach</Link>
+          <Link href="/insights">Insights</Link>
+          <WhatsAppCta className="footer-whatsapp">WhatsApp us</WhatsAppCta>
+        </div>
+        <div className="footer-col">
+          <strong>CapitalSense</strong>
+          <Link href="/about">About</Link>
+          <Link href="/ecosystem">Technology</Link>
+        </div>
+        <div className="footer-col">
+          <strong>Information</strong>
+          <Link href="/disclosures">Disclosures</Link>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms of use</Link>
+        </div>
+      </div>
+      <div className="footer-bottom">© 2026 CapitalSense. All rights reserved. <span>Mutual fund investments are subject to market risks. Read all scheme related documents carefully.</span></div>
+    </footer>
+  );
+}

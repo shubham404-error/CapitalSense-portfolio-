@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import {ArrowUpRight,ArrowRight,Target,Layers,LineChart,ShieldCheck} from 'lucide-react';
+import {ArrowRight,Target,Layers,LineChart,ShieldCheck} from 'lucide-react';
 import {SectionHeading} from '@/components/section-heading';
+import {WhatsAppCta} from '@/components/whatsapp-cta';
 
 const process=[
 ['01','Start with the goal','Clarify what the money is for, when it may be needed and what trade-offs matter.',Target],
@@ -17,7 +18,7 @@ const featured=[
 
 export default function Home(){return <main className="motion-home">
 <section className="hero cinematic-hero"><div className="hero-grid-bg"/><div className="hero-visual"><div className="orbit one"/><div className="orbit two"/><div className="orbit three"/><svg className="hero-line" viewBox="0 0 700 300" aria-hidden="true"><path d="M0 245 C70 220 90 260 150 205 S240 210 290 160 S380 180 435 112 S525 130 575 70 S650 80 700 20" fill="none" stroke="#7897ff" strokeWidth="2"/></svg><div className="hero-float float-regime"><small>INVESTOR PROCESS</small><b>Goal first</b><span><i/> PRODUCT SECOND</span></div><div className="hero-float float-strength"><small>PORTFOLIO LENS</small><b>Clarity</b><div className="mini-bars"><i/><i/><i/><i/><i/><i/><i/></div></div><div className="hero-crosshair"/></div>
-<div className="container hero-content"><span className="kicker hero-kicker">● &nbsp; CAPITALSENSE / INVESTOR SERVICES</span><h1><span>Invest with</span><br/><em>more clarity.</em><br/><span>Not more</span><br/><em>noise.</em></h1><p className="hero-copy">Mutual fund investing and portfolio support guided by your goals, explained in plain language and informed by research.</p><div className="hero-actions"><Link className="button primary hero-primary" href="/connect">Start a conversation <ArrowUpRight size={17}/></Link><Link className="button quiet" href="/services">See how we help <ArrowRight size={16}/></Link></div><div className="hero-foot"><span>GOALS / PORTFOLIOS / MUTUAL FUNDS</span><span className="scroll-cue"><i/> SCROLL TO EXPLORE</span></div></div><div className="hero-index">CS / 001</div></section>
+<div className="container hero-content"><span className="kicker hero-kicker">● &nbsp; CAPITALSENSE / INVESTOR SERVICES</span><h1><span>Invest with</span><br/><em>more clarity.</em><br/><span>Not more</span><br/><em>noise.</em></h1><p className="hero-copy">Mutual fund investing and portfolio support guided by your goals, explained in plain language and informed by research.</p><div className="hero-actions"><WhatsAppCta className="button primary hero-primary">Chat on WhatsApp</WhatsAppCta><Link className="button quiet" href="/services">See how we help <ArrowRight size={16}/></Link></div><div className="hero-foot"><span>GOALS / PORTFOLIOS / MUTUAL FUNDS</span><span className="scroll-cue"><i/> SCROLL TO EXPLORE</span></div></div><div className="hero-index">CS / 001</div></section>
 
 <div className="ticker-band"><div className="ticker-track"><span>GOAL-BASED THINKING</span><i>✳</i><span>PORTFOLIO CLARITY</span><i>✳</i><span>INVESTOR EDUCATION</span><i>✳</i><span>RESEARCH-LED PROCESS</span><i>✳</i><span>GOAL-BASED THINKING</span><i>✳</i><span>PORTFOLIO CLARITY</span><i>✳</i><span>INVESTOR EDUCATION</span><i>✳</i><span>RESEARCH-LED PROCESS</span><i>✳</i></div></div>
 
@@ -31,5 +32,5 @@ export default function Home(){return <main className="motion-home">
 
 <section className="newsletter"><div className="container newsletter-grid"><div data-reveal="left"><span className="eyebrow">RESEARCH BEHIND THE PROCESS</span><h2>Research that informs.<br/><em>Never overwhelms.</em></h2><p>We study market trends, participation and risk to test the assumptions behind portfolio discussions.</p></div><div data-reveal="right"><p>A signal alone cannot tell you what belongs in your portfolio. Your goals, holdings and capacity for risk come first.</p><Link className="button primary" href="/research">Explore our approach ↗</Link></div></div></section>
 
-<section className="final-cta motion-final"><div className="cta-orbit"/><div className="container" data-reveal="up"><span className="eyebrow">START WITH THE QUESTION</span><h2>You do not need<br/>a fund name to begin.</h2><p>Tell us what you are trying to achieve or what you want to understand about your current mutual fund portfolio.</p><Link className="button primary" href="/connect">Start a conversation ↗</Link></div></section>
+<section className="final-cta motion-final"><div className="cta-orbit"/><div className="container" data-reveal="up"><span className="eyebrow">START WITH THE QUESTION</span><h2>You do not need<br/>a fund name to begin.</h2><p>Tell us what you are trying to achieve or what you want to understand about your current mutual fund portfolio.</p><WhatsAppCta>Ask on WhatsApp</WhatsAppCta></div></section>
 </main>}

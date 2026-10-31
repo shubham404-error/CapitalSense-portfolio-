@@ -3,8 +3,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from './theme-toggle';
+import { WhatsAppCta } from './whatsapp-cta';
 
 const links = [
   ['/services', 'How we help'],
@@ -47,9 +48,7 @@ export function SiteHeader() {
         </nav>
         <div className="nav-actions">
           <ThemeToggle />
-          <Link className="nav-cta" href="/connect" aria-current={pathname === '/connect' ? 'page' : undefined}>
-            Start a conversation <ArrowUpRight size={15} aria-hidden="true" />
-          </Link>
+          <WhatsAppCta className="nav-cta">WhatsApp us</WhatsAppCta>
           <button
             className="mobile-menu icon-button"
             onClick={() => setOpen((value) => !value)}
@@ -66,7 +65,7 @@ export function SiteHeader() {
           {links.map(([href, label]) => (
             <Link key={href} href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</Link>
           ))}
-          <Link href="/connect" aria-current={pathname === '/connect' ? 'page' : undefined}>Start a conversation</Link>
+          <WhatsAppCta className="mobile-whatsapp">Chat on WhatsApp</WhatsAppCta>
         </nav>
       )}
     </header>

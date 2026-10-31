@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import {WhatsAppCta} from '@/components/whatsapp-cta';
 export const metadata = { title: 'Our Research Approach', description: 'How CapitalSense uses market research as context for disciplined investor decision-making.' };
 const pillars=[
 ['01','Market regime','Understand the broad environment using trend and participation evidence.'],
@@ -22,5 +23,5 @@ export default function Research(){return <main className="inner-page"><div clas
 
 <div className="inner-block" data-reveal="up"><h2>Research tools</h2><p>Our tools organise observations and calculations so that research can be inspected and repeated.</p><Link className="text-link" href="/ecosystem">Explore the technology work ↗</Link></div>
 
-<div className="inner-block" data-reveal="up"><h2>Apply the process to your own questions</h2><p>Have a question about your mutual fund holdings or goals? Begin there.</p><Link className="button primary" href="/connect">Start a conversation ↗</Link><p><small>For general information on service scope and regulatory status, see our <Link href="/disclosures">disclosures</Link>.</small></p></div>
+<div className="inner-block" data-reveal="up"><h2>Apply the process to your own questions</h2><p>Have a question about your mutual fund holdings or goals? Begin there.</p><WhatsAppCta>Ask on WhatsApp</WhatsAppCta><p><small>For general information on service scope and regulatory status, see our <Link href="/disclosures">disclosures</Link>.</small></p></div>
 </div></main>}

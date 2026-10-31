@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import {WhatsAppCta} from '@/components/whatsapp-cta';
 export const metadata = { title: 'How We Help Investors', description: 'Research-led mutual fund distribution, portfolio understanding and investor education from CapitalSense.' };
 const steps=[
 ['01','Understand','Start with the goal, time horizon, liquidity needs and existing investments.'],
@@ -21,5 +22,5 @@ export default function Services(){return <main className="inner-page"><div clas
 
 <div className="inner-block" data-reveal="up"><h2>Our scope</h2><p>CapitalSense investor services are focused on mutual fund distribution, related servicing and investor education. The website does not provide stock-specific buy or sell calls, discretionary portfolio management or personalised securities recommendations.</p><Link className="text-link" href="/disclosures">Read disclosures and regulatory information ↗</Link></div>
 
-<div className="inner-block" data-reveal="up"><h2>Start with your situation</h2><p>You do not need to arrive with a scheme in mind. Start with the goal, the portfolio question or the decision you are trying to make.</p><Link className="button primary" href="/connect">Start a conversation ↗</Link></div>
+<div className="inner-block" data-reveal="up"><h2>Start with your situation</h2><p>You do not need to arrive with a scheme in mind. Start with the goal, the portfolio question or the decision you are trying to make.</p><WhatsAppCta>Ask on WhatsApp</WhatsAppCta></div>
 </div></main>}

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import '@fontsource-variable/manrope';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { SiteHeader } from '@/components/site-header';
