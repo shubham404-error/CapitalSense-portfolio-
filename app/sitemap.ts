@@ -22,6 +22,12 @@ const routes = [
   '/insights/mutual-fund-costs',
   '/insights/portfolio-overlap',
   '/insights/review-without-overreacting',
+  '/insights/asset-allocation-is-the-real-portfolio',
+  '/insights/large-mid-small-cap-are-not-risk-ratings',
+  '/insights/emergency-fund-before-investing',
+  '/insights/market-cycles-and-changing-leadership',
+  '/insights/behavioural-biases-that-shape-investing',
+  '/insights/goal-based-investing-start-with-the-number',
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
