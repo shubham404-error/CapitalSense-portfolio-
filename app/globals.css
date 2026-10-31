@@ -741,3 +741,131 @@ body{
     min-height:auto;
   }
 }
+
+
+/* ===== Interior editorial rhythm ===== */
+.inner-page{
+  padding-top:clamp(88px,10vw,148px);
+}
+.inner-page>.container>.eyebrow{
+  display:inline-block;
+  margin-bottom:18px;
+}
+.page-lead{
+  max-width:760px;
+  margin-top:28px;
+  color:var(--muted);
+}
+.inner-block{
+  max-width:none;
+  padding-top:clamp(72px,8vw,118px);
+  display:grid;
+  grid-template-columns:minmax(180px,.65fr) minmax(0,1.55fr);
+  column-gap:clamp(36px,8vw,120px);
+  align-items:start;
+}
+.inner-block>h2{
+  margin:0;
+  font-size:clamp(25px,2.7vw,38px);
+  line-height:1.02;
+  font-weight:500;
+}
+.inner-block>p,
+.inner-block>.inner-cards,
+.inner-block>.hero-actions,
+.inner-block>.button,
+.inner-block>.text-link{
+  grid-column:2;
+}
+.inner-block>p{
+  max-width:760px;
+  margin-top:0;
+  margin-bottom:18px;
+}
+.inner-block>p strong{
+  font-weight:650;
+  color:var(--text);
+}
+.inner-block>.inner-cards{
+  margin-top:0;
+}
+.inner-cards{
+  border-top:1px solid var(--border);
+  border-left:1px solid var(--border);
+}
+.inner-cards article{
+  border:0;
+  border-right:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:transparent;
+}
+.inner-cards article h2{
+  margin:22px 0 12px;
+  font-size:clamp(23px,2.4vw,34px);
+  line-height:1.06;
+}
+.inner-cards article p{
+  max-width:54ch;
+}
+.inner-cards article .eyebrow{
+  color:var(--muted);
+}
+.inner-cards article:hover{
+  background:var(--surface);
+}
+.text-link{
+  transition:gap .25s ease,opacity .25s ease;
+}
+.text-link:hover{
+  gap:11px;
+  opacity:.78;
+}
+.desktop-nav a{
+  position:relative;
+  transition:color .25s ease;
+}
+.desktop-nav a:after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:100%;
+  bottom:-8px;
+  height:1px;
+  background:var(--text);
+  transition:right .3s cubic-bezier(.16,1,.3,1);
+}
+.desktop-nav a:hover{
+  color:var(--text);
+}
+.desktop-nav a:hover:after{
+  right:0;
+}
+.dark-product{
+  background:#0c1420;
+}
+.dashboard{
+  border-radius:0;
+  background:#111d2c;
+}
+.hero-float{
+  border-radius:0;
+}
+.icon-button{
+  border-radius:0;
+}
+@media(max-width:760px){
+  .inner-block{
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+  .inner-block>p,
+  .inner-block>.inner-cards,
+  .inner-block>.hero-actions,
+  .inner-block>.button,
+  .inner-block>.text-link{
+    grid-column:1;
+  }
+  .inner-cards{
+    border-left:0;
+  }
+}
