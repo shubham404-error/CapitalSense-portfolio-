@@ -4,18 +4,28 @@ import { useEffect } from 'react';
 export function MotionSystem() {
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) return;
-    document.documentElement.classList.add('motion-ready');
+    if (reduce || !('IntersectionObserver' in window)) return;
+
     const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.14, rootMargin: '0px 0px -7% 0px' });
-    targets.forEach((target) => observer.observe(target));
+    if (!targets.length) return;
+
+    let observer: IntersectionObserver;
+    try {
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
+      targets.forEach((target) => observer.observe(target));
+      document.documentElement.classList.add('motion-ready');
+    } catch {
+      targets.forEach((target) => target.classList.add('is-visible'));
+      return;
+    }
+
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const progress = max > 0 ? window.scrollY / max : 0;
@@ -28,6 +38,7 @@ export function MotionSystem() {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('pointermove', onPointer, { passive: true });
     onScroll();
+
     return () => {
       observer.disconnect();
       window.removeEventListener('scroll', onScroll);
