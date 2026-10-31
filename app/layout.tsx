@@ -16,10 +16,10 @@ const display = Inter_Tight({
 export const metadata: Metadata = {
   metadataBase: new URL('https://shubham404-error.github.io/CapitalSense-portfolio-/'),
   title: {
-    default: 'CapitalSense | Independent thinking. Systematic research.',
+    default: 'CapitalSense | Research-led mutual fund investing',
     template: '%s | CapitalSense'
   },
-  description: 'Research-led market intelligence, mutual fund investing and investor education.'
+  description: 'Research-led mutual fund distribution, portfolio understanding and investor education built around clarity, goals and disciplined decision-making.'
 };
 
 export default function RootLayout({children}:{children:React.ReactNode}) {
