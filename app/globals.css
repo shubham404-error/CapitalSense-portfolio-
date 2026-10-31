@@ -516,3 +516,29 @@ body{
   .product{padding:26px;min-height:500px}
   .final-cta{text-align:left}
 }
+
+
+/* === PRODUCTION POLISH === */
+h1,h2,h3{ text-wrap:balance }
+p{ text-wrap:pretty }
+a,button,input,select,textarea{outline-color:transparent}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:4px;
+}
+::selection{
+  background:color-mix(in srgb,var(--accent) 28%,transparent);
+  color:var(--text);
+}
+.site-header,.pointer-aura,.scroll-progress{will-change:auto}
+.pointer-aura{opacity:.14}
+@media(hover:none){
+  .pointer-aura{display:none}
+  .motion-cap-grid article:hover,
+  .motion-audience article:hover,
+  .motion-products .product:hover,
+  .motion-articles article:hover{
+    transform:none;
+    box-shadow:none;
+  }
+}
