@@ -83,3 +83,27 @@ h1,h2,h3,p{overflow-wrap:break-word}
 .investor-journey figcaption{display:grid;grid-template-columns:1fr;gap:20px;margin-top:24px;color:var(--muted);font-size:14px}
 .investor-journey strong{display:block;color:var(--text);margin-bottom:8px;font-weight:500;font-size:18px}
 @media(min-width:801px){.service-visual{grid-template-columns:300px 1fr;gap:64px}.page-services-hni-investors .inner-cards article.illustrated-review{grid-template-columns:200px 1fr;gap:48px}.investor-journey figcaption{grid-template-columns:repeat(3,1fr);gap:36px}}
+
+/* Seamless paired tracks: each group occupies exactly half the moving strip. */
+.ticker-band{display:flex;align-items:center;gap:16px;padding:16px 20px}
+.ticker-window{overflow:hidden;flex:1;min-width:0}
+.ticker-track{gap:0;white-space:nowrap;animation:marquee-travel 32s linear infinite}
+.ticker-group{display:flex;flex-shrink:0;gap:0;min-width:100vw}
+.ticker-group>span{display:flex;align-items:center;justify-content:space-around;gap:30px;padding-right:30px;flex:1}
+.ticker-group i{font-style:normal}
+.ticker-toggle{flex-shrink:0;border:1px solid #18392e;border-radius:24px;padding:10px 14px;background:transparent;color:#18392e;font-size:12px;min-height:44px;cursor:pointer}
+@keyframes marquee-travel{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:no-preference){
+ .motion-ready [data-reveal]{transform:translateY(18px);transition:transform .65s cubic-bezier(.2,.7,.2,1);transition-delay:var(--reveal-delay,0ms)}
+ .motion-ready [data-reveal="left"]{transform:translateX(-16px)}
+ .motion-ready [data-reveal="right"]{transform:translateX(16px)}
+ .motion-ready [data-reveal].is-visible{transform:none}
+ .hero-content h1{animation:hero-enter .8s ease-out both}
+ .hero-line path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:line-enter 2s .2s ease-out forwards}
+ .button{transition:transform .2s,opacity .2s}
+ .button:hover{transform:translateY(-2px)}
+ @keyframes hero-enter{from{opacity:.4;transform:translateY(16px)}to{opacity:1;transform:none}}
+ @keyframes line-enter{to{stroke-dashoffset:0}}
+}
+@media(max-width:800px){.ticker-band{gap:10px}.ticker-toggle{font-size:11px;padding:10px}.motion-ready [data-reveal="left"],.motion-ready [data-reveal="right"]{transform:translateY(12px)}.motion-ready [data-reveal].is-visible{transform:none}}
+@media(prefers-reduced-motion:reduce){.ticker-track{animation:none}.ticker-window{overflow-x:auto}.ticker-group{min-width:0}.ticker-group[aria-hidden="true"],.ticker-toggle{display:none}.motion-ready [data-reveal]{transform:none!important;transition:none!important}}
