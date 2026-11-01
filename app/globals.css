@@ -113,3 +113,53 @@ h1,h2,h3,p{overflow-wrap:break-word}
 .journal-card-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1}
 .journal-card-art>span,.journal-card-art>small{position:relative;z-index:1;text-shadow:0 1px 0 rgba(255,255,255,.25)}
 .dark .journal-card-art{color:#18392e}
+
+
+/* Insight cover artwork */
+.article-cover{
+  margin:34px 0 38px;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:var(--surface2);
+  overflow:hidden;
+}
+.article-cover img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:4/1;
+  object-fit:cover;
+}
+.journal-card-art img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+.journal-card-art{
+  position:relative;
+  isolation:isolate;
+}
+.journal-card-art:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(7,12,18,.03),rgba(7,12,18,.18));
+  z-index:1;
+  pointer-events:none;
+}
+.journal-card-art>span,
+.journal-card-art>small{
+  position:relative;
+  z-index:2;
+}
+@media(max-width:680px){
+  .article-cover{
+    margin:26px 0 30px;
+  }
+  .article-cover img{
+    aspect-ratio:3/1;
+  }
+}
