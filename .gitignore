@@ -3,3 +3,6 @@ node_modules/
 .env*
 !.env.example
 *.tsbuildinfo
+.next-pages/
+out/
+.stride-pages-api/

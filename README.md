@@ -21,7 +21,7 @@ Onboarding starts with up to 20 scenario cards. Swipe, use the buttons, skip, or
 
 ## Gemini (optional, server only)
 
-Copy `.env.example` to `.env.local` and supply `GEMINI_API_KEY` securely. Never commit real keys or use `NEXT_PUBLIC_` for them. Default model: `gemini-2.5-flash`; configurable via `GEMINI_MODEL`. Set `GEMINI_DEMO_ENABLED=true` only in controlled development. Restart after changing environment variables.
+Copy `.env.example` to `.env.local` and supply `GEMINI_API_KEY` securely. Never commit real keys or use `NEXT_PUBLIC_` for them. Default model: `gemini-3.5-flash-lite`; configurable via `GEMINI_MODEL`. Set `GEMINI_DEMO_ENABLED=true` only in controlled development. Restart after changing environment variables.
 
 The endpoint sends the five financial questionnaire answers, not photos, names, contribution amounts or swipe preferences. It requests educational explanations only and has no approved fund universe. No live model call was tested because no key was supplied. Before public enablement add real authentication, durable per-user rate limiting, consent, retention controls, approved data grounding, output validation and provider review. Same-origin checks alone do not prevent API abuse.
 
@@ -34,3 +34,11 @@ Start the production server, then run `npm run test:smoke`. Uses installed `/usr
 This is a functional UI prototype, not a launch-ready financial service. Authentication is a clearly labelled local demo profile, not a secure account. There is no shared database, real community, KYC collection, payment mandate or investment execution. Sample people and achievements are fictional. Posting cannot verify a contribution or earn a real streak.
 
 Choose and contract a provider (ZFunds or AssetPlus), verify API/white-label capabilities and webhook security, integrate secure authentication and provider-required KYC, document the curated fund universe and reviewed allocation rules, verify operator ARN/EUIN and compensation disclosures, and complete compliance/privacy/security/accessibility review. Do not collect PAN, identity documents or money through this prototype. No registration identifier or fund data has been invented.
+
+## GitHub Pages test deployment
+
+`PAGES_BASE_PATH=/CapitalSense-portfolio-/stride npm run build:pages` creates `out/`. The build temporarily excludes `app/api` and restores it in a finally block. Do not run a development build concurrently with that command. Static builds explicitly disable Gemini and never embed a key. Gemini 3.5 Flash Lite is the requested backend model; its API identifier and availability remain unverified.
+
+The `Deploy Capital Sense and Stride demo` workflow builds the existing `feature/website-v1` website at the repository root and adds Stride under `/stride/`. Repository Settings → Pages must use GitHub Actions. The expected demo URL after a successful deployment is `https://shubham404-error.github.io/CapitalSense-portfolio-/stride/`. The website branch’s independent deployment workflow can overwrite this combined artifact when that branch is pushed; redeploy this workflow afterward or consolidate publication before ongoing use.
+
+Run static browser checks with `STATIC_DEMO=true BASE_URL=<your-static-subpath-url> npm run test:smoke`. Pages is public testing only: no real authentication, investments or private server storage. Never put API keys in GitHub Pages build variables for browser code. Backend credentials belong in secure server settings.
