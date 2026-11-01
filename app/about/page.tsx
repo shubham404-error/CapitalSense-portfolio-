@@ -19,7 +19,30 @@ export default function About(){return <main className="inner-page page-about"><
 
 <div className="inner-block" data-reveal="up"><h2>What we do</h2><p><strong>Investor conversations:</strong> goals, time horizon, liquidity, existing holdings and the role mutual funds may play.</p><p><strong>Research:</strong> structured market and portfolio analysis used to add context and discipline to the decision process.</p><p><strong>Education:</strong> practical explanations of mutual funds, risk, costs, portfolio construction and investor behaviour.</p><p><strong>Technology:</strong> tools that organise information and make research workflows easier to explore.</p></div>
 
-<div className="inner-block" data-reveal="up"><h2>Who is behind CapitalSense</h2><p>CapitalSense is founder-led. A named founder biography, verified credentials, distributor registration particulars and relevant empanelments must be published before the site is used to solicit distribution business.</p></div>
+<section className="inner-block founder-section" data-reveal="up" aria-labelledby="founder-heading">
+  <span className="eyebrow">THE PERSON BEHIND THE PROCESS</span>
+  <h2 id="founder-heading">Who is behind CapitalSense</h2>
+  <div className="founder-profile">
+    <div className="founder-intro">
+      <h3>Shubham Tejani</h3>
+      <p className="founder-role">Founder, CapitalSense</p>
+      <p>CapitalSense was founded by Shubham Tejani, a finance and technology professional interested in making investment information more structured, understandable and useful. His work brings together financial-data analysis, public-equity research workflows and a technology-led approach to investor education.</p>
+      <p>The idea behind CapitalSense is straightforward: investors should be able to understand the purpose, risks, costs and trade-offs of a financial decision, rather than rely on rankings, recent returns or market noise alone.</p>
+    </div>
+    <div className="founder-credentials">
+      <article><span className="eyebrow">EDUCATION</span><h3>B.Tech, Computer Science & Engineering</h3><p>Artificial Intelligence & Machine Learning<br/>VIT Bhopal University</p></article>
+      <article><span className="eyebrow">PROFESSIONAL CERTIFICATIONS</span><h3>NISM certifications</h3><p>Equity Derivatives and Research Analyst</p></article>
+      <article><span className="eyebrow">PRACTICAL EXPERIENCE</span><h3>Financial data & research</h3><p>Experience working with financial information, company disclosures, market data and structured research processes.</p></article>
+    </div>
+  </div>
+  <div className="founder-registration">
+    <span className="eyebrow">DISTRIBUTION & REGULATORY DETAILS</span>
+    <p>CapitalSense’s intended distribution activity is limited to mutual fund distribution, related servicing and investor education, subject to applicable requirements. NISM certifications are professional qualifications. They do not, by themselves, constitute SEBI registration as an Investment Adviser or Research Analyst.</p>
+    <p><strong>Registration disclosure:</strong> The distributor’s registered name, AMFI Registration Number (ARN), applicable EUIN details and current AMC empanelments must be verified and displayed here before CapitalSense solicits or undertakes mutual fund distribution business. Until those particulars are published and applicable requirements are met, this website should not be treated as an invitation to transact through CapitalSense.</p>
+    <p>CapitalSense does not claim SEBI registration as an Investment Adviser or Research Analyst.</p>
+    <Link className="text-link" href="/disclosures">Read regulatory disclosures ↗</Link>
+  </div>
+</section>
 
 <div className="inner-block" data-reveal="up"><h2>What guides our work</h2><p>We explain risks, costs and uncertainty as clearly as potential opportunities. No return is guaranteed, and a conversation need not lead to a transaction.</p><Link className="text-link" href="/disclosures">Read our disclosures ↗</Link></div>
 
