@@ -44,3 +44,9 @@ Live email delivery, real-project migrations, real-user RLS and actual Gemini ca
 The deployment workflow builds `feature/website-v1` at the repository root and Stride under `/stride/`. Settings → Pages must use GitHub Actions. Pushing the website branch's independent deployment workflow can overwrite this combined artifact; rerun the Stride workflow afterward or consolidate publication for ongoing development.
 
 Account deletion/retention requests currently require operator handling in Supabase. Deleting saved onboarding does not delete the Auth account. Configure SMTP, privacy notice and account-deletion handling before inviting real users.
+
+## Mobile design and retention analysis
+
+Mobile uses a centred camera action, camera/library selection, preview/removal, bottom-sheet dialogs, sticky header, safe-area navigation and larger controls. `npm run test:mobile` validates camera input, photo handling and overflow at 320–430px widths against a running unconfigured server. Browser capture support depends on the device.
+
+See [the comparative product analysis](docs/PRODUCT-RETENTION.md) for Strava/Instagram/Tinder/YouTube patterns, hypotheses and proposed measurements. Official-source fetches were blocked by network policy; this is not a completed evidence-backed retention study. A finite feed deliberately provides a stopping point. No retention experiments have run.

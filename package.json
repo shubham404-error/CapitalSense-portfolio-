@@ -10,7 +10,8 @@
     "test:smoke": "node tests/smoke.cjs",
     "build:pages": "node scripts/build-pages.mjs",
     "test:backend": "node tests/backend.cjs",
-    "test:auth": "node tests/auth.cjs"
+    "test:auth": "node tests/auth.cjs",
+    "test:mobile": "node tests/mobile.cjs"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",
