@@ -166,25 +166,28 @@ h1,h2,h3,p{overflow-wrap:break-word}
 
 
 
-/* ===== Insight covers: crop source poster to illustrated half ===== */
+
+/* ===== Insight covers: tight crop to artwork ===== */
 .journal-card-art{
   position:relative;
   isolation:isolate;
   width:100%;
   aspect-ratio:2/1;
   overflow:hidden;
-  background:var(--surface2);
+  background:transparent;
   display:block;
   padding:0;
 }
 .journal-card-art img{
   position:absolute;
-  top:0;
-  left:-100%;
-  width:200%;
+  inset:0;
+  width:100%;
   height:100%;
   max-width:none;
-  object-fit:fill;
+  object-fit:cover;
+  object-position:right center;
+  transform:scale(1.10);
+  transform-origin:right center;
   display:block;
   z-index:0;
 }
@@ -192,30 +195,29 @@ h1,h2,h3,p{overflow-wrap:break-word}
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(180deg,rgba(6,12,16,.02),rgba(6,12,16,.08));
+  background:linear-gradient(180deg,rgba(5,10,14,.01),rgba(5,10,14,.05));
   z-index:1;
   pointer-events:none;
 }
 .journal-card-art>span{
   position:absolute;
-  left:20px;
-  top:18px;
+  left:18px;
+  top:16px;
   z-index:2;
-  font-size:clamp(46px,5vw,74px);
+  font-size:clamp(44px,4.8vw,70px);
   line-height:.9;
   font-weight:300;
-  letter-spacing:-.07em;
-  color:#f5f7f3;
-  text-shadow:0 2px 16px rgba(0,0,0,.42);
+  letter-spacing:-.065em;
+  color:#fff;
+  text-shadow:0 2px 14px rgba(0,0,0,.48);
 }
-.journal-card-art>small{
-  display:none;
-}
+.journal-card-art>small{display:none}
 @media(max-width:680px){
   .journal-card-art{aspect-ratio:2/1}
+  .journal-card-art img{transform:scale(1.12)}
   .journal-card-art>span{
-    left:14px;
-    top:13px;
-    font-size:46px;
+    left:13px;
+    top:12px;
+    font-size:44px;
   }
 }
