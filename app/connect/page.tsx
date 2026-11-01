@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import {WhatsAppCta} from '@/components/whatsapp-cta';
 export const metadata={title:'Contact CapitalSense',description:'Chat with CapitalSense on WhatsApp Business about mutual fund investing, portfolio understanding or investor education.'};
-export default function Connect(){return <main className="inner-page"><div className="container">
+export default function Connect(){return <main className="inner-page page-connect"><div className="container">
 <span className="eyebrow">CONTACT CAPITALSENSE</span><h1 data-reveal="up">Ask your question.<br/><em>Start on WhatsApp.</em></h1>
 <p className="page-lead" data-reveal="up">Whether you are getting started or reviewing existing mutual funds, send a short description through our WhatsApp Business account.</p>
 

@@ -9,7 +9,7 @@ const reviewAreas = [
  ['Goal alignment', 'Check whether the portfolio structure still relates to the investor’s objectives, time horizon, liquidity needs and ability to absorb losses.'],
  ['Ongoing servicing', 'Keep track of scheme communications, portfolio disclosures, changes in circumstances and service requests.'],
 ];
-export default function Page(){return <main className="inner-page"><div className="container">
+export default function Page(){return <main className="inner-page page-services-hni-investors"><div className="container">
 <span className="eyebrow">FOR EXISTING MUTUAL FUND INVESTORS</span><h1 data-reveal="up">Understand what<br/><em>your portfolio holds.</em></h1>
 <p className="page-lead" data-reveal="up">Holding several schemes does not necessarily mean owning a diversified portfolio. Start by examining exposures, costs and what each holding is meant to achieve.</p>
 <div className="inner-block" data-reveal="up"><h2>What a portfolio discussion examines</h2><p>We look at the role of each scheme and the exposures repeated across them.</p><div className="inner-cards" data-reveal="up">{reviewAreas.map(([t,d],i)=><article key={t}><span className="eyebrow">0{i+1} / REVIEW LENS</span><h2>{t}</h2><p>{d}</p></article>)}</div></div>

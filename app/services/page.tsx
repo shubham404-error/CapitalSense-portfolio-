@@ -1,26 +1,13 @@
 import Link from 'next/link';
-import {WhatsAppCta} from '@/components/whatsapp-cta';
-export const metadata = { title: 'How We Help Investors', description: 'Research-led mutual fund distribution, portfolio understanding and investor education from CapitalSense.' };
-const steps=[
-['01','Understand','Start with the goal, time horizon, liquidity needs and existing investments.'],
-['02','Structure','Identify the role different mutual fund categories and portfolio exposures may play.'],
-['03','Decide','Compare relevant options, risks, costs and scheme information before acting.'],
-['04','Review','Revisit the portfolio when goals, cash flows or material investment characteristics change.'],
-];
-export default function Services(){return <main className="inner-page"><div className="container">
-<span className="eyebrow">HOW WE HELP</span><h1 data-reveal="up">Mutual fund investing,<br/><em>made easier to understand.</em></h1>
-<p className="page-lead" data-reveal="up">We help individuals and families explore mutual fund options, understand existing holdings and navigate the practical steps of investing through a distribution-led service.</p>
-
-<div className="inner-cards service-choice-grid" data-reveal="up">
-<article><span className="eyebrow">01 / INDIVIDUALS & FAMILIES</span><h2>Start investing with a purpose.</h2><p>Understand how your goal, time horizon and ability to absorb losses shape the mutual fund categories worth exploring.</p><Link className="text-link" href="/services/individual-investors">Explore individual investor services ↗</Link></article>
-<article><span className="eyebrow">02 / EXISTING PORTFOLIOS</span><h2>Understand your current holdings.</h2><p>Look across funds for repeated exposures, mismatched goals, liquidity needs and costs—then identify questions worth resolving.</p><Link className="text-link" href="/services/hni-investors">Explore portfolio review support ↗</Link></article>
-</div>
-
-<div className="inner-block" data-reveal="up"><h2>How the process works</h2><div className="inner-cards process-flow" data-reveal="up">{steps.map(([n,t,d])=><article key={n}><span className="eyebrow">STEP {n}</span><h2>{t}</h2><p>{d}</p></article>)}</div></div>
-
-<div className="inner-block" data-reveal="up"><h2>What a conversation covers</h2><p><strong>Scheme features.</strong> Understand a fund's mandate, major risks and where it might fit.</p><p><strong>Holdings in context.</strong> Discuss the role each holding plays, not simply its trailing return.</p><p><strong>Costs and compensation.</strong> Understand direct and regular plans, expense ratios, exit loads and relevant distributor remuneration.</p><p><strong>Practical next steps.</strong> Clarify documentation and service requirements before any transaction.</p></div>
-
-<div className="inner-block" data-reveal="up"><h2>Our scope</h2><p>CapitalSense investor services are focused on mutual fund distribution, related servicing and investor education. The website does not provide stock-specific buy or sell calls, discretionary portfolio management or personalised securities recommendations.</p><Link className="text-link" href="/disclosures">Read disclosures and regulatory information ↗</Link></div>
-
-<div className="inner-block" data-reveal="up"><h2>Start with your situation</h2><p>You do not need to arrive with a scheme in mind. Start with the goal, the portfolio question or the decision you are trying to make.</p><WhatsAppCta>Ask on WhatsApp</WhatsAppCta></div>
+import { WhatsAppCta } from '@/components/whatsapp-cta';
+export const metadata={title:'Find your starting point',description:'Understand your mutual fund goals, holdings and next steps with CapitalSense.'};
+const steps=[['01','Your life first','Goals, time horizon and the money you may need along the way.'],['02','Make a map','Understand the role of different mutual fund categories and existing holdings.'],['03','Know the trade-offs','Compare risks, costs and scheme information before acting.'],['04','Keep perspective','Review when your circumstances change, not with every headline.']];
+const questions=[['What am I actually investing in?',"A fund’s mandate, its major risks and where it might fit in your plan."],['Are my funds doing the same thing?','Look at repeated holdings, concentration and the role of each investment.'],['What does it cost?','Understand expense ratios, exit loads, direct and regular plans, and distributor remuneration.'],['What happens next?','Clarify the service scope, documentation and practical steps before any transaction.']];
+export default function Services(){return <main className="inner-page page-services"><div className="container">
+<section className="service-hero"><div><span className="eyebrow">YOUR MONEY. YOUR STARTING POINT.</span><h1>Big plans.<br/><em>Clear next steps.</em></h1><p className="page-lead">Your first SIP or a portfolio of funds. We help you understand what matters, what it costs and what comes next.</p><div className="hero-actions"><WhatsAppCta>Ask on WhatsApp</WhatsAppCta></div></div><div className="goal-art" role="img" aria-label="Your life, your goals, your investment plan"><span>START HERE</span><b>Your life.<br/>Your goals.<br/>Your plan.</b><span>CAPITALSENSE / INVESTOR SERVICES</span></div></section>
+<section className="service-choices" aria-label="Choose your starting point"><article><span className="eyebrow">I’M GETTING STARTED</span><h2>A goal worth<br/>building towards.</h2><p>Connect your timeframe, contributions and capacity for risk before comparing mutual funds.</p><Link className="text-link" href="/services/individual-investors">Build your understanding ↗</Link></article><article><span className="eyebrow">I ALREADY INVEST</span><h2>More funds.<br/>More clarity?</h2><p>Find out what your holdings have in common and whether their roles still match your goals.</p><Link className="text-link" href="/services/hni-investors">Understand your portfolio ↗</Link></article></section>
+<section className="journey"><span className="eyebrow">THE PROCESS</span><h2>From a question to a considered decision.</h2><ol>{steps.map(([n,t,d])=><li key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></li>)}</ol></section>
+<section className="conversation"><span className="eyebrow">LET’S MAKE IT CLEAR</span><h2>Questions worth asking.</h2>{questions.map(([q,a])=><details key={q}><summary>{q}</summary><p>{a}</p></details>)}</section>
+<aside className="scope-note"><p>Our scope is mutual fund distribution, related servicing and investor education. We do not offer stock-specific calls, discretionary portfolio management or personalised securities recommendations.</p><Link className="text-link" href="/disclosures">Service scope & disclosures ↗</Link></aside>
+<section className="service-end"><h2>You bring the question.</h2><p>No fund name needed. Tell us what you’re working towards.</p><WhatsAppCta>Ask on WhatsApp</WhatsAppCta></section>
 </div></main>}

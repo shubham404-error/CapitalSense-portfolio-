@@ -9,7 +9,7 @@ const pillars=[
 ['05','Systematic screening','Use explicit filters to narrow a research universe for deeper work.'],
 ['06','Risk and context','Read every positive signal alongside volatility, liquidity, concentration and valuation context.'],
 ];
-export default function Research(){return <main className="inner-page"><div className="container">
+export default function Research(){return <main className="inner-page page-research"><div className="container">
 <span className="eyebrow">OUR APPROACH</span><h1 data-reveal="up">Research to ask<br/><em>better questions.</em></h1>
 <p className="page-lead" data-reveal="up">We use market and portfolio evidence to challenge first impressions. The aim is to understand risk and context—not to predict the next move.</p>
 

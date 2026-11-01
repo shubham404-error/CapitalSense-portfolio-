@@ -1,6 +1,6 @@
 import Link from 'next/link';
 export const metadata = { title: 'Privacy Notice', description: 'How the CapitalSense website handles information and external links.' };
-export default function Page(){return <main className="inner-page"><div className="container">
+export default function Page(){return <main className="inner-page page-privacy"><div className="container">
 <span className="eyebrow">YOUR INFORMATION</span><h1 data-reveal="up">Privacy<br/><em>and data use.</em></h1>
 <p className="page-lead" data-reveal="up">This notice explains the current information-handling practices of the CapitalSense public website. It applies to this website, not to external platforms you choose to visit.</p>
 <div className="inner-block" data-reveal="up"><h2>1. Information submitted directly</h2><p>The current website does not provide an account sign-up, payment checkout or working newsletter subscription database. The contact page directs visitors to LinkedIn, an external service. If you contact CapitalSense through LinkedIn or another channel, the information you choose to share will be handled through that service and the communication channel used.</p><p>Please do not send passwords, OTPs, PINs, PAN, Aadhaar, bank details, card information or unredacted investment statements through public or unsecured messages.</p></div>

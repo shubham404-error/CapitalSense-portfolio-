@@ -6,7 +6,7 @@ const principles=[
 ['03','Evidence over excitement','Recent returns, headlines and stories should not replace portfolio context and documented reasoning.'],
 ['04','Education before action','A better-informed investor can ask better questions and make more deliberate decisions.'],
 ];
-export default function About(){return <main className="inner-page"><div className="container">
+export default function About(){return <main className="inner-page page-about"><div className="container">
 <span className="eyebrow">ABOUT CAPITALSENSE</span>
 <h1 data-reveal="up">Built for investors who want<br/><em>to understand before they act.</em></h1>
 <p className="page-lead" data-reveal="up">CapitalSense brings mutual fund distribution and investor education together with a research-led approach to understanding portfolios.</p>

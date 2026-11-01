@@ -1,6 +1,6 @@
 import Link from 'next/link';
 export const metadata={title:'Technology at CapitalSense',description:'Technology projects that support CapitalSense research and investor education.'};
-export default function Ecosystem(){return <main className="inner-page"><div className="container">
+export default function Ecosystem(){return <main className="inner-page page-ecosystem"><div className="container">
 <span className="eyebrow">TECHNOLOGY AT CAPITALSENSE</span><h1 data-reveal="up">Tools that support<br/><em>the thinking behind the service.</em></h1>
 <p className="page-lead" data-reveal="up">These are supporting projects, not separate promises about investment outcomes. They organise research and make financial concepts easier to explore.</p>
 

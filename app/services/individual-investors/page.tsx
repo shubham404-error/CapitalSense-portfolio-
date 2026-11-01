@@ -9,7 +9,7 @@ const topics = [
  ['Investing behaviour', 'A SIP can help automate contributions, but it does not remove market risk or guarantee a profit. Consistency and a suitable investment choice both matter.'],
  ['Ongoing servicing', 'Keep records, review scheme communications and revisit your plan when goals, income, liabilities or liquidity needs change.'],
 ];
-export default function Page(){return <main className="inner-page"><div className="container">
+export default function Page(){return <main className="inner-page page-services-individual-investors"><div className="container">
 <span className="eyebrow">FOR INDIVIDUALS & FAMILIES</span><h1 data-reveal="up">Give your investments<br/><em>a clear purpose.</em></h1>
 <p className="page-lead" data-reveal="up">Saving for a home, education or retirement involves different time horizons and risks. Start with the goal before comparing funds.</p>
 <div className="inner-block" data-reveal="up"><h2>What we discuss</h2><div className="inner-cards" data-reveal="up">{topics.map(([t,d],i)=><article key={t}><span className="eyebrow">0{i+1} / DISCUSSION AREA</span><h2>{t}</h2><p>{d}</p></article>)}</div></div>

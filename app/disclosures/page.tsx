@@ -1,6 +1,6 @@
 import {WhatsAppCta} from '@/components/whatsapp-cta';
 export const metadata = { title: 'Disclosures & Risk Information', description: 'Important information about mutual fund risks, research content and the scope of CapitalSense services.' };
-export default function Page(){return <main className="inner-page"><div className="container">
+export default function Page(){return <main className="inner-page page-disclosures"><div className="container">
 <span className="eyebrow">IMPORTANT INFORMATION</span><h1 data-reveal="up">Disclosures &<br/><em>risk information.</em></h1>
 <p className="page-lead" data-reveal="up">The information on this website is intended to help visitors understand the nature, scope and limitations of CapitalSense content and services. Please read it before relying on any information or initiating a transaction.</p>
 <div className="inner-block" data-reveal="up"><h2>1. Mutual fund and market risk</h2><p>Mutual fund investments are subject to market risks. Read all scheme related documents carefully. The value of investments can rise or fall, and investors may receive less than the amount invested. Past performance is not indicative of future results and does not guarantee future returns.</p><p>Equity schemes are exposed to market and company-specific risks. Debt schemes may be exposed to interest-rate, credit, liquidity and reinvestment risks. Hybrid and other schemes carry risks arising from their underlying asset allocation and strategy. Risk levels, portfolio holdings and scheme features can change over time.</p></div>

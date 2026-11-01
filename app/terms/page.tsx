@@ -1,6 +1,6 @@
 import Link from 'next/link';
 export const metadata = { title: 'Terms of Use', description: 'Terms governing access to and use of the CapitalSense website and its educational content.' };
-export default function Page(){return <main className="inner-page"><div className="container">
+export default function Page(){return <main className="inner-page page-terms"><div className="container">
 <span className="eyebrow">WEBSITE TERMS</span><h1 data-reveal="up">Terms of<br/><em>use.</em></h1>
 <p className="page-lead" data-reveal="up">By accessing this website, you agree to use it responsibly and to understand the limits of general financial information. If you do not agree with these terms, please do not use the website.</p>
 <div className="inner-block" data-reveal="up"><h2>1. Website purpose</h2><p>This website introduces CapitalSense, its research approach, investor education material, technology projects and mutual fund distribution-related services. Content is intended for general information and education. It is not designed to address the objectives or circumstances of any particular visitor.</p></div>
