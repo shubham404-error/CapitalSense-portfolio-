@@ -11,3 +11,59 @@
 @media(prefers-reduced-motion:no-preference){a,button{transition:opacity .2s}a:hover{opacity:.8}details[open] p{animation:appear .25s ease}@keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
 .article-sketch{margin:32px 0;padding:20px;background:#fff;border-radius:16px}.article-sketch img{display:block;width:100%;height:auto}.article-sketch figcaption{margin-top:12px;color:#526058;font-size:13px}
+
+/* Alignment and small-screen reading rhythm. */
+.container,.nav-wrap,.footer-main,.footer-bottom{width:min(1160px,calc(100% - 40px))}
+.container>* ,article,section,.newsletter-copy{min-width:0}
+h1,h2,h3,p{overflow-wrap:break-word}
+.newsletter-grid{grid-template-columns:1fr;gap:24px;align-items:start}
+.newsletter-grid h2{max-width:20ch}
+.newsletter-copy p{margin:0}
+.newsletter-copy p+p{margin-top:16px}
+.newsletter-copy .button{margin-top:24px}
+.newsletter-grid h2 em{display:block}
+.intro-grid{align-items:start}
+.intro-grid .eyebrow{margin-bottom:16px}
+.section-top{align-items:start}
+.section-top>.text-link{flex-shrink:0}
+.button{max-width:100%;min-height:48px;line-height:1.4;text-align:left}
+.button svg{flex-shrink:0}
+.hero-actions .text-link{margin-top:0}
+.two-cards article,.service-choices article{display:flex;flex-direction:column;align-items:flex-start}
+.two-cards article>.text-link,.service-choices article>.text-link{margin-top:auto;padding-top:24px}
+.inner-cards article>.eyebrow{margin-bottom:16px}
+.final-cta h2,.final-cta p{max-width:760px}
+@media(min-width:801px){
+  .newsletter-grid{grid-template-columns:1fr 1fr;gap:70px}
+  .intro-grid>div:last-child{padding-top:35px}
+}
+@media(max-width:800px){
+  h1{font-size:clamp(36px,9vw,58px);line-height:1.14}
+  h2{font-size:clamp(28px,7vw,40px);line-height:1.2}
+  h3{font-size:24px;line-height:1.25}
+  h1 br,h2 br,h3 br{display:none}
+  h1 br::after,h2 br::after,h3 br::after{content:' '}
+  .hero h1 br{display:block}
+  .hero h1{font-size:clamp(44px,12vw,68px)}
+  .inner-page h1 em{display:block;margin-top:6px}
+  .final-cta h2{font-size:clamp(36px,9vw,52px)}
+  .final-cta h2 br{display:block}
+  .cap-grid,.journey ol,.learning-visual-items{grid-template-columns:1fr}
+  .cap-grid article,.journey li{padding:24px 0 0}
+  .cap-grid svg{margin:16px 0}
+  .cap-grid p,.journey p{font-size:15px}
+  .service-choices article,.page-ecosystem .inner-cards article{padding:24px}
+  .goal-art{width:min(100%,320px);transform:none}
+  .goal-art span{font-size:9px;letter-spacing:.09em}
+  .goal-art b{font-size:44px}
+  .page-lead{margin-top:24px}
+  .inner-block h2{margin-bottom:20px}
+  .inner-cards{gap:24px}
+  .hero,.newsletter,.final-cta{padding:56px 0}
+  .conversation{margin:56px 0}
+  .learning-visual,.article-takeaways{margin:24px 0;padding:20px}
+  .article-sketch{margin:24px 0;padding:12px}
+  .journal-card-art{gap:16px}
+  .journal-filter button{min-height:44px}
+  .footer-col a{min-height:36px;display:flex;align-items:center}
+}

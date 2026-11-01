@@ -8,7 +8,7 @@ const principles=[
 ];
 export default function About(){return <main className="inner-page page-about"><div className="container">
 <span className="eyebrow">ABOUT CAPITALSENSE</span>
-<h1 data-reveal="up">Built for investors who want<br/><em>to understand before they act.</em></h1>
+<h1 data-reveal="up">Built for investors who want{' '}<br/><em>to understand before they act.</em></h1>
 <p className="page-lead" data-reveal="up">CapitalSense brings mutual fund distribution and investor education together with a research-led approach to understanding portfolios.</p>
 
 <div className="inner-block" data-reveal="up"><h2>Why CapitalSense exists</h2><p>A fund ranking tells you what performed well. It does not tell you whether the fund fits your goal, time horizon or existing portfolio.</p><p>CapitalSense begins with those missing questions, then explains the available choices and their trade-offs.</p></div>

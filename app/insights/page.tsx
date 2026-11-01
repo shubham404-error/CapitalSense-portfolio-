@@ -5,7 +5,7 @@ export const metadata={title:'Insights',description:'Clear, practical investor e
 
 export default function Insights(){return <main className="inner-page page-insights"><div className="container">
 <span className="eyebrow">CAPITALSENSE INSIGHTS</span>
-<h1 data-reveal="up">Understand the decision.<br/><em>Not just the headline.</em></h1>
+<h1 data-reveal="up">Understand the decision.{' '}<br/><em>Not just the headline.</em></h1>
 <p className="page-lead" data-reveal="up">Practical explanations for investors who want to understand mutual funds, portfolio construction, risk, costs and behaviour before making a financial decision.</p>
 
 <JournalLibrary/>

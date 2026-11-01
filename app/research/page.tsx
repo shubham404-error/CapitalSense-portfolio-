@@ -10,7 +10,7 @@ const pillars=[
 ['06','Risk and context','Read every positive signal alongside volatility, liquidity, concentration and valuation context.'],
 ];
 export default function Research(){return <main className="inner-page page-research"><div className="container">
-<span className="eyebrow">OUR APPROACH</span><h1 data-reveal="up">Research to ask<br/><em>better questions.</em></h1>
+<span className="eyebrow">OUR APPROACH</span><h1 data-reveal="up">Research to ask{' '}<br/><em>better questions.</em></h1>
 <p className="page-lead" data-reveal="up">We use market and portfolio evidence to challenge first impressions. The aim is to understand risk and context—not to predict the next move.</p>
 
 <div className="inner-block" data-reveal="up"><h2>What research adds to the conversation</h2><p>A portfolio can hold many funds yet depend on the same underlying companies or sectors. Research helps identify these exposures and examine whether a market narrative is supported by the data.</p><p>The result is a better question to discuss—not an instruction to transact.</p></div>
