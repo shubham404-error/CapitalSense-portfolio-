@@ -1,3 +1,4 @@
+import {InvestorJourney} from '@/components/service-illustrations';
 import Link from 'next/link';
 export const metadata={title:'About CapitalSense',description:'Why CapitalSense exists, how it works and the principles behind its investor-first approach.'};
 const principles=[
@@ -10,6 +11,7 @@ export default function About(){return <main className="inner-page page-about"><
 <span className="eyebrow">ABOUT CAPITALSENSE</span>
 <h1 data-reveal="up">Built for investors who want{' '}<br/><em>to understand before they act.</em></h1>
 <p className="page-lead" data-reveal="up">CapitalSense brings mutual fund distribution and investor education together with a research-led approach to understanding portfolios.</p>
+<InvestorJourney/>
 
 <div className="inner-block" data-reveal="up"><h2>Why CapitalSense exists</h2><p>A fund ranking tells you what performed well. It does not tell you whether the fund fits your goal, time horizon or existing portfolio.</p><p>CapitalSense begins with those missing questions, then explains the available choices and their trade-offs.</p></div>
 

@@ -1,9 +1,11 @@
+import {ServiceVisual} from '@/components/service-illustrations';
 import Link from 'next/link';
 import {WhatsAppCta} from '@/components/whatsapp-cta';
 export const metadata={title:'Contact CapitalSense',description:'Chat with CapitalSense on WhatsApp Business about mutual fund investing, portfolio understanding or investor education.'};
 export default function Connect(){return <main className="inner-page page-connect"><div className="container">
 <span className="eyebrow">CONTACT CAPITALSENSE</span><h1 data-reveal="up">Ask your question.{' '}<br/><em>Start on WhatsApp.</em></h1>
 <p className="page-lead" data-reveal="up">Whether you are getting started or reviewing existing mutual funds, send a short description through our WhatsApp Business account.</p>
+<ServiceVisual kind="contact"/>
 
 <div className="inner-cards" data-reveal="up">
 <article><span className="eyebrow">01 / BUILDING A PLAN</span><h2>I want to start or organise my mutual fund investing.</h2><p>Begin with the goal, time horizon, expected contributions and the questions you want answered.</p><WhatsAppCta className="text-link">Ask about a plan</WhatsAppCta></article>

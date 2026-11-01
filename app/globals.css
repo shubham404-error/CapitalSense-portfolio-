@@ -67,3 +67,19 @@ h1,h2,h3,p{overflow-wrap:break-word}
   .journal-filter button{min-height:44px}
   .footer-col a{min-height:36px;display:flex;align-items:center}
 }
+
+/* Concept illustrations accompany explanations, with text kept in normal flow. */
+.review-illustration{width:100%;aspect-ratio:1;background-size:300% 200%;background-repeat:no-repeat;background-color:#f8f8f2;border-radius:20px}
+.service-visual{margin:48px 0 0;display:grid;grid-template-columns:1fr;gap:28px;align-items:center;max-width:1000px}
+.service-visual>.review-illustration{width:min(100%,280px)}
+.service-visual figcaption{min-width:0}
+.service-visual h2{font-size:clamp(26px,3vw,38px);margin-bottom:20px}
+.service-visual small{display:block;color:var(--muted);margin-top:20px;font-size:12px;line-height:1.6}
+.page-services-hni-investors .inner-cards article.illustrated-review{display:grid;grid-template-columns:1fr;gap:24px;align-items:center}
+.illustrated-review>.review-illustration{width:180px}
+.page-services-hni-investors .inner-cards .review-copy p{margin-top:16px}
+.investor-journey{margin:48px 0 0}
+.investor-journey img{display:block;width:100%;height:auto;border-radius:16px}
+.investor-journey figcaption{display:grid;grid-template-columns:1fr;gap:20px;margin-top:24px;color:var(--muted);font-size:14px}
+.investor-journey strong{display:block;color:var(--text);margin-bottom:8px;font-weight:500;font-size:18px}
+@media(min-width:801px){.service-visual{grid-template-columns:300px 1fr;gap:64px}.page-services-hni-investors .inner-cards article.illustrated-review{grid-template-columns:200px 1fr;gap:48px}.investor-journey figcaption{grid-template-columns:repeat(3,1fr);gap:36px}}
