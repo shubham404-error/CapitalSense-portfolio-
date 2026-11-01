@@ -107,3 +107,9 @@ h1,h2,h3,p{overflow-wrap:break-word}
 }
 @media(max-width:800px){.ticker-band{gap:10px}.ticker-toggle{font-size:11px;padding:10px}.motion-ready [data-reveal="left"],.motion-ready [data-reveal="right"]{transform:translateY(12px)}.motion-ready [data-reveal].is-visible{transform:none}}
 @media(prefers-reduced-motion:reduce){.ticker-track{animation:none}.ticker-window{overflow-x:auto}.ticker-group{min-width:0}.ticker-group[aria-hidden="true"],.ticker-toggle{display:none}.motion-ready [data-reveal]{transform:none!important;transition:none!important}}
+
+/* Topic-specific illustrations sit beneath the existing card number/category. */
+.journal-card-art{position:relative;overflow:hidden;isolation:isolate}
+.journal-card-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1}
+.journal-card-art>span,.journal-card-art>small{position:relative;z-index:1;text-shadow:0 1px 0 rgba(255,255,255,.25)}
+.dark .journal-card-art{color:#18392e}
