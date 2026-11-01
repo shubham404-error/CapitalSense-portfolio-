@@ -19,7 +19,7 @@ export function SiteFooter() {
         <div className="footer-col">
           <strong>CapitalSense</strong>
           <Link href="/about">About</Link>
-          <Link href="/ecosystem">Technology</Link>
+          <Link href="/products">Products</Link>
         </div>
         <div className="footer-col">
           <strong>Information</strong>

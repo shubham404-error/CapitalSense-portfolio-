@@ -11,6 +11,7 @@ const links = [
   ['/services', 'How we help'],
   ['/research', 'Our approach'],
   ['/insights', 'Insights'],
+  ['/products', 'Products'],
   ['/about', 'About'],
 ];
 

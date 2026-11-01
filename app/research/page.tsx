@@ -23,7 +23,7 @@ export default function Research(){return <main className="inner-page page-resea
 
 <div className="inner-block" data-reveal="up"><h2>What we guard against</h2><p>Recent winners can look compelling. Screens can miss fundamentals. We document the assumptions and limitations before interpreting any result.</p><p>Research supports education and distribution conversations; it does not replace scheme documents or individual circumstances.</p></div>
 
-<div className="inner-block" data-reveal="up"><h2>Research tools</h2><p>Our tools organise observations and calculations so that research can be inspected and repeated.</p><Link className="text-link" href="/ecosystem">Explore the technology work ↗</Link></div>
+<div className="inner-block" data-reveal="up"><h2>Research tools</h2><p>Our tools organise observations and calculations so that research can be inspected and repeated.</p><Link className="text-link" href="/products">Explore our products ↗</Link></div>
 
 <div className="inner-block" data-reveal="up"><h2>Apply the process to your own questions</h2><p>Have a question about your mutual fund holdings or goals? Begin there.</p><WhatsAppCta>Ask on WhatsApp</WhatsAppCta><p><small>For general information on service scope and regulatory status, see our <Link href="/disclosures">disclosures</Link>.</small></p></div>
 </div></main>}

@@ -11,7 +11,7 @@ const routes = [
   '/services/hni-investors',
   '/research',
   '/insights',
-  '/ecosystem',
+  '/products',
   '/connect',
   '/disclosures',
   '/privacy',
