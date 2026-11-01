@@ -341,3 +341,73 @@ h1,h2,h3,p{overflow-wrap:break-word}
 .founder-disclosures{max-width:850px;margin-top:40px;padding-top:28px;border-top:1px solid var(--border)}
 .founder-disclosures p:last-child{color:var(--text)}
 @media(max-width:800px){.founder-details{grid-template-columns:1fr;gap:32px}.about-founder h3{font-size:23px}}
+
+/* Aadi's Money Diary: a recurring fictional learner, in warm editorial tones. */
+.aadi-portrait{position:relative;aspect-ratio:1/2;overflow:hidden;background:#f8f8f2;border-radius:20px;width:100%;max-width:250px;flex-shrink:0}
+.aadi-portrait img{display:block;width:300%;max-width:none;height:100%;object-fit:fill}
+.aadi-introduction{display:grid;grid-template-columns:150px minmax(0,1fr);gap:36px;align-items:center;margin:48px 0 0;padding:28px 36px;background:var(--surface2);border:1px solid var(--border);border-radius:22px}
+.aadi-introduction h2{font-size:clamp(26px,3vw,36px);max-width:26ch}
+.aadi-introduction p{font-size:15px;margin-top:18px}
+.aadi-introduction small,.aadi-case-study>small{display:block;font-size:11px;color:var(--muted);margin-top:16px;line-height:1.7}
+.aadi-introduction .eyebrow{margin-bottom:14px}
+.aadi-case-study{margin:48px 0;padding:28px;border:1px solid var(--border);border-radius:20px;background:var(--surface2)}
+.aadi-case-heading{display:flex;gap:24px;align-items:center}
+.aadi-case-heading .aadi-portrait{width:90px;border-radius:12px}
+.aadi-case-heading h2{font-size:28px}
+.aadi-case-heading .eyebrow{margin-bottom:12px}
+.aadi-case-heading .text-link{margin-top:12px;font-size:12px}
+.aadi-case-study dl{margin:24px 0}
+.aadi-case-study dl>div{padding:18px 0;border-top:1px solid var(--border)}
+.aadi-case-study dt{font-size:12px;font-weight:600;color:var(--accent);margin-bottom:8px}
+.aadi-case-study dd{margin:0;color:var(--muted);font-size:15px}
+.aadi-reader-question{font-size:16px;color:var(--text)}
+.page-aadi>.container>.text-link{margin:0 0 36px}
+.aadi-profile-hero{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:64px;align-items:center}
+.aadi-profile-hero h1{font-size:clamp(36px,5vw,64px)}
+.aadi-profile-hero p{margin-top:20px}
+.aadi-profile-hero small{display:block;font-size:12px;color:var(--muted);margin-top:20px;max-width:60ch}
+.aadi-profile-hero .aadi-series-line{font-size:22px;color:var(--accent)}
+.aadi-profile-section{margin-top:64px;padding-top:28px;border-top:1px solid var(--border)}
+.aadi-profile-section h2{font-size:clamp(30px,4vw,42px);margin-bottom:24px}
+.aadi-profile-section h3{font-size:23px;margin-bottom:16px}
+.aadi-profile-section>p{font-size:16px}
+.aadi-life-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin-top:32px}
+.aadi-life-grid p{font-size:15px}
+.aadi-budget-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;margin-top:30px}
+.aadi-budget-table{overflow-x:auto}
+.aadi-budget-table table{width:100%;border-collapse:collapse;font-size:14px;text-align:left}
+.aadi-budget-table caption{text-align:left;font-size:12px;color:var(--muted);margin-bottom:12px}
+.aadi-budget-table th,.aadi-budget-table td{padding:12px 8px;border-bottom:1px solid var(--border)}
+.aadi-budget-table th{font-weight:450}
+.aadi-budget-table td,.aadi-budget-table thead th:last-child{text-align:right;white-space:nowrap}
+.aadi-budget-table thead,.aadi-budget-table tfoot{color:var(--accent)}
+.aadi-baseline{background:var(--surface2);padding:28px;border-radius:18px}
+.aadi-baseline dl{margin:0}
+.aadi-baseline dl>div{margin-top:16px}
+.aadi-baseline dt{font-size:12px;color:var(--muted)}
+.aadi-baseline dd{margin:4px 0 0;font-size:21px}
+.aadi-baseline p{font-size:13px;margin-top:24px}
+.aadi-chapters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:36px}
+.aadi-chapters>a{border-top:1px solid var(--border);padding-top:20px;display:flex;flex-direction:column;align-items:flex-start}
+.aadi-chapters h3{font-size:23px}
+.aadi-chapters p{font-size:14px;margin-bottom:16px}
+.aadi-chapters .text-link{margin-top:auto}
+.aadi-character-sheet{margin:64px 0 0;max-width:1000px}
+.aadi-character-sheet img{display:block;width:100%;height:auto;border-radius:20px}
+.aadi-character-sheet figcaption{font-size:12px;color:var(--muted);margin-top:14px}
+@media(max-width:800px){.aadi-profile-hero{grid-template-columns:minmax(0,1fr) 180px;gap:28px}.aadi-life-grid,.aadi-budget-layout{grid-template-columns:1fr;gap:28px}.aadi-chapters{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){
+ .aadi-introduction{grid-template-columns:95px minmax(0,1fr);gap:18px;padding:22px 18px;align-items:start}
+ .aadi-introduction h2{font-size:25px}
+ .aadi-introduction .eyebrow{font-size:9px}
+ .aadi-introduction h2 br{display:initial}
+ .aadi-profile-hero{display:flex;flex-direction:column-reverse;align-items:flex-start;gap:28px}
+ .aadi-profile-hero .aadi-portrait{max-width:140px;align-self:center}
+ .aadi-profile-hero h1 br{display:initial}
+ .aadi-case-study{padding:20px}
+ .aadi-case-heading{gap:16px}
+ .aadi-case-heading .aadi-portrait{width:64px}
+ .aadi-case-heading h2{font-size:24px}
+ .aadi-case-heading .eyebrow{font-size:9px}
+ .aadi-chapters{grid-template-columns:1fr}
+}

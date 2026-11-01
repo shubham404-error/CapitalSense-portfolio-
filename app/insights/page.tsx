@@ -1,3 +1,4 @@
+import { AadiIntroduction } from '@/components/aadi-story';
 import { JournalLibrary } from '@/components/journal-library';
 import {WhatsAppCta} from '@/components/whatsapp-cta';
 
@@ -7,6 +8,8 @@ export default function Insights(){return <main className="inner-page page-insig
 <span className="eyebrow">CAPITALSENSE INSIGHTS</span>
 <h1 data-reveal="up">Understand the decision.{' '}<br/><em>Not just the headline.</em></h1>
 <p className="page-lead" data-reveal="up">Practical explanations for investors who want to understand mutual funds, portfolio construction, risk, costs and behaviour before making a financial decision.</p>
+
+<AadiIntroduction/>
 
 <JournalLibrary/>
 
