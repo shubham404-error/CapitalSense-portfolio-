@@ -40,9 +40,12 @@ jobs:
         working-directory: stride-source
         env:
           PAGES_BASE_PATH: /CapitalSense-portfolio-/stride
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
         run: |
           npm ci --no-audit --no-fund
           npm run typecheck
+          npm run test:backend
           npm run build:pages
       - name: Combine sites without replacing the website
         run: |

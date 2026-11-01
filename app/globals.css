@@ -8,3 +8,5 @@
 .vibe-disclaimer{font-size:10px;margin-top:18px}.vibe-card{transition:transform .08s}
 .brand span{display:inline-flex;vertical-align:middle;margin-left:3px}.brand svg{stroke-width:2.5}.mobile-brand{align-items:center}.mobile-brand svg{vertical-align:middle;stroke-width:2.5}.spark{font-family:Georgia,serif;font-size:115px;color:var(--orange);top:10px;right:65px;line-height:1}
 @media(max-width:700px){.mobile-brand{display:flex}.spark{font-size:85px;right:25px;top:45px}}
+.consent{display:flex;align-items:flex-start;gap:10px;font-size:11px;color:#72766a;line-height:1.7;margin:20px 0}.consent input{margin-top:4px;accent-color:var(--orange);width:17px;height:17px;flex-shrink:0}.auth-note{font-size:10px;margin-top:20px}
+.saved-banner{display:flex;gap:10px;align-items:center;padding:13px 16px;margin-bottom:25px;background:#edf0e6;border:1px solid #dce2d2;border-radius:8px;color:#6d785f;font-size:11px}.saved-banner button{margin-left:auto;color:#657454}@media(max-width:700px){.saved-banner{flex-wrap:wrap;font-size:10px}.saved-banner button{font-size:10px}}

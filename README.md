@@ -1,44 +1,46 @@
 # Stride / Capital Sense
 
-An orange, responsive investing-habit web app prototype. Work is on `feature/sip-social-app`; the existing `feature/website-v1` site is untouched.
+Orange, responsive investing-habit web app on `feature/sip-social-app`. Existing public website: `feature/website-v1`. Demo: https://shubham404-error.github.io/CapitalSense-portfolio-/stride/
 
-## Run
+## Develop
 
-Node.js 24, npm 11 or later. From this checkout:
+Node.js 24, npm 11+:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Production: `npm run typecheck`, `npm run build`, then `npm start` (port 3000). Fonts, icons and the illustrated landscape are bundled locally.
+Validate with `npm run typecheck`, `npm run test:backend`, `npm run build`. Run production with `npm start`. Fonts, icons and landscape artwork are bundled locally.
 
-## What works
+## Supabase onboarding
 
-Feed reactions/bookmarks, session-only photo posts (5 MB limit), circle previews, journey and learning screens, local demo profile, local questionnaire storage and data deletion, downloadable PNG milestone cards, native file sharing when supported. Photos are not included in exported cards yet. Native share destinations depend on the browser/device; there is no direct Instagram/Facebook publishing API integration.
+**[Step-by-step project creation and deployment guide](docs/SUPABASE.md).** Creating code does not provision a project. Configure the public project URL and publishable key in `.env.local` locally, or GitHub Actions repository Variables for Pages. Never expose service-role keys or Gemini credentials in browser code.
 
-Onboarding starts with up to 20 scenario cards. Swipe, use the buttons, skip, or finish at any point. After five cards, a deterministic prototype heuristic stops when at least four responses cover planning, community and clarity, with no disagreement within each theme. Mixed answers continue up to 20. This heuristic is not a validated psychological instrument, AI confidence score, risk assessment or suitability conclusion. Recap preferences can be edited. Five practical financial questions follow separately; no fund baskets are recommended without an approved universe and full suitability rules.
+Implemented: email-link signup/signin, persisted Supabase session, consented private onboarding saves, restoration and deletion, signout, row-level access controls and an authenticated Gemini Edge Function with an atomic daily quota. Without project configuration the Account screen explains setup is pending; it does not pretend to create accounts.
 
-## Gemini (optional, server only)
+The user can explore and take the vibe check before signing in. An email link creates/authenticates their account. After signing in they complete and explicitly save onboarding. Supabase auth is separate from investment KYC. Financial onboarding is never uploaded automatically. Saved answers are private; a banner lets returning users review them. Requesting Gemini sends the last saved financial answers, not photos, amounts, names or swipe choices. The requested model `gemini-3.5-flash-lite` still requires API availability verification.
 
-Copy `.env.example` to `.env.local` and supply `GEMINI_API_KEY` securely. Never commit real keys or use `NEXT_PUBLIC_` for them. Default model: `gemini-3.5-flash-lite`; configurable via `GEMINI_MODEL`. Set `GEMINI_DEMO_ENABLED=true` only in controlled development. Restart after changing environment variables.
+## UI and prototype scope
 
-The endpoint sends the five financial questionnaire answers, not photos, names, contribution amounts or swipe preferences. It requests educational explanations only and has no approved fund universe. No live model call was tested because no key was supplied. Before public enablement add real authentication, durable per-user rate limiting, consent, retention controls, approved data grounding, output validation and provider review. Same-origin checks alone do not prevent API abuse.
+Feed reactions/bookmarks, session-only photo posts (5 MB limit), circle previews, private journey and learning screens, amount-free PNG milestone cards and native file sharing. Share destinations depend on the browser/device; direct Instagram/Facebook publishing and photos in exported cards are not implemented.
 
-## Browser checks
+The vibe check has up to 20 scenario cards, with swipe/button controls, skipping and early finish. After five, a deterministic heuristic stops if at least four responses cover planning, community and clarity with no within-theme disagreement. This is a prototype preference heuristic, not a validated personality or risk assessment. A separate practical questionnaire follows. No actual fund basket is recommended without approved data and full suitability rules.
 
-Start the production server, then run `npm run test:smoke`. Uses installed `/usr/bin/chromium`; override `CHROMIUM_PATH` for another browser executable and `BASE_URL` for another local server. Test writes screenshots and a PNG card under `/tmp`. It covers the five-card early finish, actual pointer swipe, mixed-answer continuation to 20 cards, practical assessment, missing-key handling, a post, export and mobile circle interaction. The missing-key test assumes Gemini is unconfigured.
+Social posts/circles are still demo-only and disappear on reload. Sample people and milestones are fictional. No real investments, mandates, verified contribution streaks or provider KYC are enabled. Choose and contract ZFunds/AssetPlus, verify APIs, approve fund selection and allocation logic, and complete compliance/security/privacy reviews before customer transactions. The operator's ARN/EUIN and commission disclosures must be verified before launch.
 
-## Before real customers or transactions
+## Tests
 
-This is a functional UI prototype, not a launch-ready financial service. Authentication is a clearly labelled local demo profile, not a secure account. There is no shared database, real community, KYC collection, payment mandate or investment execution. Sample people and achievements are fictional. Posting cannot verify a contribution or earn a real streak.
+- `npm run test:backend`: real embedded PostgreSQL tests for RLS, cross-user denial, deletion and quota; mocked Edge handler tests for auth, origin, quota and provider behavior.
+- `npm run test:smoke`: with an unconfigured app server running, checks UI, both adaptive onboarding paths, pointer swipe, posts, card downloads and mobile overflow. Uses `/usr/bin/chromium` by default; override `CHROMIUM_PATH` and `BASE_URL` as needed.
+- `npm run test:auth`: contract test for configured Supabase frontend using intercepted HTTP responses. Build with `NEXT_PUBLIC_SUPABASE_URL=https://stride-test.supabase.co` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_test_only`, serve at `BASE_URL`, then run. Fake test configuration is never committed as production configuration.
 
-Choose and contract a provider (ZFunds or AssetPlus), verify API/white-label capabilities and webhook security, integrate secure authentication and provider-required KYC, document the curated fund universe and reviewed allocation rules, verify operator ARN/EUIN and compensation disclosures, and complete compliance/privacy/security/accessibility review. Do not collect PAN, identity documents or money through this prototype. No registration identifier or fund data has been invented.
+Live email delivery, real-project migrations, real-user RLS and actual Gemini calls are not verified without a Supabase project. Required live checks are in the guide.
 
-## GitHub Pages test deployment
+## Pages deployment
 
-`PAGES_BASE_PATH=/CapitalSense-portfolio-/stride npm run build:pages` creates `out/`. The build temporarily excludes `app/api` and restores it in a finally block. Do not run a development build concurrently with that command. Static builds explicitly disable Gemini and never embed a key. Gemini 3.5 Flash Lite is the requested backend model; its API identifier and availability remain unverified.
+`PAGES_BASE_PATH=/CapitalSense-portfolio-/stride npm run build:pages` creates `out/`. It temporarily excludes `app/api` and restores it in a finally block. Do not run a concurrent dev/build command. Pages uses Supabase directly for auth/data/Edge Functions; it needs no Gemini key in its build.
 
-The `Deploy Capital Sense and Stride demo` workflow builds the existing `feature/website-v1` website at the repository root and adds Stride under `/stride/`. Repository Settings → Pages must use GitHub Actions. The expected demo URL after a successful deployment is `https://shubham404-error.github.io/CapitalSense-portfolio-/stride/`. The website branch’s independent deployment workflow can overwrite this combined artifact when that branch is pushed; redeploy this workflow afterward or consolidate publication before ongoing use.
+The deployment workflow builds `feature/website-v1` at the repository root and Stride under `/stride/`. Settings → Pages must use GitHub Actions. Pushing the website branch's independent deployment workflow can overwrite this combined artifact; rerun the Stride workflow afterward or consolidate publication for ongoing development.
 
-Run static browser checks with `STATIC_DEMO=true BASE_URL=<your-static-subpath-url> npm run test:smoke`. Pages is public testing only: no real authentication, investments or private server storage. Never put API keys in GitHub Pages build variables for browser code. Backend credentials belong in secure server settings.
+Account deletion/retention requests currently require operator handling in Supabase. Deleting saved onboarding does not delete the Auth account. Configure SMTP, privacy notice and account-deletion handling before inviting real users.

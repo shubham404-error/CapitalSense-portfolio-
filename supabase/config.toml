@@ -1,0 +1,6 @@
+project_id = "capitalsense-stride"
+
+# The function validates the user's bearer token with auth.getUser itself.
+# This supports current publishable keys, which are not JWTs.
+[functions.guide]
+verify_jwt = false
