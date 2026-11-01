@@ -290,3 +290,36 @@ h1,h2,h3,p{overflow-wrap:break-word}
  .money-planning-path p{margin:0}
 }
 .page-products .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* A single visual balances the About principles without repeating four images. */
+.page-about .about-principles{max-width:none}
+.about-principles-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,340px);gap:56px;align-items:start;margin-top:36px}
+.about-principles-visual{grid-column:2;grid-row:1;position:sticky;top:112px;margin:0}
+.about-principles-visual .review-illustration{border:1px solid var(--border)}
+.about-principles-visual figcaption{padding:24px 0 0}
+.about-principles-visual .eyebrow{font-size:10px;margin-bottom:14px}
+.about-principles-visual h3{font-size:28px;line-height:1.25;margin-bottom:14px}
+.about-principles-visual p{font-size:14px;margin:0}
+.page-about .about-principles-list{grid-column:1;grid-row:1;max-width:none;margin:0;gap:22px}
+.page-about .about-principles-list article{grid-template-columns:100px minmax(0,1fr);gap:12px 22px;padding:28px 0}
+.about-principles-list h3{font-size:26px}
+.about-principles-list .eyebrow{font-size:10px;line-height:1.7;margin:2px 0 0}
+@media(max-width:900px){
+ .about-principles-layout{grid-template-columns:minmax(0,1fr) 270px;gap:32px}
+ .page-about .about-principles-list article{display:block}
+ .about-principles-list .eyebrow{margin:0 0 14px}
+ .page-about .about-principles-list p{margin-top:16px}
+}
+@media(max-width:680px){
+ .about-principles-layout{display:flex;flex-direction:column;gap:32px;margin-top:28px}
+ .about-principles-visual{position:static;display:grid;grid-template-columns:130px minmax(0,1fr);gap:22px;align-items:center;width:100%}
+ .about-principles-visual figcaption{padding:0}
+ .about-principles-visual h3{font-size:23px}
+ .about-principles-visual p{font-size:13px}
+ .about-principles-visual .eyebrow{font-size:9px}
+ .page-about .about-principles-list{width:100%;gap:8px}
+}
+@media(max-width:380px){
+ .about-principles-visual{grid-template-columns:100px minmax(0,1fr);gap:16px}
+ .about-principles-visual h3{font-size:21px}
+}

@@ -1,4 +1,4 @@
-import {InvestorJourney} from '@/components/service-illustrations';
+import {InvestorJourney, ReviewIllustration} from '@/components/service-illustrations';
 import Link from 'next/link';
 export const metadata={title:'About CapitalSense',description:'Why CapitalSense exists, how it works and the principles behind its investor-first approach.'};
 const principles=[
@@ -15,7 +15,7 @@ export default function About(){return <main className="inner-page page-about"><
 
 <div className="inner-block" data-reveal="up"><h2>Why CapitalSense exists</h2><p>A fund ranking tells you what performed well. It does not tell you whether the fund fits your goal, time horizon or existing portfolio.</p><p>CapitalSense begins with those missing questions, then explains the available choices and their trade-offs.</p></div>
 
-<div className="inner-block" data-reveal="up"><h2>How we think</h2><div className="inner-cards" data-reveal="up">{principles.map(([n,t,d])=><article key={n}><span className="eyebrow">{n} / PRINCIPLE</span><h2>{t}</h2><p>{d}</p></article>)}</div></div>
+<section className="inner-block about-principles" aria-labelledby="principles-heading"><h2 id="principles-heading">How we think</h2><div className="about-principles-layout"><figure className="about-principles-visual"><ReviewIllustration index={3}/><figcaption><span className="eyebrow">LOOK BENEATH THE HEADLINE</span><h3>A clearer view,{' '}<br/>one layer at a time.</h3><p>Bring goals, holdings, risks and costs into the same picture before deciding.</p></figcaption></figure><div className="inner-cards about-principles-list">{principles.map(([n,t,d])=><article key={n}><span className="eyebrow">{n} / PRINCIPLE</span><h3>{t}</h3><p>{d}</p></article>)}</div></div></section>
 
 <div className="inner-block" data-reveal="up"><h2>What we do</h2><p><strong>Investor conversations:</strong> goals, time horizon, liquidity, existing holdings and the role mutual funds may play.</p><p><strong>Research:</strong> structured market and portfolio analysis used to add context and discipline to the decision process.</p><p><strong>Education:</strong> practical explanations of mutual funds, risk, costs, portfolio construction and investor behaviour.</p><p><strong>Technology:</strong> tools that organise information and make research workflows easier to explore.</p></div>
 
