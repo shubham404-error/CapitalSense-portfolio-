@@ -68,3 +68,11 @@ The account sheet supports Continue with Google through Supabase, alongside emai
 Profile navigation opens an account dashboard with name, username, optional age/gender, 12 original illustrated avatar assets (all styles open to everyone), or a private compressed photo. It prompts the adaptive swipe check and shows the investor snapshot, separately displayed loss comfort/financial constraints, and actual per-theme response counts. No age/gender-based risk scoring or invented analytics are used.
 
 Apply the additive `202611030001_profiles.sql` migration in Supabase SQL Editor before real profile saving. Existing onboarding is unchanged. `npm run test:profile` checks the editing → photo/avatar → swipe → analytics flow with intercepted Supabase responses. `npm run test:backend` includes private profile access, username/age constraints and profile-summary rules. Live persistence still requires the migration and signed-in acceptance checks.
+
+## Funds and baskets demo
+
+The Funds destination is an interactive sandbox: 23 category tiles, 23 regular-plan examples, two direct-plan examples, three illustrative baskets, search/category/house/plan filters, fund detail sheets, device-local shortlists and monthly SIP previews. Every scheme, fund house, NAV/date and allocation is fictional. Demo identifiers use a `demo-` prefix and cannot be treated as real provider scheme codes. Basket amounts are whole-rupee previews whose allocations sum exactly to the entered amount; the ₹500–₹10,00,000 input range is a UI limit, not a real scheme minimum.
+
+The demo does not fetch live market data, choose investments from the user's profile, create mandates, save an investment plan or move money. No ZFunds/AssetPlus credentials are needed. Provider API documentation, approved fund universe, verified scheme data and suitability review remain prerequisites for live integration. Demo shortlist entries stay on this device, namespaced by account or guest; Clear local demo data removes the current namespace.
+
+`npm run test:funds` checks filtering, plan distinctions, fund details, shortlist persistence, exact basket allocation and validation, SIP preview wording and mobile overflow against the static server. Mobile navigation now includes Funds; learning remains available via Learn the basics.

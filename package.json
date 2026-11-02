@@ -14,7 +14,8 @@
     "test:mobile": "node tests/mobile.cjs",
     "test:lenses": "node tests/lenses.cjs",
     "test:google-auth": "node tests/google-auth.cjs",
-    "test:profile": "node tests/profile-page.cjs"
+    "test:profile": "node tests/profile-page.cjs",
+    "test:funds": "node tests/funds.cjs"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",
