@@ -71,7 +71,7 @@ Apply the additive `202611030001_profiles.sql` migration in Supabase SQL Editor 
 
 ## Funds and baskets demo
 
-The Funds destination is an interactive sandbox: 23 category tiles, 23 regular-plan examples, two direct-plan examples, three illustrative baskets, search/category/house/plan filters, fund detail sheets, device-local shortlists and monthly SIP previews. Every scheme, fund house, NAV/date and allocation is fictional. Demo identifiers use a `demo-` prefix and cannot be treated as real provider scheme codes. Basket amounts are whole-rupee previews whose allocations sum exactly to the entered amount; the ₹500–₹10,00,000 input range is a UI limit, not a real scheme minimum.
+The Funds destination is an interactive sandbox: 23 category tiles, 23 regular-growth examples, three illustrative baskets, search/category/house/plan filters, fund detail sheets, device-local shortlists and monthly SIP previews. Every scheme, fund house, NAV/date and allocation is fictional. Demo identifiers use a `demo-` prefix and cannot be treated as real provider scheme codes. Basket amounts are whole-rupee previews whose allocations sum exactly to the entered amount; the ₹500–₹10,00,000 input range is a UI limit, not a real scheme minimum.
 
 The demo does not fetch live market data, choose investments from the user's profile, create mandates, save an investment plan or move money. No ZFunds/AssetPlus credentials are needed. Provider API documentation, approved fund universe, verified scheme data and suitability review remain prerequisites for live integration. Demo shortlist entries stay on this device, namespaced by account or guest; Clear local demo data removes the current namespace.
 

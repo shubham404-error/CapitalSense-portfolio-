@@ -1,0 +1,564 @@
+{
+  "sourceFile": "Recommended_Schemes_Master_Updated.xlsx",
+  "status": "user-provided-research-list",
+  "asOf": null,
+  "sourceRows": 81,
+  "uniqueSchemeNames": 79,
+  "funds": [
+    {
+      "id": "research-0cb31d029ee8",
+      "name": "HDFC Flexi Cap Fund",
+      "categories": [
+        "Flexi Cap"
+      ]
+    },
+    {
+      "id": "research-3b3667bf1cb1",
+      "name": "WhiteOak Capital Flexi Cap Fund",
+      "categories": [
+        "Flexi Cap"
+      ]
+    },
+    {
+      "id": "research-7af513580676",
+      "name": "Kotak Large & Mid Cap Fund",
+      "categories": [
+        "Large and Mid Cap"
+      ]
+    },
+    {
+      "id": "research-2e19157ba46f",
+      "name": "BANDHAN Large & Mid Cap Fund",
+      "categories": [
+        "Large and Mid Cap"
+      ]
+    },
+    {
+      "id": "research-b75a15eb45c8",
+      "name": "Mirae Asset Large & Midcap Fund Growth",
+      "categories": [
+        "Large and Mid Cap"
+      ]
+    },
+    {
+      "id": "research-93fadc353597",
+      "name": "ICICI Prudential Value Fund",
+      "categories": [
+        "Value/Contra"
+      ]
+    },
+    {
+      "id": "research-f2108eee278e",
+      "name": "SBI Contra Fund",
+      "categories": [
+        "Value/Contra"
+      ]
+    },
+    {
+      "id": "research-6cfc01fb7516",
+      "name": "Nippon India Growth Mid Cap Fund",
+      "categories": [
+        "Mid Cap"
+      ]
+    },
+    {
+      "id": "research-1e4fd3d6b31c",
+      "name": "Edelweiss Mid Cap Fund",
+      "categories": [
+        "Mid Cap"
+      ]
+    },
+    {
+      "id": "research-137ef5344cfc",
+      "name": "HDFC Mid Cap Fund",
+      "categories": [
+        "Mid Cap"
+      ]
+    },
+    {
+      "id": "research-920c0549f218",
+      "name": "Kotak Midcap Fund",
+      "categories": [
+        "Mid Cap"
+      ]
+    },
+    {
+      "id": "research-95eb8a752e70",
+      "name": "ICICI Prudential MidCap Fund",
+      "categories": [
+        "Mid Cap"
+      ]
+    },
+    {
+      "id": "research-44e4fef693c6",
+      "name": "WhiteOak Capital Mid Cap Fund",
+      "categories": [
+        "Mid Cap"
+      ]
+    },
+    {
+      "id": "research-fe65ef8fea23",
+      "name": "BANDHAN SMALL CAP FUND",
+      "categories": [
+        "Small Cap"
+      ]
+    },
+    {
+      "id": "research-aff32dde9ad6",
+      "name": "Invesco India Smallcap Fund",
+      "categories": [
+        "Small Cap"
+      ]
+    },
+    {
+      "id": "research-2702d2c4564c",
+      "name": "Tata Small Cap Fund",
+      "categories": [
+        "Small Cap"
+      ]
+    },
+    {
+      "id": "research-7773aadb2770",
+      "name": "Kotak Multicap Fund",
+      "categories": [
+        "Multi Cap"
+      ]
+    },
+    {
+      "id": "research-f920401bbea6",
+      "name": "Axis Multicap Fund",
+      "categories": [
+        "Multi Cap"
+      ]
+    },
+    {
+      "id": "research-c624d1e039f4",
+      "name": "Nippon India Multi Cap Fund",
+      "categories": [
+        "Multi Cap"
+      ]
+    },
+    {
+      "id": "research-d33e1fe0869c",
+      "name": "SBI ELSS Tax Saver FUND",
+      "categories": [
+        "Tax Saving (ELSS)"
+      ]
+    },
+    {
+      "id": "research-066cd6a043a7",
+      "name": "Franklin India ELSS Tax Saver Fund",
+      "categories": [
+        "Tax Saving (ELSS)"
+      ]
+    },
+    {
+      "id": "research-2bfe99eeba02",
+      "name": "Mirae Asset ELSS Tax Saver Fund",
+      "categories": [
+        "Tax Saving (ELSS)"
+      ]
+    },
+    {
+      "id": "research-1b20a2c03b9f",
+      "name": "ICICI Prudential Large Cap Fund",
+      "categories": [
+        "Large Cap"
+      ]
+    },
+    {
+      "id": "research-60ca62058fae",
+      "name": "Nippon India Large Cap Fund",
+      "categories": [
+        "Large Cap"
+      ]
+    },
+    {
+      "id": "research-945f6ef68c79",
+      "name": "ICICI Prudential Balanced Advantage Fund",
+      "categories": [
+        "Dynamic Asset Allocation or Balanced Advantage",
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-19fb1de0f8a1",
+      "name": "Axis Balanced Advantage Fund",
+      "categories": [
+        "Dynamic Asset Allocation or Balanced Advantage"
+      ]
+    },
+    {
+      "id": "research-1259ec7c6ea0",
+      "name": "Edelweiss Balanced Advantage Fund",
+      "categories": [
+        "Dynamic Asset Allocation or Balanced Advantage"
+      ]
+    },
+    {
+      "id": "research-f93f5ab636a1",
+      "name": "WhiteOak Capital Balanced Advantage Fund",
+      "categories": [
+        "Dynamic Asset Allocation or Balanced Advantage"
+      ]
+    },
+    {
+      "id": "research-fd48752ccd97",
+      "name": "ICICI Prudential Multi - Asset Fund",
+      "categories": [
+        "Multi Asset"
+      ]
+    },
+    {
+      "id": "research-c655f255e196",
+      "name": "Nippon India Multi Asset Allocation Fund",
+      "categories": [
+        "Multi Asset"
+      ]
+    },
+    {
+      "id": "research-22a4fb2e413d",
+      "name": "DSP Multi Asset Allocation Fund",
+      "categories": [
+        "Multi Asset"
+      ]
+    },
+    {
+      "id": "research-d2d1cb0b93e6",
+      "name": "Kotak Multi Asset Allocation Fund",
+      "categories": [
+        "Multi Asset",
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-2d863f93a637",
+      "name": "SBI EQUITY HYBRID FUND",
+      "categories": [
+        "Aggressive Hybrid"
+      ]
+    },
+    {
+      "id": "research-f585ff246315",
+      "name": "Kotak Aggressive Hybrid Fund",
+      "categories": [
+        "Aggressive Hybrid"
+      ]
+    },
+    {
+      "id": "research-0edcebe39799",
+      "name": "Edelweiss Aggressive Hybrid Fund",
+      "categories": [
+        "Aggressive Hybrid"
+      ]
+    },
+    {
+      "id": "research-49f2da0341fc",
+      "name": "ICICI Prudential Aggressive Hybrid Active FOF",
+      "categories": [
+        "Aggressive Hybrid"
+      ]
+    },
+    {
+      "id": "research-fa6a6739d2e3",
+      "name": "Kotak Debt Hybrid Fund",
+      "categories": [
+        "Conservative Hybrid"
+      ]
+    },
+    {
+      "id": "research-04a98fb9eac7",
+      "name": "SBI Conservative Hybrid Fund",
+      "categories": [
+        "Conservative Hybrid"
+      ]
+    },
+    {
+      "id": "research-a973bc02d9c4",
+      "name": "ICICI Prudential Regular Savings Fund",
+      "categories": [
+        "Conservative Hybrid"
+      ]
+    },
+    {
+      "id": "research-cf2bc9e2bce4",
+      "name": "Kotak Equity Savings Fund",
+      "categories": [
+        "Equity Savings"
+      ]
+    },
+    {
+      "id": "research-3434f5890032",
+      "name": "ICICI Prudential Equity Savings Fund",
+      "categories": [
+        "Equity Savings"
+      ]
+    },
+    {
+      "id": "research-e4a3c8b8cbff",
+      "name": "WhiteOak Capital Equity Savings Fund",
+      "categories": [
+        "Equity Savings"
+      ]
+    },
+    {
+      "id": "research-1b591e7e93f7",
+      "name": "ICICI Prudential Regular Gold Savings Fund",
+      "categories": [
+        "Commodities"
+      ]
+    },
+    {
+      "id": "research-19372ff7994c",
+      "name": "Axis Gold Fund",
+      "categories": [
+        "Commodities"
+      ]
+    },
+    {
+      "id": "research-686ca32ae834",
+      "name": "HDFC Gold Fund Of Fund",
+      "categories": [
+        "Commodities"
+      ]
+    },
+    {
+      "id": "research-45cdeec822e2",
+      "name": "Helios Flexi Cap Fund",
+      "categories": [
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-72878672b5f9",
+      "name": "Franklin India Mid Cap Fund",
+      "categories": [
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-653fd2953319",
+      "name": "Abakkus Small Cap Fund",
+      "categories": [
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-e665e659f6aa",
+      "name": "Franklin India Small Cap Fund",
+      "categories": [
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-3d543154cf32",
+      "name": "Nippon India Balanced Advantage Fund",
+      "categories": [
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-9c4231ceb945",
+      "name": "360 ONE QUANT FUND",
+      "categories": [
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-50d584473dda",
+      "name": "Aditya Birla Sun Life Quant Fund",
+      "categories": [
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-928e0586455d",
+      "name": "Bajaj Finserv Flexi Cap Fund",
+      "categories": [
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-75db71356bed",
+      "name": "DSP Business Cycle Fund",
+      "categories": [
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-a07739b24038",
+      "name": "UTI - Flexi Cap Fund",
+      "categories": [
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-24e727c6977d",
+      "name": "Edelweiss Business Cycle Fund",
+      "categories": [
+        "Opportunities"
+      ]
+    },
+    {
+      "id": "research-59c53b0874d7",
+      "name": "Axis Money Market Fund",
+      "categories": [
+        "Money Market"
+      ]
+    },
+    {
+      "id": "research-0aa718c6bb04",
+      "name": "BANDHAN Money Market Fund",
+      "categories": [
+        "Money Market"
+      ]
+    },
+    {
+      "id": "research-927a3ceb960e",
+      "name": "HDFC Money Market Fund",
+      "categories": [
+        "Money Market"
+      ]
+    },
+    {
+      "id": "research-bc2ea1ae5e0a",
+      "name": "ICICI Prudential Money Market Fund",
+      "categories": [
+        "Money Market"
+      ]
+    },
+    {
+      "id": "research-d597d3f5cbb9",
+      "name": "Kotak Money Market Fund",
+      "categories": [
+        "Money Market"
+      ]
+    },
+    {
+      "id": "research-0e7d4f772f1b",
+      "name": "HDFC Liquid Fund",
+      "categories": [
+        "Liquid"
+      ]
+    },
+    {
+      "id": "research-c1124454030a",
+      "name": "ICICI Prudential Liquid Fund",
+      "categories": [
+        "Liquid"
+      ]
+    },
+    {
+      "id": "research-4a93f6c15f42",
+      "name": "Tata Arbitrage Fund",
+      "categories": [
+        "Arbitrage"
+      ]
+    },
+    {
+      "id": "research-ac9b5ec1688a",
+      "name": "Edelweiss Arbitrage Fund",
+      "categories": [
+        "Arbitrage"
+      ]
+    },
+    {
+      "id": "research-91ff39dec5a8",
+      "name": "Kotak Arbitrage Fund",
+      "categories": [
+        "Arbitrage"
+      ]
+    },
+    {
+      "id": "research-ea2b60262ccb",
+      "name": "Axis Banking & PSU Debt Fund",
+      "categories": [
+        "Banking and PSU"
+      ]
+    },
+    {
+      "id": "research-0bdbd1fe057a",
+      "name": "ICICI Prudential Banking And PSU Debt Fund",
+      "categories": [
+        "Banking and PSU"
+      ]
+    },
+    {
+      "id": "research-02cc29d3ecd5",
+      "name": "Axis Corporate Bond Fund",
+      "categories": [
+        "Corporate Bond"
+      ]
+    },
+    {
+      "id": "research-e98ced608e59",
+      "name": "Kotak Corporate Bond Fund",
+      "categories": [
+        "Corporate Bond"
+      ]
+    },
+    {
+      "id": "research-37de8b376fa7",
+      "name": "Nippon India Overnight Fund",
+      "categories": [
+        "Overnight"
+      ]
+    },
+    {
+      "id": "research-ba2373f25c31",
+      "name": "Axis Overnight Fund",
+      "categories": [
+        "Overnight"
+      ]
+    },
+    {
+      "id": "research-106cfa1ee2f4",
+      "name": "Bandhan Income Plus Arbitrage Active FOF",
+      "categories": [
+        "Income Plus Arbitrage Fund of Funds"
+      ]
+    },
+    {
+      "id": "research-ce7e1939cc3b",
+      "name": "Kotak Income Plus Arbitrage Omni FOF",
+      "categories": [
+        "Income Plus Arbitrage Fund of Funds"
+      ]
+    },
+    {
+      "id": "research-5d860774f507",
+      "name": "Axis Income Plus Arbitrage Active FOF",
+      "categories": [
+        "Income Plus Arbitrage Fund of Funds"
+      ]
+    },
+    {
+      "id": "research-48925479d77d",
+      "name": "HDFC Income Plus Arbitrage Active FOF",
+      "categories": [
+        "Income Plus Arbitrage Fund of Funds"
+      ]
+    },
+    {
+      "id": "research-4e940080af30",
+      "name": "ICICI Prudential Income Plus Arbitrage Omni FOF",
+      "categories": [
+        "Income Plus Arbitrage Fund of Funds"
+      ]
+    },
+    {
+      "id": "research-d5724e7e5fec",
+      "name": "Bandhan Short Duration Fund",
+      "categories": [
+        "Short-Term"
+      ]
+    },
+    {
+      "id": "research-a555c6503aac",
+      "name": "HDFC Short Term Debt Fund",
+      "categories": [
+        "Short-Term"
+      ]
+    }
+  ]
+}
