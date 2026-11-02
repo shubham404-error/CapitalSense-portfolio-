@@ -12,6 +12,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
+    outputs:
+      backend_status: ${{ steps.readiness.outputs.summary }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out Stride
@@ -47,6 +49,10 @@ jobs:
           npm run typecheck
           npm run test:backend
           npm run build:pages
+      - name: Check live Supabase public endpoints
+        id: readiness
+        working-directory: stride-source
+        run: node scripts/check-supabase.mjs
       - name: Combine sites without replacing the website
         run: |
           test ! -e website-source/out/stride
@@ -59,6 +65,7 @@ jobs:
         with:
           path: website-source/out
   deploy:
+    name: "Publish · ${{ needs.build.outputs.backend_status }}"
     needs: build
     runs-on: ubuntu-latest
     environment:

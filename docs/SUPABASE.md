@@ -66,3 +66,9 @@ The social feed, photos and circle previews remain session-only demo features. N
 ## Required live acceptance checks
 
 Before inviting testers: sign up and click a real email link; refresh and sign out/in; save and reload onboarding; use a second account to confirm isolation; delete saved answers; confirm allowed redirects; request a Gemini explanation; verify unauthenticated requests are rejected and quotas enforced. These live checks could not run without a project. Add a privacy notice, review retention and subprocessors, configure email delivery, and complete security/compliance review before public customer onboarding.
+
+## Connected project
+
+The frontend now defaults to the public project configuration in `config/supabase-public.json`. The publishable key is intentionally browser-visible; it grants no service-role privileges. GitHub Actions Variables are optional overrides. If overriding, supply URL and key together to avoid mixing projects. The new workflow runs read-only public endpoint checks and includes their results in the deployment job title/summary. Those checks do not create accounts, send email, store answers or call Gemini.
+
+For browser smoke/mobile checks against this configured frontend, set `SUPABASE_CONNECTED=true`. Authentication-specific tests still use intercepted responses with the explicit fake test project described in README. Live sign-in requires a real inbox: never share session tokens or magic links in chat.
