@@ -1,2 +1,2 @@
-import Stride from '../components/stride';
-export default function Page(){return <Stride/>}
+import AppEntry from '../components/app-entry';
+export default function Page(){return <AppEntry/>}

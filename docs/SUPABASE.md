@@ -95,3 +95,15 @@ Profiles include name, a unique lowercase username, optional adult age, optional
 The account UI cannot save until this migration is applied. It reports save failures without pretending to persist a local preview. Deployment readiness checks report profile-table status, but a signed-in save/reload still needs acceptance testing on the real project.
 
 Investor snapshots derive only from saved/current financial answers and actual swipe-response counts. Age, gender, avatar and photo are excluded. The classification is an illustrative starting point, not an approved suitability/risk assessment. Loss willingness and financial constraints are displayed separately; no final fund allocation or numerical risk score is generated. A retaken assessment replaces stored answers only after the user explicitly saves it.
+
+## Public post links — sharing update
+
+Run **only** `supabase/migrations/202611030002_shared_posts.sql` in SQL Editor on existing installations. It creates separate shared-post storage, a public lookup RPC that requires a random UUID, owner-only listing/insertion/deletion, a 30-day expiry and a 20-active-new-posts-per-day creation limit. It does not expose profiles, onboarding, email, age or gender. The public API returns only explicitly shared name/caption/photo and labelled demo milestone fields. Deleting a post revokes the link and removes its stored image. Links already copied by others cannot be recalled, and exported/downloaded images cannot be revoked.
+
+The UI requires public-sharing consent before insertion. No URL is shown until the save succeeds. Missing schema and failed saves produce a visible error instead of a broken link. The user manages links from Account → Shared moments. Link lookups are public; treat the generated URLs as public content, not a way to share sensitive data. Expired rows are not returned, but storage cleanup/retention should be scheduled before a larger rollout.
+
+The shared viewer is served by the existing static root URL with `?post=<uuid>`, so GitHub Pages does not need dynamic routes. People can open the post without an account. Social crawlers may show the generic Stride site preview because GitHub Pages cannot render per-post Open Graph metadata server-side. The dedicated story image is the reliable way to share the actual picture; rich link previews would require a separate metadata/image hosting endpoint.
+
+## Where Gemini is used
+
+Gemini is available from the **AI Guide** sidebar destination, the sparkle button in the header, and the Account page's guide card. The frontend invokes the existing authenticated `guide` function, using the saved onboarding record. Model calls and keys remain server-side. The swipe question bank and investor snapshot are still rule-based; no AI-generated question or approved-fund basket engine is claimed. No live authenticated model response was verified by the agent without access to a signed-in test session. Test from your own account and report the visible error text if it fails; never share the session token.

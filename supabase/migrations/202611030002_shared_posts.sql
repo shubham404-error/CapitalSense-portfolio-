@@ -35,4 +35,5 @@ end;$$;
 drop trigger if exists enforce_share_limit on public.shared_posts;
 create trigger enforce_share_limit before insert on public.shared_posts for each row execute function public.limit_shared_posts();
 revoke all on function public.limit_shared_posts() from public;
+notify pgrst, 'reload schema';
 commit;
