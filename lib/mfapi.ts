@@ -9,3 +9,31 @@ async function mfFetch(url:string,signal:AbortSignal){const controller=new Abort
 async function json(url:string,signal:AbortSignal){const response=await mfFetch(url,signal);if(!response.ok)throw Error(response.status===429?'MFAPI is rate limiting requests. Please wait and retry.':`MFAPI returned HTTP ${response.status}. Please retry later.`);return response.json()}
 export async function searchMfapi(query:string,signal:AbortSignal){if(query.trim().length<3)return [];return parseSearch(await json(MFAPI_BASE+'/mf/search?q='+encodeURIComponent(query.trim()),signal))}
 export async function latestMfapi(code:string,signal:AbortSignal){if(!/^\d{4,9}$/.test(code))throw Error('Choose a valid scheme code.');let response=await mfFetch(MFAPI_BASE+'/mf/'+code+'/latest',signal);if(response.status===404)response=await mfFetch(MFAPI_BASE+'/mf/'+code,signal);if(!response.ok)throw Error(response.status===429?'MFAPI is rate limiting requests. Please wait and retry.':`MFAPI returned HTTP ${response.status}. Please retry later.`);return parseNav(await response.json(),code)}
+
+export type NavPoint={date:string;nav:number};
+export type NavHistory=NavSnapshot & {points:NavPoint[]};
+export function parseHistory(value:unknown,code:string,now=Date.now()):NavHistory{
+ const snapshot=parseNav(value,code,now);
+ const rows=(value as {data:unknown[]}).data;
+ const unique=new Map<string,NavPoint>();
+ for(const row of rows){try{const point=parseNav({...value as object,data:[row]},code,now);unique.set(point.date,{date:point.date,nav:point.nav})}catch{/* Skip malformed observations, never invent NAVs. */}}
+ return {...snapshot,points:Array.from(unique.values()).sort((a,b)=>a.date.localeCompare(b.date))};
+}
+export async function historyMfapi(code:string,signal:AbortSignal):Promise<NavHistory>{
+ if(!/^\d{4,9}$/.test(code))throw Error('Choose a valid scheme code.');
+ return parseHistory(await json(MFAPI_BASE+'/mf/'+code,signal),code);
+}
+export const chartPeriods=['1M','3M','6M','1Y','3Y','5Y','ALL'] as const;
+export type ChartPeriod=typeof chartPeriods[number];
+export function chartSeries(histories:NavHistory[],period:ChartPeriod){
+ if(!histories.length)return [];
+ const end=histories.map(h=>h.date).sort()[0];
+ const months:Record<ChartPeriod,number>={'1M':1,'3M':3,'6M':6,'1Y':12,'3Y':36,'5Y':60,'ALL':0};
+ const cutoff=new Date(end+'T00:00:00Z');if(months[period]){const day=cutoff.getUTCDate();cutoff.setUTCDate(1);cutoff.setUTCMonth(cutoff.getUTCMonth()-months[period]);const last=new Date(Date.UTC(cutoff.getUTCFullYear(),cutoff.getUTCMonth()+1,0)).getUTCDate();cutoff.setUTCDate(Math.min(day,last));}
+ const start=months[period]?cutoff.toISOString().slice(0,10):'0000';
+ // Comparison uses only dates published by every selected scheme. No forward filling.
+ const published=histories.map(h=>new Set(h.points.map(p=>p.date)));
+ const shared=histories[0].points.filter(p=>p.date>=start&&p.date<=end&&published.every(dates=>dates.has(p.date))).map(p=>p.date);
+ const dates=new Set(shared);
+ return histories.map(h=>({...h,points:h.points.filter(p=>dates.has(p.date))}));
+}

@@ -17,7 +17,8 @@
     "test:profile": "node tests/profile-page.cjs",
     "test:funds": "node tests/funds.cjs",
     "test:guide-sharing": "node tests/guide-sharing.cjs",
-    "test:mfapi": "node tests/mfapi.cjs"
+    "test:mfapi": "node tests/mfapi.cjs",
+    "test:fund-research": "node tests/fund-research.cjs"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",
