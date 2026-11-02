@@ -61,11 +61,11 @@ jobs:
       - name: Retain the downloaded artwork in the repository
         working-directory: stride-source
         run: |
-          git add public/fund-categories
+          git add public/fund-categories public/data-sources
           if ! git diff --cached --quiet; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Vendor supplied fund category artwork"
+            git commit -m "Retain category artwork and MFAPI response evidence"
             git push origin HEAD:feature/sip-social-app
           fi
       - name: Check live Supabase public endpoints
