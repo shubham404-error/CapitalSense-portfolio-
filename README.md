@@ -50,3 +50,11 @@ Account deletion/retention requests currently require operator handling in Supab
 Mobile uses a centred camera action, camera/library selection, preview/removal, bottom-sheet dialogs, sticky header, safe-area navigation and larger controls. `npm run test:mobile` validates camera input, photo handling and overflow at 320–430px widths against a running unconfigured server. Browser capture support depends on the device.
 
 See [the comparative product analysis](docs/PRODUCT-RETENTION.md) for Strava/Instagram/Tinder/YouTube patterns, hypotheses and proposed measurements. Official-source fetches were blocked by network policy; this is not a completed evidence-backed retention study. A finite feed deliberately provides a stopping point. No retention experiments have run.
+
+## Photo lenses
+
+The camera composer now includes seven local lenses: Golden Hour, Sunday Film, Bloom Mode, Main Character, After Hours, Dream Postcard and Showing Up. They combine photo colour treatments, frames, emoji stickers, editable context and optional explicitly labelled demo milestone overlays. Default exports include no stats and never show investment amounts.
+
+Open the live camera (explicit permission required), switch front/back, and capture; or use the phone camera/photo library. The portrait frame crops to fill 720×960. Save a JPEG, use native file sharing where supported, or post the rendered image to the session-only feed. This is a photo effects studio, not face-tracked AR. Colour effects depend on browser Canvas filter support; overlays remain local. Native camera capture, front/back selection and share targets vary by device. Photos are not sent to Supabase or Gemini. Save before closing the composer: editing-session photos are cleared on close, and camera tracks stop on capture, closure or hidden tab.
+
+`npm run test:lenses` exercises live camera using Chromium's synthetic camera, seven distinct renders, caption/stat/sticker edits, JPEG export, filtered posting, track cleanup and denied-permission fallback. It does not prove real-device camera availability; test iOS Safari and Android Chrome before wider release.

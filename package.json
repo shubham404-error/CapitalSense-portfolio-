@@ -11,7 +11,8 @@
     "build:pages": "node scripts/build-pages.mjs",
     "test:backend": "node tests/backend.cjs",
     "test:auth": "node tests/auth.cjs",
-    "test:mobile": "node tests/mobile.cjs"
+    "test:mobile": "node tests/mobile.cjs",
+    "test:lenses": "node tests/lenses.cjs"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",
