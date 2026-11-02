@@ -1,0 +1,131 @@
+{
+  "source": "User-supplied public image URLs",
+  "images": [
+    {
+      "asset": "1464466_3695c64f47.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 23698,
+      "sha256": "d02811ddf91236b670d924e89466308b0d1f60554f7d760128802f6ca74984cb"
+    },
+    {
+      "asset": "Aggressive_hybrid_a4b92454ce.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 2774,
+      "sha256": "c59dd6a1e7a12e0b0e5135a8709cce6c0223bfec874a23e983e347bcdc6d57da"
+    },
+    {
+      "asset": "Balanced_advantage_30e5072f4f_70a02b87bb.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 2702,
+      "sha256": "d24852e43483adb58daa5aa08012f7a0846fdf5897935411f7309e865519ed5e"
+    },
+    {
+      "asset": "Banking_9b4cbf4a65_d231e1937d.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 2440,
+      "sha256": "2f04bb47920e11e140242555c782126863cf9fa3d9174d6f839823e3af04da26"
+    },
+    {
+      "asset": "Commodities_23f854767e_f25d1f3a02.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 1666,
+      "sha256": "86592dd2ac05807da0729d2bcee9b99bd11ed5dc6b89de204387cac5d44f8a6d"
+    },
+    {
+      "asset": "Conservative_hybrid_8f47275762_47dc189d60.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 2950,
+      "sha256": "95dca857eafc3954a30ff65ef14b610ff73de37556118c33b56ceec626a767c2"
+    },
+    {
+      "asset": "Corporate_bond_b444f07c70_b72b323f21.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 1798,
+      "sha256": "56977705b6d92fda0242d317c1a6611c8d30b9189e0ee29af50b3925ac39bd29"
+    },
+    {
+      "asset": "Equity_savings_710199fdec_a65bcab3db.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 2923,
+      "sha256": "8d413f28ca5ca5c2b567535b6f1488e0ec4bcff1c0e5d06820169130136a38fb"
+    },
+    {
+      "asset": "Large_cap_d81f537198_077a23aa97.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 3387,
+      "sha256": "d71c1935017513d30d3318a4550185183174b78f3f053f44eaeb89dfe0c3d447"
+    },
+    {
+      "asset": "Large_mid_cap_3f44d197e1_2c28aefd2e.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 3387,
+      "sha256": "d71c1935017513d30d3318a4550185183174b78f3f053f44eaeb89dfe0c3d447"
+    },
+    {
+      "asset": "Large_mid_cap_3f44d197e1_877bae7ad0.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 3387,
+      "sha256": "d71c1935017513d30d3318a4550185183174b78f3f053f44eaeb89dfe0c3d447"
+    },
+    {
+      "asset": "Liquid_423cf9e1e9_280395cd9b.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 1587,
+      "sha256": "f15e550847fda1efc6c6790420b47cb4c62e72c61f3e9788d2d4658de595eb06"
+    },
+    {
+      "asset": "Multi_asset_6949c833fe_46b230da18.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 4421,
+      "sha256": "1fe2b4a2aa0896e37beea77800c5a8c19da6f3034aa3b5d1fc5486b317d57547"
+    },
+    {
+      "asset": "Overnight_682490845e_5790e16148.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 1902,
+      "sha256": "2e2279fa6c10b6d2f9dbaf7bcfa984f17266f43fc67ddd5c8ad4dc1e382bfd04"
+    },
+    {
+      "asset": "Screenshot_2026_01_08_180456_2c6a8807b4.png",
+      "width": 211,
+      "height": 380,
+      "bytes": 31965,
+      "sha256": "fb001e2018949e7f2e4f421cc2f7194053a700056f67293636ec59daee6a9fa9"
+    },
+    {
+      "asset": "Short_term_7976b014b8_fe656e8b48.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 3211,
+      "sha256": "22463192e5e1414d684a1da54c85c53fa7746113a594f45d211c0d736808c508"
+    },
+    {
+      "asset": "small_Screenshot_193_4f131bcca4_527dd32d04.png",
+      "width": 500,
+      "height": 357,
+      "bytes": 45003,
+      "sha256": "7515f9788092a06d40c61262e3d0e3ec5f9d62db47340a094bf0b568df466627"
+    },
+    {
+      "asset": "Tax_saving_7ef655a5ca_33d17f9e9b.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 2194,
+      "sha256": "d4ff5b972edb4c457f095503d1acf4ae010c25b8350f609832c53cce4aa13259"
+    }
+  ]
+}
