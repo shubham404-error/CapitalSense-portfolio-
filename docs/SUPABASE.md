@@ -85,3 +85,13 @@ The app checks Supabase's public Auth settings and enables its Google button onl
 6. Refresh the app, open Sign in, confirm the age/account checkbox and choose Continue with Google. Test account selection, cancellation, successful return, refresh, sign-out and retrieval of existing saved answers. Use the same verified email as your existing account and check that your saved onboarding appears; do not delete old accounts to work around a duplicate-identity issue.
 
 Google OAuth uses only the standard identity scopes requested by Supabase; Stride does not request Gmail or Drive access. No real Google OAuth round-trip can be validated until a web client is configured in the Google project and enabled in Supabase.
+
+## Account page migration — 3 November 2026
+
+Existing installations need **only** `supabase/migrations/202611030001_profiles.sql` for the new account page. In your project's SQL Editor create a new query, paste that file's complete contents and run it. Do not rerun the original onboarding migration on an existing database. This additive migration leaves onboarding and existing accounts intact; it creates the private profiles table and owner-only policies.
+
+Profiles include name, a unique lowercase username, optional adult age, optional gender, avatar ID and an optional compressed 320px JPEG. Photos stay in the private profile row and are never placed in Auth metadata/JWTs or sent to Gemini. This small-image prototype storage should move to a private object-storage bucket if usage grows. Usernames are reserved globally but profiles are not publicly discoverable. Profile deletion is possible through the owner-restricted table; account deletion/retention requests remain operator handled.
+
+The account UI cannot save until this migration is applied. It reports save failures without pretending to persist a local preview. Deployment readiness checks report profile-table status, but a signed-in save/reload still needs acceptance testing on the real project.
+
+Investor snapshots derive only from saved/current financial answers and actual swipe-response counts. Age, gender, avatar and photo are excluded. The classification is an illustrative starting point, not an approved suitability/risk assessment. Loss willingness and financial constraints are displayed separately; no final fund allocation or numerical risk score is generated. A retaken assessment replaces stored answers only after the user explicitly saves it.

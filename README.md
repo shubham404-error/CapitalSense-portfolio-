@@ -62,3 +62,9 @@ Open the live camera (explicit permission required), switch front/back, and capt
 ## Google sign-in
 
 The account sheet supports Continue with Google through Supabase, alongside email links. It checks the project's public provider settings before enabling Google. The account consent checkbox is required for either method. Google returns through Supabase to the same Pages URL, keeping auth and onboarding in the existing backend. Enable the provider with your Google Web OAuth client ID/secret as described in `docs/SUPABASE.md`; no client secret is included in this repository. OAuth cancellation/errors show a retry message and return to Account. `npm run test:google-auth` checks provider discovery, consent, the generated OAuth handoff, email fallback and cancellation using intercepted services; it does not sign into a real Google account.
+
+## Full account page
+
+Profile navigation opens an account dashboard with name, username, optional age/gender, 12 original illustrated avatar assets (all styles open to everyone), or a private compressed photo. It prompts the adaptive swipe check and shows the investor snapshot, separately displayed loss comfort/financial constraints, and actual per-theme response counts. No age/gender-based risk scoring or invented analytics are used.
+
+Apply the additive `202611030001_profiles.sql` migration in Supabase SQL Editor before real profile saving. Existing onboarding is unchanged. `npm run test:profile` checks the editing → photo/avatar → swipe → analytics flow with intercepted Supabase responses. `npm run test:backend` includes private profile access, username/age constraints and profile-summary rules. Live persistence still requires the migration and signed-in acceptance checks.
