@@ -12,8 +12,13 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     outputs:
       backend_status: ${{ steps.readiness.outputs.summary }}
+      category_images: ${{ steps.stride.outputs.category_images }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out Stride
@@ -39,6 +44,7 @@ jobs:
           npm ci --no-audit --no-fund
           npm run build
       - name: Build static Stride demo
+        id: stride
         working-directory: stride-source
         env:
           PAGES_BASE_PATH: /CapitalSense-portfolio-/stride
@@ -46,9 +52,20 @@ jobs:
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
         run: |
           npm ci --no-audit --no-fund
+          node scripts/sync-category-images.mjs
           npm run typecheck
           npm run test:backend
           npm run build:pages
+      - name: Retain the downloaded artwork in the repository
+        working-directory: stride-source
+        run: |
+          git add public/fund-categories
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Vendor supplied fund category artwork"
+            git push origin HEAD:feature/sip-social-app
+          fi
       - name: Check live Supabase public endpoints
         id: readiness
         working-directory: stride-source
@@ -65,7 +82,7 @@ jobs:
         with:
           path: website-source/out
   deploy:
-    name: "Publish · ${{ needs.build.outputs.backend_status }}"
+    name: "Publish · ${{ needs.build.outputs.category_images }} images · ${{ needs.build.outputs.backend_status }}"
     needs: build
     runs-on: ubuntu-latest
     environment:

@@ -1,4 +1,4 @@
-const host='https://ap-strapi.s3.ap-south-1.amazonaws.com/';
+
 export const fundCategories=[
  {id:'flexi',label:'Flexi Cap',group:'Equity',asset:'Large_mid_cap_3f44d197e1_877bae7ad0.png'},
  {id:'large-mid',label:'Large and Mid Cap',group:'Equity',asset:'Large_mid_cap_3f44d197e1_877bae7ad0.png'},
@@ -23,4 +23,4 @@ export const fundCategories=[
  {id:'overnight',label:'Overnight',group:'Debt & cash',asset:'Overnight_682490845e_5790e16148.png'},
  {id:'income-arbitrage',label:'Income Plus Arbitrage Fund of Funds',group:'Other strategies',asset:'Screenshot_2026_01_08_180456_2c6a8807b4.png'},
  {id:'short-term',label:'Short-Term',group:'Debt & cash',asset:'1464466_3695c64f47.png'},
-].map(c=>({...c,image:host+c.asset}));
+].map(c=>({...c,image:'/fund-categories/'+c.asset}));
