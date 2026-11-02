@@ -6,4 +6,7 @@ const overrideKey=process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY||process.env.
 const overridden=Boolean(overrideUrl||overrideKey);
 const url=overridden?overrideUrl:project.url;
 const key=overridden?overrideKey:project.publishableKey;
+export const supabasePublicUrl=url;
+export const supabasePublicKey=key;
+export const oauthReturnFailed=typeof window!=='undefined'&&(new URLSearchParams(window.location.hash.slice(1)).has('error')||new URLSearchParams(window.location.search).has('error'));
 export const supabase=url&&key?createClient(url,key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}):null;

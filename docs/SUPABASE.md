@@ -72,3 +72,16 @@ Before inviting testers: sign up and click a real email link; refresh and sign o
 The frontend now defaults to the public project configuration in `config/supabase-public.json`. The publishable key is intentionally browser-visible; it grants no service-role privileges. GitHub Actions Variables are optional overrides. If overriding, supply URL and key together to avoid mixing projects. The new workflow runs read-only public endpoint checks and includes their results in the deployment job title/summary. Those checks do not create accounts, send email, store answers or call Gemini.
 
 For browser smoke/mobile checks against this configured frontend, set `SUPABASE_CONNECTED=true`. Authentication-specific tests still use intercepted responses with the explicit fake test project described in README. Live sign-in requires a real inbox: never share session tokens or magic links in chat.
+
+## Enable Continue with Google
+
+The app checks Supabase's public Auth settings and enables its Google button only when the provider is enabled. Email-link login remains available. User profiles and private onboarding stay in Supabase; Firebase is not needed.
+
+1. In Supabase open Authentication → Sign In / Providers → Google. Copy the OAuth callback URL. For this project it is `https://qmjtmrvrkvmbyfpsapsp.supabase.co/auth/v1/callback`.
+2. In Google Cloud Console / Google Auth Platform, choose a project, configure branding/audience and create an OAuth client of type **Web application**. If the app is in testing, add the intended Google accounts as test users where required.
+3. Add `https://shubham404-error.github.io` as an authorised JavaScript origin, and the exact **Supabase callback URL above** as an authorised redirect URI. The Google redirect URI is not the GitHub Pages app URL.
+4. Copy the Google client ID and client secret into the Google provider settings in Supabase. Enable the provider and save. Keep the client secret in Supabase; never paste it into chat or browser configuration.
+5. Keep `https://shubham404-error.github.io/CapitalSense-portfolio-/stride/` in Supabase's allowed Redirect URLs. This is where Supabase returns the user after Google completes.
+6. Refresh the app, open Sign in, confirm the age/account checkbox and choose Continue with Google. Test account selection, cancellation, successful return, refresh, sign-out and retrieval of existing saved answers. Use the same verified email as your existing account and check that your saved onboarding appears; do not delete old accounts to work around a duplicate-identity issue.
+
+Google OAuth uses only the standard identity scopes requested by Supabase; Stride does not request Gmail or Drive access. No real Google OAuth round-trip can be validated until a web client is configured in the Google project and enabled in Supabase.
