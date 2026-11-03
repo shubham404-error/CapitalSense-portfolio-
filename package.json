@@ -18,7 +18,11 @@
     "test:funds": "node tests/funds.cjs",
     "test:guide-sharing": "node tests/guide-sharing.cjs",
     "test:mfapi": "node tests/mfapi.cjs",
-    "test:fund-research": "node tests/fund-research.cjs"
+    "test:fund-research": "node tests/fund-research.cjs",
+    "test:assetplus": "node tests/assetplus.cjs",
+    "test:launch-journey": "node tests/launch-journey.cjs",
+    "test:holdings-storage": "node tests/holdings-storage.cjs",
+    "test:manual-holdings": "node tests/manual-holdings.cjs"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",
