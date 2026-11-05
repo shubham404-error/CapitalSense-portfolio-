@@ -1,4 +1,4 @@
-# Mobile product and retention study — Stride
+# Mobile product and retention study - Stride
 
 ## Evidence status
 
@@ -45,7 +45,7 @@ Future contributions must not be labelled successful on a button tap or photo up
 
 Track cohort onboarding completion, saved-plan retrieval and voluntary monthly return. Once transactions are integrated, assess provider-confirmed contribution continuity alongside affordability and pause rates. Do not optimise for larger amounts, excessive transactions or daily screen time as substitutes for financial wellbeing. No A/B experiment or retention measurement has been run yet.
 
-## Official reading list — access pending
+## Official reading list - access pending
 
 - Strava Support, Kudos: https://support.strava.com/hc/en-us/articles/115001183630-Kudos
 - Instagram, Instagram Ranking Explained: https://about.instagram.com/blog/announcements/instagram-ranking-explained
