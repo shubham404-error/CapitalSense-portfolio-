@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { ArrowDown, ArrowUpRight, ChartNoAxesCombined, Compass, Layers3, ScanLine, Search, Target } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, BookOpenCheck, ChartNoAxesCombined, Compass, Footprints, Layers3, ScanLine, Search, Share2, Sparkles, Target } from 'lucide-react';
 
 export const metadata = {
-  title: 'CapitalSense & Paisaan | Products',
-  description: 'Explore Indian equity markets with CapitalSense Market Intelligence, or bring clarity to financial goals and investment choices with Paisaan.',
+  title: 'Products: CapitalSense, Stride & Paisaan',
+  description: 'Explore Indian equity markets with CapitalSense, build a more intentional investing habit with Stride, and bring clarity to financial goals with Paisaan.',
 };
 
 const marketFeatures = [
@@ -15,6 +15,11 @@ const moneyFeatures = [
   { icon: Target, title: 'Put a number and a date to a goal', name: 'Future Me', description: 'Explore the amount you may need, your time horizon and the savings required to work towards a future goal.' },
   { icon: Layers3, title: 'Understand what you already own', name: 'Money Mirror', description: 'Examine portfolio composition, concentration and potential gaps so you can ask better questions about your investments.' },
   { icon: Compass, title: 'Give your choices a framework', name: 'Decision Intelligence', description: 'Explore Fund Match, IPO Lens and Baskets to evaluate investment choices using relevant criteria, supported by financial explainers.' },
+];
+const strideFeatures = [
+  { icon: Sparkles, title: 'Begin with your own context', name: 'Investor Vibe Check', description: 'Reflect on planning, clarity and community preferences through a short, mobile-first check-in before exploring the app.' },
+  { icon: BookOpenCheck, title: 'Learn before you take the next step', name: 'Guided Learning & Research', description: 'Explore investing basics, fund research and clearly labelled demonstrations without presenting a prototype as personalised advice.' },
+  { icon: Share2, title: 'Make progress feel more tangible', name: 'Journey & Moments', description: 'Keep a private investing journal, revisit practical check-ins and choose when to share a milestone or moment.' },
 ];
 
 function FeatureList({ features }: { features: typeof marketFeatures }) {
@@ -51,14 +56,28 @@ function MoneyOverview() {
   </figure>;
 }
 
+function StrideOverview() {
+  return <figure className="product-overview stride-overview">
+    <div className="product-diagram-heading"><Footprints size={20} aria-hidden="true" /><span>FROM GOOD INTENTIONS TO A REPEATABLE INVESTING HABIT</span></div>
+    <ol className="stride-habit-path">
+      <li><span className="diagram-step">01</span><div><strong>Understand your starting point</strong><p>Preferences · Constraints · Goals</p></div></li>
+      <li><span className="diagram-step">02</span><div><strong>Build confidence through context</strong><p>Learn · Research · Ask better questions</p></div></li>
+      <li><span className="diagram-step">03</span><div><strong>Keep showing up intentionally</strong><p>Review · Journal · Share by choice</p></div></li>
+    </ol>
+    <div className="product-diagram-result"><span>YOUR STARTING POINT</span><strong>A next step you understand.</strong><p>A calmer way to turn investing intent into an informed, repeatable practice.</p></div>
+    <figcaption>Feature overview · Stride is an early prototype, not an investment account or recommendation service.</figcaption>
+  </figure>;
+}
+
 export default function Products() {
   return <main className="inner-page page-products"><div className="container">
     <header className="products-intro">
       <span className="eyebrow">PRODUCTS AT CAPITALSENSE</span>
       <h1>Explore markets.<br /><em>Make clearer money decisions.</em></h1>
-      <p className="page-lead">Two products for two different questions: where to focus your equity research, and how to make sense of your own financial choices.</p>
+      <p className="page-lead">Three products for three connected questions: where to focus your research, how to build a healthier investing habit, and how to make sense of your financial choices.</p>
       <nav className="product-jump-links" aria-label="Explore our products">
         <a href="#market-intelligence"><ChartNoAxesCombined size={18} aria-hidden="true" /><span>For equity research<strong>CapitalSense</strong></span><ArrowDown size={16} aria-hidden="true" /></a>
+        <a href="#stride"><Footprints size={18} aria-hidden="true" /><span>For investing habits<strong>Stride</strong></span><ArrowDown size={16} aria-hidden="true" /></a>
         <a href="#paisaan"><Target size={18} aria-hidden="true" /><span>For personal finance<strong>Paisaan</strong></span><ArrowDown size={16} aria-hidden="true" /></a>
       </nav>
     </header>
@@ -80,8 +99,25 @@ export default function Products() {
       <p className="product-release-note"><strong>Still evolving.</strong> Advanced functionality and research safeguards are being refined. Treat the beta as a research aid; its outputs are not validated investment signals.</p>
     </section>
 
+    <section id="stride" className="product-showcase product-stride" aria-labelledby="stride-title">
+      <div className="product-section-top"><span className="eyebrow">02 / INVESTING HABITS & GUIDED LEARNING</span><span className="product-status"><i aria-hidden="true" />Early prototype</span></div>
+      <div className="product-showcase-grid">
+        <div className="product-story">
+          <h2 id="stride-title">Stride</h2>
+          <p className="product-promise">Build an investing habit{' '}<br />you can understand and keep.</p>
+          <p>For new and early-stage investors who want a more reflective, guided and social way to learn, research and keep track of their investing journey.</p>
+          <a className="button primary product-launch" href="https://shubham404-error.github.io/CapitalSense-portfolio-/stride/" target="_blank" rel="noopener noreferrer">Explore Stride <ArrowUpRight size={18} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
+          <p className="product-access">Public prototype · Best explored on mobile</p>
+        </div>
+        <StrideOverview />
+      </div>
+      <FeatureList features={strideFeatures} />
+      <div className="product-outcome"><span className="eyebrow">ON YOUR FIRST VISIT</span><p>Take the investor vibe check, explore the learning and research tools, and see how Stride turns reflection and regular reviews into a more intentional investing journey.</p></div>
+      <p className="product-release-note"><strong>Still evolving.</strong> Social activity, fund examples and progress features include prototype or demo elements. Stride does not place investments or verify transactions.</p>
+    </section>
+
     <section id="paisaan" className="product-showcase product-paisaan" aria-labelledby="paisaan-title">
-      <div className="product-section-top"><span className="eyebrow">02 / PERSONAL FINANCE & INVESTMENT DECISION SUPPORT</span><span className="product-status"><i aria-hidden="true" />Early-stage MVP</span></div>
+      <div className="product-section-top"><span className="eyebrow">03 / PERSONAL FINANCE & INVESTMENT DECISION SUPPORT</span><span className="product-status"><i aria-hidden="true" />Early-stage MVP</span></div>
       <div className="product-showcase-grid">
         <div className="product-story">
           <h2 id="paisaan-title">Paisaan</h2>
@@ -99,7 +135,7 @@ export default function Products() {
 
     <aside className="products-closing" aria-label="Product scope">
       <div><span className="eyebrow">BETTER QUESTIONS. MORE INFORMED DECISIONS.</span><h2>Tools to explore.{' '}<br /><em>Room for your own judgement.</em></h2></div>
-      <div><p>Both products support research and financial understanding. Their outputs are starting points for investigation, not personalised investment advice or promises of returns.</p><Link className="text-link" href="/research">Explore our research approach <ArrowUpRight size={16} aria-hidden="true" /></Link></div>
+      <div><p>All three products support research, learning and financial understanding. Their outputs are starting points for investigation, not personalised investment advice or promises of returns.</p><Link className="text-link" href="/research">Explore our research approach <ArrowUpRight size={16} aria-hidden="true" /></Link></div>
     </aside>
   </div></main>;
 }
