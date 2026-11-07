@@ -1,4 +1,4 @@
-name: Deploy CapitalSense website to GitHub Pages
+name: Deploy CapitalSense website and Stride to GitHub Pages
 on:
   push:
     branches: [feature/website-v1]
@@ -16,19 +16,46 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          path: website-source
+      - name: Checkout Stride
+        uses: actions/checkout@v4
+        with:
+          ref: feature/sip-social-app
+          path: stride-source
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: 'website-source/.nvmrc'
           cache: npm
+          cache-dependency-path: |
+            website-source/package-lock.json
+            stride-source/package-lock.json
       - name: Install dependencies
+        working-directory: website-source
         run: npm ci
       - name: Build static website
+        working-directory: website-source
         run: npm run build
+      - name: Build static Stride app
+        working-directory: stride-source
+        env:
+          PAGES_BASE_PATH: /CapitalSense-portfolio-/stride
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          npm ci --no-audit --no-fund
+          npm run typecheck
+          npm run build:pages
+      - name: Combine the website and Stride artifacts
+        run: |
+          test ! -e website-source/out/stride
+          cp -R stride-source/out website-source/out/stride
+          touch website-source/out/.nojekyll
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: website-source/out
   deploy:
     environment:
       name: github-pages
