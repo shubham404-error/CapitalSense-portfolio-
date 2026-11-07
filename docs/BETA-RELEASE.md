@@ -12,6 +12,8 @@ After the SQL runs, verify the table and permissions on the live project, then p
 
 ## Implemented
 
+- A focused readiness journey: assess financial foundations, understand priorities, learn/research, then prepare for an explicit external AssetPlus handoff.
+- Gemini-first guidance with an automatic six-question, deterministic fallback only when the AI provider, function or network is unavailable. Authentication and saved-profile errors are never hidden by the fallback.
 - Private signed-in holdings with error states, editing, deletion and explicit migration of account-specific older device entries.
 - Empty initial feed; no fabricated people, posts or sample circle memberships. New personal journals are explicitly session-only; public links require separate consent.
 - AssetPlus preparation/activation guide and troubleshooting, plus WhatsApp support to the operator-approved +91 8850405723. The user reviews and sends the draft; private account data is not attached.
@@ -24,4 +26,4 @@ Use an actual invited account to check email-link and configured Google sign-in,
 
 Browser automation uses Chromium with phone-sized viewports and mocked authenticated Supabase data. It does not establish physical Android/iPhone compatibility or authenticated production success. Check iPhone Safari and Android Chrome before inviting a wider group. Existing public links are not automatically removed merely because demo feed entries were removed.
 
-Provider syncing, verified contributions, push reminders and real circles remain unavailable. Demo baskets stay explicitly separated from the real research list. Beta communication should describe a private habit companion with manual tracking and external AssetPlus investing. Capital Sense must operate the WhatsApp support inbox and handle identity verification and deletion questions privately.
+Provider syncing, verified contributions, push reminders and real circles remain unavailable. Circles and the simulated social feed are not promoted in primary navigation. Demo baskets stay explicitly separated from the real research list. Beta communication should describe a readiness and decision-support journey with manual tracking and an external AssetPlus handoff. Capital Sense must operate the WhatsApp support inbox and handle identity verification and deletion questions privately.
