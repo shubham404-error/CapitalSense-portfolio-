@@ -1,15 +1,7 @@
 {
-  "checkedAt": "2026-11-05T22:45:53.067Z",
+  "checkedAt": "2026-11-07T22:29:48.961Z",
   "searchStatus": 200,
   "rows": [
-    {
-      "schemeCode": 101762,
-      "schemeName": "HDFC Flexi Cap Fund - Regular Plan - Growth Option"
-    },
-    {
-      "schemeCode": 101763,
-      "schemeName": "HDFC Flexi Cap Fund - Regular Plan - IDCW Option"
-    },
     {
       "schemeCode": 117991,
       "schemeName": "HDFC FMP 371D October 2012 (1)-Flexi Option"
@@ -61,6 +53,94 @@
     {
       "schemeCode": 120861,
       "schemeName": "HDFC FMP 372D January 2013 (2)-Direct Plan-Flexi Option"
+    },
+    {
+      "schemeCode": 120866,
+      "schemeName": "HDFC FMP 372D January 2013 (2)-Flexi Option"
+    },
+    {
+      "schemeCode": 120978,
+      "schemeName": "HDFC FMP 372D January 2013 (3)-Flexi Option"
     }
-  ]
+  ],
+  "alternateQuery": "HDFC Equity",
+  "alternateRows": [
+    {
+      "schemeCode": 121263,
+      "schemeName": "HDFC Rajiv Gandhi Equity Savings Scheme - Series 1 - February 2013-Regular Plan-Growth Option"
+    },
+    {
+      "schemeCode": 121264,
+      "schemeName": "HDFC Rajiv Gandhi Equity Savings Scheme - Series 1 - February 2013-Regular Plan-Dividend Option"
+    },
+    {
+      "schemeCode": 121265,
+      "schemeName": "HDFC Rajiv Gandhi Equity Savings Scheme - Series 1 - February 2013-Direct Plan-Growth Option"
+    },
+    {
+      "schemeCode": 121266,
+      "schemeName": "HDFC Rajiv Gandhi Equity Savings Scheme - Series 1 - February 2013-Direct Plan-Dividend Option"
+    },
+    {
+      "schemeCode": 126893,
+      "schemeName": "HDFC Rajiv Gandhi Equity Savings Scheme - Series 2 - Direct Plan - Dividend Option"
+    },
+    {
+      "schemeCode": 126894,
+      "schemeName": "HDFC Rajiv Gandhi Equity Savings Scheme - Series 2 - Regular Plan - Growth Option"
+    },
+    {
+      "schemeCode": 126895,
+      "schemeName": "HDFC Rajiv Gandhi Equity Savings Scheme - Series 2 - Direct Plan - Growth Option"
+    },
+    {
+      "schemeCode": 126896,
+      "schemeName": "HDFC Rajiv Gandhi Equity Savings Scheme - Series 2 - Regular Plan - Dividend Option"
+    },
+    {
+      "schemeCode": 133526,
+      "schemeName": "HDFC FOCUSED EQUITY FUND - Regular Plan - Dividend Option"
+    },
+    {
+      "schemeCode": 133527,
+      "schemeName": "HDFC FOCUSED EQUITY FUND - Regular Plan - Growth Option"
+    },
+    {
+      "schemeCode": 133528,
+      "schemeName": "HDFC FOCUSED EQUITY FUND - Direct Plan - Dividend Option"
+    },
+    {
+      "schemeCode": 133529,
+      "schemeName": "HDFC FOCUSED EQUITY FUND - Direct Plan - Growth Option"
+    },
+    {
+      "schemeCode": 134333,
+      "schemeName": "HDFC Focused Equity Fund - Plan B - Direct Plan-  Dividend Option"
+    },
+    {
+      "schemeCode": 134334,
+      "schemeName": "HDFC Focused Equity Fund - Plan B - Direct Plan - Growth Option"
+    },
+    {
+      "schemeCode": 134335,
+      "schemeName": "HDFC Focused Equity Fund - Plan B - Regular Plan - Dividend Option"
+    }
+  ],
+  "sampleMeta": {
+    "fund_house": "HDFC Mutual Fund",
+    "scheme_type": "141581;INF179KB1V39;-;HDFC EOF - II - 1100D June 2017",
+    "scheme_category": "1",
+    "scheme_code": 121263,
+    "scheme_name": "HDFC Rajiv Gandhi Equity Savings Scheme - Series 1 - February 2013-Regular Plan-Growth Option",
+    "isin_growth": null,
+    "isin_div_reinvestment": null
+  },
+  "sampleData": [
+    {
+      "date": "21-03-2016",
+      "nav": "13.72400"
+    }
+  ],
+  "sampleCors": "*",
+  "sampleStatus": 200
 }
