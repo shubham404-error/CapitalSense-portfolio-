@@ -1,7 +1,8 @@
 const {chromium}=require('@playwright/test'),assert=require('node:assert/strict'),ts=require('typescript'),fs=require('fs');
 function load(path){const exports={};new Function('exports',ts.transpileModule(fs.readFileSync(path,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText)(exports);return exports;}
-const api=load('lib/mfapi.ts'),tiles=load('lib/fund-categories.ts').fundCategories,source=require('../config/fund-research.json');
+const api=load('lib/mfapi.ts'),tiles=load('lib/fund-categories.ts').fundCategories,logos=load('lib/amc-logos.ts'),source=require('../config/fund-research.json');
 assert.equal(tiles.length,23);for(const category of tiles)assert(source.funds.some(f=>f.categories.includes(category.label)));for(const fund of source.funds)for(const c of fund.categories)assert(tiles.some(t=>t.label===c));assert.equal(source.funds.length,79);
+for(const fund of source.funds){const brand=logos.amcBrandForScheme(fund.name);assert(brand,`Missing AMC logo mapping for ${fund.name}`);assert(fs.existsSync(`public/amc-logos/${brand.logo}`),`Missing AMC logo file ${brand.logo}`)}
 const make=(code,name,points)=>({meta:{scheme_code:code,scheme_name:name,fund_house:'Test AMC',scheme_category:'Equity - Flexi Cap'},data:points});
 const points=[{date:'01-10-2026',nav:'10'},{date:'02-10-2026',nav:'11'},{date:'01-11-2026',nav:'12'},{date:'02-11-2026',nav:'13'}];
 const first=make(120000,'HDFC Flexi Cap Fund - Regular Plan - Growth',points);
