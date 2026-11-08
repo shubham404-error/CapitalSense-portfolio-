@@ -89,7 +89,9 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      # The artifact also contains the website-v1 root. Point GitHub's
+      # "View deployment" button at the Stride subpath, not that root site.
+      url: https://shubham404-error.github.io/CapitalSense-portfolio-/stride/
     steps:
       - name: Publish
         id: deployment
