@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-09T12:31:59.392Z",
+  "checkedAt": "2026-11-09T13:24:03.282Z",
   "searchStatus": 200,
   "rows": [
     {
@@ -66,6 +66,14 @@
   "alternateQuery": "HDFC Equity",
   "alternateRows": [
     {
+      "schemeCode": 149180,
+      "schemeName": "HDFC Developed World Overseas Equity Passive FOF"
+    },
+    {
+      "schemeCode": 149181,
+      "schemeName": "HDFC Developed World Overseas Equity Passive FOF"
+    },
+    {
       "schemeCode": 121263,
       "schemeName": "HDFC Rajiv Gandhi Equity Savings Scheme - Series 1 - February 2013-Regular Plan-Growth Option"
     },
@@ -116,14 +124,6 @@
     {
       "schemeCode": 134333,
       "schemeName": "HDFC Focused Equity Fund - Plan B - Direct Plan-  Dividend Option"
-    },
-    {
-      "schemeCode": 134334,
-      "schemeName": "HDFC Focused Equity Fund - Plan B - Direct Plan - Growth Option"
-    },
-    {
-      "schemeCode": 134335,
-      "schemeName": "HDFC Focused Equity Fund - Plan B - Regular Plan - Dividend Option"
     }
   ],
   "sampleMeta": {
