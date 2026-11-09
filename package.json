@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit",
     "test:smoke": "node tests/smoke.cjs",
     "build:pages": "node scripts/build-pages.mjs",
-    "test:backend": "node tests/backend.cjs && node tests/rule-guide.cjs && node tests/expense-tracker.cjs",
+    "test:backend": "node tests/backend.cjs && node tests/rule-guide.cjs && node tests/expense-tracker.cjs && node tests/expense-backend.cjs",
     "test:auth": "node tests/auth.cjs",
     "test:mobile": "node tests/mobile.cjs",
     "test:lenses": "node tests/lenses.cjs",

@@ -1,0 +1,31 @@
+const {PGlite}=require('@electric-sql/pglite');
+const {readFileSync}=require('node:fs');
+const assert=require('node:assert/strict');
+
+(async()=>{
+ const db=new PGlite();
+ await db.exec(`create schema auth; create role anon; create role authenticated; create role service_role bypassrls;
+ create table auth.users(id uuid primary key);
+ create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
+ grant usage on schema public,auth to anon,authenticated,service_role;
+ grant execute on function auth.uid() to authenticated;
+ insert into auth.users values ('11111111-1111-1111-1111-111111111111'),('22222222-2222-2222-2222-222222222222');`);
+ await db.exec(readFileSync('supabase/migrations/202611090001_expense_tracking.sql','utf8'));
+ await db.exec(`set role authenticated; set request.jwt.claim.sub='11111111-1111-1111-1111-111111111111';
+ insert into public.expense_entries(id,user_id,title,amount,spent_on,category,account,notes) values ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','11111111-1111-1111-1111-111111111111','Groceries',1250.50,'2026-11-08','🍴 Food','Bank','weekly shop');
+ insert into public.monthly_budgets(user_id,month,category,amount) values ('11111111-1111-1111-1111-111111111111','2026-11-01','🍴 Food',6000);`);
+ assert.equal((await db.query('select title from public.expense_entries')).rows[0].title,'Groceries');
+ assert.equal(Number((await db.query('select amount from public.monthly_budgets')).rows[0].amount),6000);
+ await db.exec(`set request.jwt.claim.sub='22222222-2222-2222-2222-222222222222'`);
+ assert.equal((await db.query('select * from public.expense_entries')).rows.length,0);
+ assert.equal((await db.query('select * from public.monthly_budgets')).rows.length,0);
+ await db.exec('delete from public.expense_entries; delete from public.monthly_budgets;');
+ await assert.rejects(()=>db.exec(`insert into public.expense_entries(id,user_id,title,amount,spent_on,category,account) values ('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb','11111111-1111-1111-1111-111111111111','Stolen',10,'2026-11-08','🍴 Food','Cash')`));
+ await assert.rejects(()=>db.exec(`insert into public.monthly_budgets(user_id,month,category,amount) values ('11111111-1111-1111-1111-111111111111','2026-11-01','🍴 Food',100)`));
+ await assert.rejects(()=>db.exec(`insert into public.expense_entries(id,user_id,title,amount,spent_on,category,account) values ('cccccccc-cccc-4ccc-8ccc-cccccccccccc','22222222-2222-2222-2222-222222222222','Bad',-1,'2026-11-08','Unknown','Cash')`));
+ await db.exec('reset role; set role anon');
+ await assert.rejects(()=>db.query('select * from public.expense_entries'));
+ await assert.rejects(()=>db.query('select * from public.monthly_budgets'));
+ await db.close();
+ console.log('PASS: expense and budget tables enforce validation, authenticated ownership, anonymous denial and cross-user isolation.');
+})().catch(error=>{console.error(error);process.exit(1)});
