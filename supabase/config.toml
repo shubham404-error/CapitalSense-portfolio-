@@ -4,3 +4,6 @@ project_id = "capitalsense-stride"
 # This supports current publishable keys, which are not JWTs.
 [functions.guide]
 verify_jwt = false
+
+[functions.spending-insight]
+verify_jwt = false

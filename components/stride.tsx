@@ -1,7 +1,7 @@
 'use client';
 import Account from './account';
 import OnboardingHelp from './onboarding-help';
-import ManualHoldings from './manual-holdings';
+import ManualHoldings from './journey-money';
 import {NextMove,HabitPassport,ReviewToolkit} from './launch-journey';
 import AssetPlusOnboarding,{AssetPlusEntry} from './assetplus-onboarding';
 import {investmentProvider} from '../lib/investment-provider';
