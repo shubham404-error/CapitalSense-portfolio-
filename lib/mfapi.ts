@@ -1,5 +1,6 @@
 export const MFAPI_BASE='https://api.mfapi.in';
 export const FACTSHEET_DIRECTORY='https://www.amfiindia.com/online-center/download-factsheets';
+export const AMFI_TER_DIRECTORY='https://www.amfiindia.com/ter-of-mf-schemes';
 export type MfapiMatch={code:string;name:string;isinGrowth:string|null};
 export type NavSnapshot={code:string;name:string;amc:string;category:string;nav:number;date:string;fetchedAt:string};
 export function isRegularGrowth(name:string){const marker=name.match(/\bregular(?:\s+plan)?\b/i);if(!marker||/\bdirect\b/i.test(name))return false;const option=name.slice((marker.index||0)+marker[0].length);return /\bgrowth\b/i.test(option)&&!/\b(idcw|dividend|bonus|reinvestment|payout)\b/i.test(option)}
@@ -12,6 +13,8 @@ export async function latestMfapi(code:string,signal:AbortSignal){if(!/^\d{4,9}$
 
 export type NavPoint={date:string;nav:number};
 export type NavHistory=NavSnapshot & {points:NavPoint[]};
+export type NavMetric={label:string;value:number;annualized:boolean};
+export type NavMetrics={returns:NavMetric[];annualizedVolatility:number|null;maxDrawdown:number|null;inceptionDate:string};
 export function parseHistory(value:unknown,code:string,now=Date.now()):NavHistory{
  const snapshot=parseNav(value,code,now);
  const rows=(value as {data:unknown[]}).data;
@@ -22,6 +25,19 @@ export function parseHistory(value:unknown,code:string,now=Date.now()):NavHistor
 export async function historyMfapi(code:string,signal:AbortSignal):Promise<NavHistory>{
  if(!/^\d{4,9}$/.test(code))throw Error('Choose a valid scheme code.');
  return parseHistory(await json(MFAPI_BASE+'/mf/'+code,signal),code);
+}
+function subtractMonths(date:string,months:number){const d=new Date(date+'T00:00:00Z'),day=d.getUTCDate();d.setUTCDate(1);d.setUTCMonth(d.getUTCMonth()-months);d.setUTCDate(Math.min(day,new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,0)).getUTCDate()));return d.toISOString().slice(0,10)}
+export function navMetrics(history:NavHistory):NavMetrics{
+ const points=[...history.points].sort((a,b)=>a.date.localeCompare(b.date));
+ if(!points.length)return {returns:[],annualizedVolatility:null,maxDrawdown:null,inceptionDate:history.date};
+ const latest=points.at(-1)!;const periods=[['1M',1],['3M',3],['6M',6],['1Y',12],['3Y',36],['5Y',60]] as const;
+ const returns:NavMetric[]=[];
+ for(const [label,months] of periods){const target=subtractMonths(latest.date,months);const start=[...points].reverse().find(p=>p.date<=target);if(!start)continue;const age=(Date.parse(target)-Date.parse(start.date))/86400000;if(age>45)continue;const raw=latest.nav/start.nav-1;const years=months/12;returns.push({label,value:months>12?(Math.pow(1+raw,1/years)-1)*100:raw*100,annualized:months>12})}
+ let peak=points[0].nav,maxDrawdown=0;for(const point of points){peak=Math.max(peak,point.nav);maxDrawdown=Math.min(maxDrawdown,(point.nav/peak-1)*100)}
+ const daily=points.slice(1).flatMap((point,i)=>{const previous=points[i];const gap=(Date.parse(point.date)-Date.parse(previous.date))/86400000;return gap>0&&gap<=7?[point.nav/previous.nav-1]:[]});
+ if(daily.length<30)return {returns,annualizedVolatility:null,maxDrawdown,inceptionDate:points[0].date};
+ const mean=daily.reduce((sum,value)=>sum+value,0)/daily.length;const variance=daily.reduce((sum,value)=>sum+(value-mean)**2,0)/(daily.length-1);
+ return {returns,annualizedVolatility:Math.sqrt(variance)*Math.sqrt(252)*100,maxDrawdown,inceptionDate:points[0].date};
 }
 export const chartPeriods=['1M','3M','6M','1Y','3Y','5Y','ALL'] as const;
 export type ChartPeriod=typeof chartPeriods[number];

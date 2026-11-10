@@ -1,0 +1,143 @@
+{
+  "generatedAt": "2026-11-10T19:20:01.195Z",
+  "source": "https://api.mfapi.in/mf",
+  "universe": "Stride launch shortlist: first 22 ordered funds in config/fund-research.json.",
+  "policy": "Exact normalized name or reviewed rename; explicit Regular Growth only.",
+  "matchedCount": 22,
+  "unmatchedCount": 0,
+  "funds": [
+    {
+      "id": "research-0cb31d029ee8",
+      "workbookName": "HDFC Flexi Cap Fund",
+      "schemeCode": "101762",
+      "schemeName": "HDFC Flexi Cap Fund - Regular Plan - Growth Option"
+    },
+    {
+      "id": "research-3b3667bf1cb1",
+      "workbookName": "WhiteOak Capital Flexi Cap Fund",
+      "schemeCode": "150347",
+      "schemeName": "WhiteOak Capital Flexi Cap Fund - Regular Plan - Growth Option"
+    },
+    {
+      "id": "research-7af513580676",
+      "workbookName": "Kotak Large & Mid Cap Fund",
+      "schemeCode": "103234",
+      "schemeName": "Kotak Large & Mid Cap Fund - Regular Plan - Growth"
+    },
+    {
+      "id": "research-2e19157ba46f",
+      "workbookName": "BANDHAN Large & Mid Cap Fund",
+      "schemeCode": "108596",
+      "schemeName": "Bandhan Large & Mid Cap Fund - Regular Plan - Growth"
+    },
+    {
+      "id": "research-b75a15eb45c8",
+      "workbookName": "Mirae Asset Large & Midcap Fund Growth",
+      "schemeCode": "112932",
+      "schemeName": "Mirae Asset Large & Midcap Fund - Regular Plan - Growth"
+    },
+    {
+      "id": "research-93fadc353597",
+      "workbookName": "ICICI Prudential Value Fund",
+      "schemeCode": "102594",
+      "schemeName": "ICICI Prudential Value Fund (erstwhile Value Discovery Fund) - Regular Plan - Growth"
+    },
+    {
+      "id": "research-f2108eee278e",
+      "workbookName": "SBI Contra Fund",
+      "schemeCode": "102414",
+      "schemeName": "SBI CONTRA FUND - Regular Plan - Growth"
+    },
+    {
+      "id": "research-6cfc01fb7516",
+      "workbookName": "Nippon India Growth Mid Cap Fund",
+      "schemeCode": "100377",
+      "schemeName": "Nippon India Growth Mid Cap Fund - Regular Plan - Growth Option"
+    },
+    {
+      "id": "research-1e4fd3d6b31c",
+      "workbookName": "Edelweiss Mid Cap Fund",
+      "schemeCode": "140225",
+      "schemeName": "Edelweiss Mid Cap Fund - Regular Plan - Growth"
+    },
+    {
+      "id": "research-137ef5344cfc",
+      "workbookName": "HDFC Mid Cap Fund",
+      "schemeCode": "105758",
+      "schemeName": "HDFC Mid Cap Fund - Regular Plan - Growth Option"
+    },
+    {
+      "id": "research-920c0549f218",
+      "workbookName": "Kotak Midcap Fund",
+      "schemeCode": "104908",
+      "schemeName": "Kotak Mid Cap Fund - Regular Plan - Growth"
+    },
+    {
+      "id": "research-95eb8a752e70",
+      "workbookName": "ICICI Prudential MidCap Fund",
+      "schemeCode": "102528",
+      "schemeName": "ICICI Prudential Mid Cap Fund - Regular Plan - Growth"
+    },
+    {
+      "id": "research-44e4fef693c6",
+      "workbookName": "WhiteOak Capital Mid Cap Fund",
+      "schemeCode": "150583",
+      "schemeName": "WhiteOak Capital Mid Cap Fund - Regular Plan - Growth Option"
+    },
+    {
+      "id": "research-fe65ef8fea23",
+      "workbookName": "BANDHAN SMALL CAP FUND",
+      "schemeCode": "147944",
+      "schemeName": "BANDHAN Small Cap Fund - Regular Plan - Growth"
+    },
+    {
+      "id": "research-aff32dde9ad6",
+      "workbookName": "Invesco India Smallcap Fund",
+      "schemeCode": "145139",
+      "schemeName": "Invesco India Small Cap Fund - Regular Plan - Growth"
+    },
+    {
+      "id": "research-2702d2c4564c",
+      "workbookName": "Tata Small Cap Fund",
+      "schemeCode": "145208",
+      "schemeName": "Tata Small Cap Fund - Regular Plan - Growth Option"
+    },
+    {
+      "id": "research-7773aadb2770",
+      "workbookName": "Kotak Multicap Fund",
+      "schemeCode": "149182",
+      "schemeName": "Kotak Multi Cap Fund - Regular Plan - Growth"
+    },
+    {
+      "id": "research-f920401bbea6",
+      "workbookName": "Axis Multicap Fund",
+      "schemeCode": "149382",
+      "schemeName": "Axis Multicap Fund - Regular Plan - Growth Option"
+    },
+    {
+      "id": "research-c624d1e039f4",
+      "workbookName": "Nippon India Multi Cap Fund",
+      "schemeCode": "101161",
+      "schemeName": "Nippon India Multi Cap Fund - Regular Plan - Growth Option"
+    },
+    {
+      "id": "research-d33e1fe0869c",
+      "workbookName": "SBI ELSS Tax Saver FUND",
+      "schemeCode": "105628",
+      "schemeName": "SBI ELSS Tax Saver Fund - Regular Plan - Growth"
+    },
+    {
+      "id": "research-066cd6a043a7",
+      "workbookName": "Franklin India ELSS Tax Saver Fund",
+      "schemeCode": "100526",
+      "schemeName": "Franklin India ELSS Tax Saver Fund - Regular Plan - Growth"
+    },
+    {
+      "id": "research-2bfe99eeba02",
+      "workbookName": "Mirae Asset ELSS Tax Saver Fund",
+      "schemeCode": "135784",
+      "schemeName": "Mirae Asset ELSS Tax Saver Fund - Regular Plan - Growth"
+    }
+  ],
+  "unmatched": []
+}
