@@ -1,37 +1,747 @@
-'use client';
-import AccountPrivacy from './account-privacy';
-import OnboardingHelp from './onboarding-help';
-import {useEffect,useRef,useState} from 'react';
-import type {User} from '@supabase/supabase-js';
-import {ArrowUpRight,ArrowRight,Camera,Check,ChevronRight,Edit3,Lock,ShieldCheck,Sparkles,Target,Users,X,LogOut,Leaf,Compass,RefreshCw} from 'lucide-react';
-import {supabase} from '../lib/supabase';
-import SharedMoments from './shared-moments';
-import {AssetPlusEntry} from './assetplus-onboarding';
-import {investorProfile} from '../lib/investor-profile';
-const base=process.env.NEXT_PUBLIC_BASE_PATH||'';
-const avatars=['masculine','feminine','neutral'].flatMap(group=>[1,2,3,4].map(n=>({id:group+'-'+n,group,name:group.charAt(0).toUpperCase()+group.slice(1)+' avatar '+n})));
-type Profile={name:string;username:string;age:string;gender:string;avatar:string;photo:string|null};
-const empty:Profile={name:'',username:'',age:'',gender:'prefer-not-to-say',avatar:'neutral-1',photo:null};
-type Props={user:User|null;answers:string[];preferences:(boolean|null)[];saved:boolean;start:()=>void;review:()=>void;signIn:()=>void;notify:(s:string)=>void;onName:(s:string)=>void;onIdentity:(s:string)=>void;onGuide:()=>void;onInvest:()=>void;circles:()=>void};
-export default function ProfilePage({user,answers,preferences,saved,start,review,signIn,notify,onName,onIdentity,onGuide,onInvest,circles}:Props){
- const [profile,setProfile]=useState<Profile>(empty),[draft,setDraft]=useState<Profile>(empty),[editing,setEditing]=useState(false),[filter,setFilter]=useState('all'),[busy,setBusy]=useState(false),[loading,setLoading]=useState(Boolean(user)),[status,setStatus]=useState(''),[photoBusy,setPhotoBusy]=useState(false);
- const upload=useRef<HTMLInputElement>(null),request=useRef(0);const report=investorProfile(answers,preferences);const hasProfile=Boolean(profile.name);const chosen=editing?draft:profile;
- useEffect(()=>{let active=true;setProfile(empty);setDraft(empty);setStatus('');if(!user||!supabase){setLoading(false);return}setLoading(true);supabase.from('profiles').select('name,username,age,gender,avatar,photo').eq('user_id',user.id).maybeSingle().then(({data,error})=>{if(!active)return;setLoading(false);if(error){setStatus('Profile storage is not ready. You can explore, but profile changes cannot be saved yet.');return}if(data){const value={...data,age:data.age?String(data.age):''};setProfile(value);setDraft(value);onName(value.name);onIdentity(value.photo||base+'/avatars/'+value.avatar+'.svg')}});return()=>{active=false;request.current++}},[user?.id]);
- function edit(){setDraft(profile);setEditing(true);setStatus('')}
- async function readPhoto(file?:File){if(!file)return;const id=++request.current;if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5*1024*1024){notify('Choose a JPG, PNG or WebP photo under 5 MB.');return}setPhotoBusy(true);const url=URL.createObjectURL(file);try{const image=new Image();image.src=url;await image.decode();if(image.width*image.height>40000000)throw Error('large');const canvas=document.createElement('canvas');canvas.width=320;canvas.height=320;const c=canvas.getContext('2d')!;const side=Math.min(image.width,image.height);c.drawImage(image,(image.width-side)/2,(image.height-side)/2,side,side,0,0,320,320);const photo=canvas.toDataURL('image/jpeg',.84);if(photo.length>=160000)throw Error('large');if(id===request.current)setDraft(old=>({...old,photo}))}catch{if(id===request.current)notify('Could not prepare this photo. Try a smaller image.')}finally{URL.revokeObjectURL(url);if(id===request.current)setPhotoBusy(false)}}
- async function save(e:React.FormEvent){e.preventDefault();if(!user||!supabase){signIn();return}if(!/^[a-z][a-z0-9_]{2,19}$/.test(draft.username)){setStatus('Use 3–20 lowercase letters, numbers or underscores, starting with a letter.');return}setBusy(true);setStatus('');const {error}=await supabase.from('profiles').upsert({user_id:user.id,...draft,name:draft.name.trim(),age:draft.age?Number(draft.age):null,updated_at:new Date().toISOString()});setBusy(false);if(error){setStatus(error.code==='23505'?'That username is already taken. Try another.':'Could not save your profile. Your edits are still here; please try again later.');return}const next={...draft,name:draft.name.trim()};setProfile(next);setEditing(false);onName(next.name);onIdentity(next.photo||base+'/avatars/'+next.avatar+'.svg');notify('Your profile is saved privately.')}
- return <div className="profile-page"><div className="profile-page-title"><div><span className="eyebrow">MY STRIDE / YOUR OWN KIND OF PROGRESS</span><h1>A little more you.</h1><p>Your identity. Your money mindset. Your next chapter.</p></div><span className="profile-private"><Lock size={13}/>Only you can see this</span></div>
- <div className="profile-layout"><div className="profile-left"><section className="identity-card"><div className="identity-cover"><span>MAKE ROOM FOR<br/><b>future you.</b></span><span className="cover-flower" aria-hidden="true">*</span><div className="cover-orbit"/></div><div className="identity-body"><div className="identity-avatar-wrap"><img className="identity-avatar" src={chosen.photo||base+'/avatars/'+chosen.avatar+'.svg'} alt={chosen.photo?'Your profile photo':'Your selected illustrated avatar'}/><button aria-label="Change profile picture" onClick={edit}><Camera size={16}/></button></div><span className="identity-pill"><Leaf size={11}/>A WORK IN PROGRESS</span><h2>{loading?'Loading your space…':profile.name||'Your name goes here'}</h2><p className="identity-handle">{profile.username?'@'+profile.username:'Your next chapter starts with you.'}</p><div className="identity-facts"><span>{profile.age?profile.age+' years old':'Age not added'}</span><i/><span>{({'woman':'Woman','man':'Man','non-binary':'Non-binary','prefer-not-to-say':'Gender private'} as Record<string,string>)[profile.gender]}</span></div><button className="secondary wide" onClick={edit}><Edit3 size={15}/>{hasProfile?'Edit profile':'Make it yours'}</button><div className="identity-footer"><ShieldCheck size={14}/>{user?'Private account · signed in':'Exploring as a guest'}</div></div></section>
- <section className="profile-mini-card"><div className="profile-mini-icon"><Target size={20}/></div><div><b>Progress, on your terms.</b><p>No public balances. No wealth rankings. Just your own next step.</p></div></section><button className="profile-circle-link" onClick={circles}><Users size={19}/><span>Find your circle<small>Good company. No comparisons.</small></span><ArrowUpRight size={18}/></button><button className="profile-session" onClick={user?async()=>{const {error}=await supabase!.auth.signOut();notify(error?error.message:'Signed out.')} :signIn}>{user?<LogOut size={15}/>:<Lock size={15}/>} {user?'Sign out of this account':'Sign in to save your profile'}</button>
- </div><div className="profile-main">
- {editing&&<section className="profile-editor"><div className="profile-section-title"><div><span className="eyebrow">THE PERSON BEHIND THE PLAN</span><h2>Make yourself at home.</h2></div><button aria-label="Cancel profile editing" className="icon-btn" onClick={()=>{request.current++;setPhotoBusy(false);setEditing(false)}}><X size={20}/></button></div><form onSubmit={save}><div className="profile-fields"><label className="field">Name<input required maxLength={40} value={draft.name} onChange={e=>setDraft({...draft,name:e.target.value})} autoComplete="given-name" placeholder="What do your friends call you?"/></label><label className="field">Username<input required minLength={3} maxLength={20} pattern="[a-z][a-z0-9_]{2,19}" value={draft.username} onChange={e=>setDraft({...draft,username:e.target.value.toLowerCase()})} autoComplete="username" placeholder="your_future_era"/></label><label className="field">Age <small>Optional · 18+</small><input type="number" min={18} max={110} step={1} value={draft.age} onChange={e=>setDraft({...draft,age:e.target.value})} placeholder="Your age"/></label><label className="field">Gender <small>Optional</small><select value={draft.gender} onChange={e=>{const gender=e.target.value;setDraft({...draft,gender});setFilter(gender==='man'?'masculine':gender==='woman'?'feminine':gender==='non-binary'?'neutral':'all')}}><option value="prefer-not-to-say">Prefer not to say</option><option value="woman">Woman</option><option value="man">Man</option><option value="non-binary">Non-binary</option></select></label></div><div className="avatar-section-title"><b>Pick your character.</b><button type="button" className="text-button" onClick={()=>upload.current?.click()}><Camera size={15}/>Upload a photo</button></div><p className="avatar-help">Style is yours to choose. Every avatar is available to everyone.</p><input ref={upload} type="file" hidden accept="image/jpeg,image/png,image/webp" onChange={e=>void readPhoto(e.target.files?.[0])}/><div className="avatar-filters" role="group" aria-label="Avatar style">{['all','masculine','feminine','neutral'].map(g=><button type="button" key={g} aria-pressed={filter===g} className={filter===g?'active':''} onClick={()=>setFilter(g)}>{g==='all'?'All styles':g.charAt(0).toUpperCase()+g.slice(1)}</button>)}</div><div className="avatar-picker">{avatars.filter(a=>filter==='all'||a.group===filter).map(a=><button type="button" key={a.id} aria-label={a.name} aria-pressed={draft.avatar===a.id&&!draft.photo} className={draft.avatar===a.id&&!draft.photo?'selected':''} onClick={()=>{request.current++;setPhotoBusy(false);setDraft({...draft,avatar:a.id,photo:null})}}><img src={base+'/avatars/'+a.id+'.svg'} alt=""/>{draft.avatar===a.id&&!draft.photo&&<Check size={12}/>}</button>)}</div>{draft.photo&&<div className="profile-photo-preview"><img src={draft.photo} alt="New profile photo preview"/><span>Your own main-character moment.</span><button type="button" className="text-button" onClick={()=>setDraft({...draft,photo:null})}>Use avatar instead</button></div>}<div className="profile-editor-note"><Lock size={14}/><p>Name, username, age, gender and photo stay private in this version. Age and gender do not determine your risk profile. Uploads are cropped to a square and compressed.</p></div>{status&&<p role="status" className="profile-error">{status}</p>}<button className="primary" disabled={busy||photoBusy||!draft.name.trim()}>{photoBusy?'Preparing photo…':busy?'Saving…':user?'Save profile':'Sign in to save'}<ArrowRight size={16}/></button></form></section>}
- {!editing&&status&&<p role="status" className="profile-error">{status}</p>}
- <AssetPlusEntry onOpen={onInvest}/><button className="profile-guide-entry" onClick={onGuide}><span><Sparkles size={23}/></span><div><small>GEMINI / YOUR PRIVATE GUIDE</small><h3>Make sense of your money mindset.</h3><p>Get an explanation of your saved profile and next steps.</p></div><ArrowUpRight size={21}/></button><section className="profile-test-card"><div className="profile-test-copy"><span className="eyebrow">{report.complete?'YOUR MONEY MINDSET, IN FOCUS':'A VIBE CHECK FOR YOUR FUTURE'}</span><h2>{report.complete?'You’re getting to know your investor self.':'Meet your money personality.'}</h2><p>{report.complete?'Your profile is a starting point, not a permanent label. Life changes. Your answers can too.':'Swipe through real-life moments. Find what resonates. Then connect the dots with a few practical money questions.'}</p><button className="primary" onClick={report.complete?review:start}>{report.complete?'Review my profile':'Find my investor style'}<ArrowUpRight size={17}/></button><small><span/>Swipe. Reflect. Understand. · Up to 20 cards</small></div><div className="profile-deck" aria-hidden="true"><div className="mini-swipe-card back"/><div className="mini-swipe-card front"><span>YOUR NEXT CHAPTER</span><b>🌱</b><strong>Slow progress<br/>is still a flex.</strong><div><i>×</i><i>♡</i></div></div><span className="deck-spark">*</span></div></section>
- <section className="profile-analytics"><div className="profile-section-title"><div><span className="eyebrow">SELF-KNOWLEDGE IS A GOOD INVESTMENT</span><h2>Your investor snapshot.</h2></div><span className={'analysis-status '+(report.complete?'complete':'')}>{report.complete?<Check size={12}/>:<Compass size={12}/>}{report.complete?(saved?'Saved answers':'Session preview'):'Not assessed'}</span></div>
- <div className={'investor-summary '+(!report.complete?'pending':'')}><div className="investor-symbol">{report.complete?<Leaf size={28}/>:<Compass size={28}/>}</div><div><small>{report.complete?'YOUR CURRENT STARTING POINT':'A PROFILE THAT GROWS WITH YOU'}</small><h3>{report.title}</h3><p>{report.description}</p></div></div>
- {report.complete&&!saved&&<div className="assessment-unsaved"><p>This snapshot uses your current answers. Save your assessment to keep it across visits.</p><button className="text-button" onClick={review}>Save assessment <ArrowRight size={13}/></button></div>}<div className="risk-grid"><article><div><ShieldCheck size={17}/><span>Financial risk capacity</span></div><strong>{report.capacity}</strong><p>{report.complete?'Based on your timeline, buffer and budget answers. A full review is still needed.':'Complete the practical questions to identify constraints.'}</p></article><article><div><Compass size={17}/><span>Comfort with losses</span></div><strong>{report.willing}</strong><p>{report.complete?'Self-reported reaction to a hypothetical 20% loss. Not a measure of ability to bear loss.':'Your reaction to a loss will be considered separately.'}</p></article></div>
- {report.complete&&report.constraints.length>0&&<div className="constraint-list"><b>Things to take care of first</b>{report.constraints.map(c=><span key={c}><ShieldCheck size={13}/>{c}</span>)}</div>}
- <div className="response-map"><div className="response-map-header"><h3>Your response map</h3><span>{report.answered} answered · {report.skipped} skipped</span></div><p>How often you chose “that’s me” in each theme. These are response counts, not personality scores.</p>{report.dimensions.map(d=><div className="response-dimension" key={d.key}><div><b>{d.label}</b><span>{d.total?`${d.yes} of ${d.total} resonated`:'Not enough responses'}</span></div><div className="response-track"><span style={{width:(d.percent??0)+'%'}}/></div></div>)}</div>
- <div className="profile-insight"><Sparkles size={19}/><p>{report.complete?(report.foundation&&report.willing==='Higher'?'You’re comfortable with market swings, but your financial constraints come first. Willingness to take risk does not establish capacity.':'A longer horizon and a calm reaction to losses are only part of the picture. Existing investments, obligations and liquidity needs still matter.'):'Your age, gender, avatar and swipes won’t be used to assume how much risk you can afford.'}</p></div><div className="analytics-footer"><span>Illustrative, rules-based profile · No fund recommendation</span><button className="text-button" onClick={start}><RefreshCw size={13}/>{report.complete?'Retake the check':'Start my check'}</button></div></section><OnboardingHelp/>{user&&<AccountPrivacy key={user.id} userId={user.id}/>}<SharedMoments user={user} notify={notify}/>
- </div></div></div>
+"use client";
+import AccountPrivacy from "./account-privacy";
+import OnboardingHelp from "./onboarding-help";
+import { useEffect, useRef, useState } from "react";
+import type { User } from "@supabase/supabase-js";
+import {
+  ArrowUpRight,
+  ArrowRight,
+  Camera,
+  Check,
+  ChevronRight,
+  Edit3,
+  Lock,
+  ShieldCheck,
+  Sparkles,
+  Target,
+  Users,
+  X,
+  LogOut,
+  Leaf,
+  Compass,
+  RefreshCw,
+} from "lucide-react";
+import { supabase } from "../lib/supabase";
+import SharedMoments from "./shared-moments";
+import { investorProfile } from "../lib/investor-profile";
+const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const avatars = ["masculine", "feminine", "neutral"].flatMap((group) =>
+  [1, 2, 3, 4].map((n) => ({
+    id: group + "-" + n,
+    group,
+    name: group.charAt(0).toUpperCase() + group.slice(1) + " avatar " + n,
+  })),
+);
+type Profile = {
+  name: string;
+  username: string;
+  age: string;
+  gender: string;
+  avatar: string;
+  photo: string | null;
+};
+const empty: Profile = {
+  name: "",
+  username: "",
+  age: "",
+  gender: "prefer-not-to-say",
+  avatar: "neutral-1",
+  photo: null,
+};
+type Props = {
+  user: User | null;
+  answers: string[];
+  preferences: (boolean | null)[];
+  saved: boolean;
+  start: () => void;
+  review: () => void;
+  signIn: () => void;
+  notify: (s: string) => void;
+  onName: (s: string) => void;
+  onIdentity: (s: string) => void;
+  onGuide: () => void;
+  onInvest: () => void;
+  circles: () => void;
+};
+export default function ProfilePage({
+  user,
+  answers,
+  preferences,
+  saved,
+  start,
+  review,
+  signIn,
+  notify,
+  onName,
+  onIdentity,
+  onGuide,
+  onInvest,
+  circles,
+}: Props) {
+  const [profile, setProfile] = useState<Profile>(empty),
+    [draft, setDraft] = useState<Profile>(empty),
+    [editing, setEditing] = useState(false),
+    [filter, setFilter] = useState("all"),
+    [busy, setBusy] = useState(false),
+    [loading, setLoading] = useState(Boolean(user)),
+    [status, setStatus] = useState(""),
+    [photoBusy, setPhotoBusy] = useState(false);
+  const upload = useRef<HTMLInputElement>(null),
+    request = useRef(0);
+  const report = investorProfile(answers, preferences);
+  const hasProfile = Boolean(profile.name);
+  const chosen = editing ? draft : profile;
+  useEffect(() => {
+    let active = true;
+    setProfile(empty);
+    setDraft(empty);
+    setStatus("");
+    if (!user || !supabase) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    supabase
+      .from("profiles")
+      .select("name,username,age,gender,avatar,photo")
+      .eq("user_id", user.id)
+      .maybeSingle()
+      .then(({ data, error }) => {
+        if (!active) return;
+        setLoading(false);
+        if (error) {
+          setStatus(
+            "Profile storage is not ready. You can explore, but profile changes cannot be saved yet.",
+          );
+          return;
+        }
+        if (data) {
+          const value = { ...data, age: data.age ? String(data.age) : "" };
+          setProfile(value);
+          setDraft(value);
+          onName(value.name);
+          onIdentity(value.photo || base + "/avatars/" + value.avatar + ".svg");
+        }
+      });
+    return () => {
+      active = false;
+      request.current++;
+    };
+  }, [user?.id]);
+  function edit() {
+    setDraft(profile);
+    setEditing(true);
+    setStatus("");
+  }
+  async function readPhoto(file?: File) {
+    if (!file) return;
+    const id = ++request.current;
+    if (
+      !["image/jpeg", "image/png", "image/webp"].includes(file.type) ||
+      file.size > 5 * 1024 * 1024
+    ) {
+      notify("Choose a JPG, PNG or WebP photo under 5 MB.");
+      return;
+    }
+    setPhotoBusy(true);
+    const url = URL.createObjectURL(file);
+    try {
+      const image = new Image();
+      image.src = url;
+      await image.decode();
+      if (image.width * image.height > 40000000) throw Error("large");
+      const canvas = document.createElement("canvas");
+      canvas.width = 320;
+      canvas.height = 320;
+      const c = canvas.getContext("2d")!;
+      const side = Math.min(image.width, image.height);
+      c.drawImage(
+        image,
+        (image.width - side) / 2,
+        (image.height - side) / 2,
+        side,
+        side,
+        0,
+        0,
+        320,
+        320,
+      );
+      const photo = canvas.toDataURL("image/jpeg", 0.84);
+      if (photo.length >= 160000) throw Error("large");
+      if (id === request.current) setDraft((old) => ({ ...old, photo }));
+    } catch {
+      if (id === request.current)
+        notify("Could not prepare this photo. Try a smaller image.");
+    } finally {
+      URL.revokeObjectURL(url);
+      if (id === request.current) setPhotoBusy(false);
+    }
+  }
+  async function save(e: React.FormEvent) {
+    e.preventDefault();
+    if (!user || !supabase) {
+      signIn();
+      return;
+    }
+    if (!/^[a-z][a-z0-9_]{2,19}$/.test(draft.username)) {
+      setStatus(
+        "Use 3–20 lowercase letters, numbers or underscores, starting with a letter.",
+      );
+      return;
+    }
+    setBusy(true);
+    setStatus("");
+    const { error } = await supabase
+      .from("profiles")
+      .upsert({
+        user_id: user.id,
+        ...draft,
+        name: draft.name.trim(),
+        age: draft.age ? Number(draft.age) : null,
+        updated_at: new Date().toISOString(),
+      });
+    setBusy(false);
+    if (error) {
+      setStatus(
+        error.code === "23505"
+          ? "That username is already taken. Try another."
+          : "Could not save your profile. Your edits are still here; please try again later.",
+      );
+      return;
+    }
+    const next = { ...draft, name: draft.name.trim() };
+    setProfile(next);
+    setEditing(false);
+    onName(next.name);
+    onIdentity(next.photo || base + "/avatars/" + next.avatar + ".svg");
+    notify("Your profile is saved privately.");
+  }
+  return (
+    <div className="profile-page">
+      <div className="profile-page-title">
+        <div>
+          <span className="eyebrow">MY STRIDE / YOUR OWN KIND OF PROGRESS</span>
+          <h1>A little more you.</h1>
+          <p>Your identity. Your money mindset. Your next chapter.</p>
+        </div>
+        <span className="profile-private">
+          <Lock size={13} />
+          Only you can see this
+        </span>
+      </div>
+      <div className="profile-layout">
+        <div className="profile-left">
+          <section className="identity-card">
+            <div className="identity-cover">
+              <span>
+                MAKE ROOM FOR
+                <br />
+                <b>future you.</b>
+              </span>
+              <span className="cover-flower" aria-hidden="true">
+                *
+              </span>
+              <div className="cover-orbit" />
+            </div>
+            <div className="identity-body">
+              <div className="identity-avatar-wrap">
+                <img
+                  className="identity-avatar"
+                  src={
+                    chosen.photo || base + "/avatars/" + chosen.avatar + ".svg"
+                  }
+                  alt={
+                    chosen.photo
+                      ? "Your profile photo"
+                      : "Your selected illustrated avatar"
+                  }
+                />
+                <button aria-label="Change profile picture" onClick={edit}>
+                  <Camera size={16} />
+                </button>
+              </div>
+              <span className="identity-pill">
+                <Leaf size={11} />A WORK IN PROGRESS
+              </span>
+              <h2>
+                {loading
+                  ? "Loading your space…"
+                  : profile.name || "Your name goes here"}
+              </h2>
+              <p className="identity-handle">
+                {profile.username
+                  ? "@" + profile.username
+                  : "Your next chapter starts with you."}
+              </p>
+              <div className="identity-facts">
+                <span>
+                  {profile.age ? profile.age + " years old" : "Age not added"}
+                </span>
+                <i />
+                <span>
+                  {
+                    (
+                      {
+                        woman: "Woman",
+                        man: "Man",
+                        "non-binary": "Non-binary",
+                        "prefer-not-to-say": "Gender private",
+                      } as Record<string, string>
+                    )[profile.gender]
+                  }
+                </span>
+              </div>
+              <button className="secondary wide" onClick={edit}>
+                <Edit3 size={15} />
+                {hasProfile ? "Edit profile" : "Make it yours"}
+              </button>
+              <div className="identity-footer">
+                <ShieldCheck size={14} />
+                {user ? "Private account · signed in" : "Exploring as a guest"}
+              </div>
+            </div>
+          </section>
+          <section className="profile-mini-card">
+            <div className="profile-mini-icon">
+              <Target size={20} />
+            </div>
+            <div>
+              <b>Progress, on your terms.</b>
+              <p>
+                No public balances. No wealth rankings. Just your own next step.
+              </p>
+            </div>
+          </section>
+          <button className="profile-circle-link" onClick={circles}>
+            <Users size={19} />
+            <span>
+              Find your circle<small>Good company. No comparisons.</small>
+            </span>
+            <ArrowUpRight size={18} />
+          </button>
+          <button
+            className="profile-session"
+            onClick={
+              user
+                ? async () => {
+                    const { error } = await supabase!.auth.signOut();
+                    notify(error ? error.message : "Signed out.");
+                  }
+                : signIn
+            }
+          >
+            {user ? <LogOut size={15} /> : <Lock size={15} />}{" "}
+            {user ? "Sign out of this account" : "Sign in to save your profile"}
+          </button>
+        </div>
+        <div className="profile-main">
+          {editing && (
+            <section className="profile-editor">
+              <div className="profile-section-title">
+                <div>
+                  <span className="eyebrow">THE PERSON BEHIND THE PLAN</span>
+                  <h2>Make yourself at home.</h2>
+                </div>
+                <button
+                  aria-label="Cancel profile editing"
+                  className="icon-btn"
+                  onClick={() => {
+                    request.current++;
+                    setPhotoBusy(false);
+                    setEditing(false);
+                  }}
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              <form onSubmit={save}>
+                <div className="profile-fields">
+                  <label className="field">
+                    Name
+                    <input
+                      required
+                      maxLength={40}
+                      value={draft.name}
+                      onChange={(e) =>
+                        setDraft({ ...draft, name: e.target.value })
+                      }
+                      autoComplete="given-name"
+                      placeholder="What do your friends call you?"
+                    />
+                  </label>
+                  <label className="field">
+                    Username
+                    <input
+                      required
+                      minLength={3}
+                      maxLength={20}
+                      pattern="[a-z][a-z0-9_]{2,19}"
+                      value={draft.username}
+                      onChange={(e) =>
+                        setDraft({
+                          ...draft,
+                          username: e.target.value.toLowerCase(),
+                        })
+                      }
+                      autoComplete="username"
+                      placeholder="your_future_era"
+                    />
+                  </label>
+                  <label className="field">
+                    Age <small>Optional · 18+</small>
+                    <input
+                      type="number"
+                      min={18}
+                      max={110}
+                      step={1}
+                      value={draft.age}
+                      onChange={(e) =>
+                        setDraft({ ...draft, age: e.target.value })
+                      }
+                      placeholder="Your age"
+                    />
+                  </label>
+                  <label className="field">
+                    Gender <small>Optional</small>
+                    <select
+                      value={draft.gender}
+                      onChange={(e) => {
+                        const gender = e.target.value;
+                        setDraft({ ...draft, gender });
+                        setFilter(
+                          gender === "man"
+                            ? "masculine"
+                            : gender === "woman"
+                              ? "feminine"
+                              : gender === "non-binary"
+                                ? "neutral"
+                                : "all",
+                        );
+                      }}
+                    >
+                      <option value="prefer-not-to-say">
+                        Prefer not to say
+                      </option>
+                      <option value="woman">Woman</option>
+                      <option value="man">Man</option>
+                      <option value="non-binary">Non-binary</option>
+                    </select>
+                  </label>
+                </div>
+                <div className="avatar-section-title">
+                  <b>Pick your character.</b>
+                  <button
+                    type="button"
+                    className="text-button"
+                    onClick={() => upload.current?.click()}
+                  >
+                    <Camera size={15} />
+                    Upload a photo
+                  </button>
+                </div>
+                <p className="avatar-help">
+                  Style is yours to choose. Every avatar is available to
+                  everyone.
+                </p>
+                <input
+                  ref={upload}
+                  type="file"
+                  hidden
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={(e) => void readPhoto(e.target.files?.[0])}
+                />
+                <div
+                  className="avatar-filters"
+                  role="group"
+                  aria-label="Avatar style"
+                >
+                  {["all", "masculine", "feminine", "neutral"].map((g) => (
+                    <button
+                      type="button"
+                      key={g}
+                      aria-pressed={filter === g}
+                      className={filter === g ? "active" : ""}
+                      onClick={() => setFilter(g)}
+                    >
+                      {g === "all"
+                        ? "All styles"
+                        : g.charAt(0).toUpperCase() + g.slice(1)}
+                    </button>
+                  ))}
+                </div>
+                <div className="avatar-picker">
+                  {avatars
+                    .filter((a) => filter === "all" || a.group === filter)
+                    .map((a) => (
+                      <button
+                        type="button"
+                        key={a.id}
+                        aria-label={a.name}
+                        aria-pressed={draft.avatar === a.id && !draft.photo}
+                        className={
+                          draft.avatar === a.id && !draft.photo
+                            ? "selected"
+                            : ""
+                        }
+                        onClick={() => {
+                          request.current++;
+                          setPhotoBusy(false);
+                          setDraft({ ...draft, avatar: a.id, photo: null });
+                        }}
+                      >
+                        <img src={base + "/avatars/" + a.id + ".svg"} alt="" />
+                        {draft.avatar === a.id && !draft.photo && (
+                          <Check size={12} />
+                        )}
+                      </button>
+                    ))}
+                </div>
+                {draft.photo && (
+                  <div className="profile-photo-preview">
+                    <img src={draft.photo} alt="New profile photo preview" />
+                    <span>Your own main-character moment.</span>
+                    <button
+                      type="button"
+                      className="text-button"
+                      onClick={() => setDraft({ ...draft, photo: null })}
+                    >
+                      Use avatar instead
+                    </button>
+                  </div>
+                )}
+                <div className="profile-editor-note">
+                  <Lock size={14} />
+                  <p>
+                    Name, username, age, gender and photo stay private in this
+                    version. Age and gender do not determine your risk profile.
+                    Uploads are cropped to a square and compressed.
+                  </p>
+                </div>
+                {status && (
+                  <p role="status" className="profile-error">
+                    {status}
+                  </p>
+                )}
+                <button
+                  className="primary"
+                  disabled={busy || photoBusy || !draft.name.trim()}
+                >
+                  {photoBusy
+                    ? "Preparing photo…"
+                    : busy
+                      ? "Saving…"
+                      : user
+                        ? "Save profile"
+                        : "Sign in to save"}
+                  <ArrowRight size={16} />
+                </button>
+              </form>
+            </section>
+          )}
+          {!editing && status && (
+            <p role="status" className="profile-error">
+              {status}
+            </p>
+          )}
+          <button className="profile-guide-entry" onClick={onGuide}>
+            <span>
+              <Sparkles size={23} />
+            </span>
+            <div>
+              <small>GEMINI / YOUR PRIVATE GUIDE</small>
+              <h3>Make sense of your money mindset.</h3>
+              <p>Get an explanation of your saved profile and next steps.</p>
+            </div>
+            <ArrowUpRight size={21} />
+          </button>
+          <section className="profile-test-card">
+            <div className="profile-test-copy">
+              <span className="eyebrow">
+                {report.complete
+                  ? "YOUR MONEY MINDSET, IN FOCUS"
+                  : "A VIBE CHECK FOR YOUR FUTURE"}
+              </span>
+              <h2>
+                {report.complete
+                  ? "You’re getting to know your investor self."
+                  : "Meet your money personality."}
+              </h2>
+              <p>
+                {report.complete
+                  ? "Your profile is a starting point, not a permanent label. Life changes. Your answers can too."
+                  : "Swipe through real-life moments. Find what resonates. Then connect the dots with a few practical money questions."}
+              </p>
+              <button
+                className="primary"
+                onClick={report.complete ? review : start}
+              >
+                {report.complete
+                  ? "Review my profile"
+                  : "Find my investor style"}
+                <ArrowUpRight size={17} />
+              </button>
+              <small>
+                <span />
+                Swipe. Reflect. Understand. · Up to 20 cards
+              </small>
+            </div>
+            <div className="profile-deck" aria-hidden="true">
+              <div className="mini-swipe-card back" />
+              <div className="mini-swipe-card front">
+                <span>YOUR NEXT CHAPTER</span>
+                <b>🌱</b>
+                <strong>
+                  Slow progress
+                  <br />
+                  is still a flex.
+                </strong>
+                <div>
+                  <i>×</i>
+                  <i>♡</i>
+                </div>
+              </div>
+              <span className="deck-spark">*</span>
+            </div>
+          </section>
+          <section className="profile-analytics">
+            <div className="profile-section-title">
+              <div>
+                <span className="eyebrow">
+                  SELF-KNOWLEDGE IS A GOOD INVESTMENT
+                </span>
+                <h2>Your investor snapshot.</h2>
+              </div>
+              <span
+                className={
+                  "analysis-status " + (report.complete ? "complete" : "")
+                }
+              >
+                {report.complete ? <Check size={12} /> : <Compass size={12} />}
+                {report.complete
+                  ? saved
+                    ? "Saved answers"
+                    : "Session preview"
+                  : "Not assessed"}
+              </span>
+            </div>
+            <div
+              className={
+                "investor-summary " + (!report.complete ? "pending" : "")
+              }
+            >
+              <div className="investor-symbol">
+                {report.complete ? <Leaf size={28} /> : <Compass size={28} />}
+              </div>
+              <div>
+                <small>
+                  {report.complete
+                    ? "YOUR CURRENT STARTING POINT"
+                    : "A PROFILE THAT GROWS WITH YOU"}
+                </small>
+                <h3>{report.title}</h3>
+                <p>{report.description}</p>
+              </div>
+            </div>
+            {report.complete && !saved && (
+              <div className="assessment-unsaved">
+                <p>
+                  This snapshot uses your current answers. Save your assessment
+                  to keep it across visits.
+                </p>
+                <button className="text-button" onClick={review}>
+                  Save assessment <ArrowRight size={13} />
+                </button>
+              </div>
+            )}
+            <div className="risk-grid">
+              <article>
+                <div>
+                  <ShieldCheck size={17} />
+                  <span>Financial risk capacity</span>
+                </div>
+                <strong>{report.capacity}</strong>
+                <p>
+                  {report.complete
+                    ? "Based on your timeline, buffer and budget answers. A full review is still needed."
+                    : "Complete the practical questions to identify constraints."}
+                </p>
+              </article>
+              <article>
+                <div>
+                  <Compass size={17} />
+                  <span>Comfort with losses</span>
+                </div>
+                <strong>{report.willing}</strong>
+                <p>
+                  {report.complete
+                    ? "Self-reported reaction to a hypothetical 20% loss. Not a measure of ability to bear loss."
+                    : "Your reaction to a loss will be considered separately."}
+                </p>
+              </article>
+            </div>
+            {report.complete && report.constraints.length > 0 && (
+              <div className="constraint-list">
+                <b>Things to take care of first</b>
+                {report.constraints.map((c) => (
+                  <span key={c}>
+                    <ShieldCheck size={13} />
+                    {c}
+                  </span>
+                ))}
+              </div>
+            )}
+            <div className="response-map">
+              <div className="response-map-header">
+                <h3>Your response map</h3>
+                <span>
+                  {report.answered} answered · {report.skipped} skipped
+                </span>
+              </div>
+              <p>
+                How often you chose “that’s me” in each theme. These are
+                response counts, not personality scores.
+              </p>
+              {report.dimensions.map((d) => (
+                <div className="response-dimension" key={d.key}>
+                  <div>
+                    <b>{d.label}</b>
+                    <span>
+                      {d.total
+                        ? `${d.yes} of ${d.total} resonated`
+                        : "Not enough responses"}
+                    </span>
+                  </div>
+                  <div className="response-track">
+                    <span style={{ width: (d.percent ?? 0) + "%" }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="profile-insight">
+              <Sparkles size={19} />
+              <p>
+                {report.complete
+                  ? report.foundation && report.willing === "Higher"
+                    ? "You’re comfortable with market swings, but your financial constraints come first. Willingness to take risk does not establish capacity."
+                    : "A longer horizon and a calm reaction to losses are only part of the picture. Existing investments, obligations and liquidity needs still matter."
+                  : "Your age, gender, avatar and swipes won’t be used to assume how much risk you can afford."}
+              </p>
+            </div>
+            <div className="analytics-footer">
+              <span>
+                Illustrative, rules-based profile · No fund recommendation
+              </span>
+              <button className="text-button" onClick={start}>
+                <RefreshCw size={13} />
+                {report.complete ? "Retake the check" : "Start my check"}
+              </button>
+            </div>
+          </section>
+          <OnboardingHelp />
+          {user && <AccountPrivacy key={user.id} userId={user.id} />}
+          <SharedMoments user={user} notify={notify} />
+        </div>
+      </div>
+    </div>
+  );
 }

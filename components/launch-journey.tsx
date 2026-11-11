@@ -1,16 +1,205 @@
-'use client';
-import {ArrowRight,Compass,ShieldCheck,CalendarDays,Leaf,HeartHandshake} from 'lucide-react';
-import {investorProfile} from '../lib/investor-profile';
-export function NextMove({answers,start,account,invest}:{answers:string[];start:()=>void;account:()=>void;invest:()=>void}){
- const report=investorProfile(answers,[]);
- const title=!report.complete?'Give your money a starting point.':report.foundation?'Make room for a stronger foundation.':report.capacity==='Limited by timeline'?'Keep your deadline in the picture.':'Prepare for your next step.';
- const copy=!report.complete?'Start with your goals, timeline and financial breathing room. Your amounts stay private.':report.foundation?report.constraints.join(' · ')+'. Review these before committing money to a fund.':report.capacity==='Limited by timeline'?'Review access needs and your ability to bear losses before choosing a fund.':'Your answers are a starting point. Learn what to keep handy for AssetPlus registration and account activation.';
- const action=!report.complete?start:report.foundation||report.capacity==='Limited by timeline'?account:invest;
- return <section className="next-move"><span className="launch-icon"><Compass size={24}/></span><div><span className="eyebrow">YOUR NEXT MOVE</span><h2>{title}</h2><p>{copy}</p><button className="primary" onClick={action}>{!report.complete?'Find my starting point':report.foundation||report.capacity==='Limited by timeline'?'Review my financial foundations':'Prepare for AssetPlus'}<ArrowRight size={16}/></button><small>Based on your confirmed answers · You choose your pace</small></div></section>
+"use client";
+import {
+  ArrowRight,
+  Compass,
+  ShieldCheck,
+  CalendarDays,
+  Leaf,
+  HeartHandshake,
+} from "lucide-react";
+import { investorProfile } from "../lib/investor-profile";
+export function NextMove({
+  answers,
+  start,
+  account,
+  research,
+}: {
+  answers: string[];
+  start: () => void;
+  account: () => void;
+  research: () => void;
+}) {
+  const report = investorProfile(answers, []);
+  const title = !report.complete
+    ? "Give your money a starting point."
+    : report.foundation
+      ? "Make room for a stronger foundation."
+      : report.capacity === "Limited by timeline"
+        ? "Keep your deadline in the picture."
+        : "Prepare for your next step.";
+  const copy = !report.complete
+    ? "Start with your goals, timeline and financial breathing room. Your amounts stay private."
+    : report.foundation
+      ? report.constraints.join(" · ") +
+        ". Review these before committing money to a fund."
+      : report.capacity === "Limited by timeline"
+        ? "Review access needs and your ability to bear losses before choosing a fund."
+        : "Your answers are a starting point. Compare the launch shortlist before choosing what to research further.";
+  const action = !report.complete
+    ? start
+    : report.foundation || report.capacity === "Limited by timeline"
+      ? account
+      : research;
+  return (
+    <section className="next-move">
+      <span className="launch-icon">
+        <Compass size={24} />
+      </span>
+      <div>
+        <span className="eyebrow">YOUR NEXT MOVE</span>
+        <h2>{title}</h2>
+        <p>{copy}</p>
+        <button className="primary" onClick={action}>
+          {!report.complete
+            ? "Find my starting point"
+            : report.foundation || report.capacity === "Limited by timeline"
+              ? "Review my financial foundations"
+              : "Research the shortlist"}
+          <ArrowRight size={16} />
+        </button>
+        <small>Based on your confirmed answers · You choose your pace</small>
+      </div>
+    </section>
+  );
 }
-export function HabitPassport({invest,share}:{invest:()=>void;share:()=>void}){
- return <section className="habit-passport"><div className="launch-section-title"><div><span className="eyebrow">YOUR HABIT PASSPORT</span><h2>A journey worth showing up for.</h2></div><CalendarDays size={25}/></div><p>Keep the meaning of your progress. Keep your amounts to yourself.</p><div className="passport-stats"><div><small>Verified contribution months</small><strong>-</strong><span>Awaiting provider connection</span></div><div><small>Your next milestone</small><strong>First confirmed month</strong><span>A registration is the beginning, not a contribution.</span></div></div><div className="passport-empty"><Leaf size={27}/><h3>Your financial story starts here.</h3><p>AssetPlus activity is not synced to Stride yet. Once confirmed transaction data is connected, your completed months can appear here. Until then, we won’t guess your progress.</p></div><details><summary>What will count toward my passport?</summary><p>Only confirmed contributions can earn verified credit. Planned, pending or failed payments do not count. Multiple funds in one month still count as one month. Pauses and reversals must be reflected honestly; processing delays need confirmation before a month is marked missed.</p></details><div className="launch-actions"><button className="primary" onClick={invest}>See the AssetPlus setup guide <ArrowRight size={16}/></button><button className="secondary" onClick={share}>Capture my reason <ArrowRight size={16}/></button></div><small>A personal photo or goal journal does not verify an investment.</small></section>
+export function HabitPassport({
+  research,
+  share,
+}: {
+  research: () => void;
+  share: () => void;
+}) {
+  return (
+    <section className="habit-passport">
+      <div className="launch-section-title">
+        <div>
+          <span className="eyebrow">YOUR HABIT PASSPORT</span>
+          <h2>A journey worth showing up for.</h2>
+        </div>
+        <CalendarDays size={25} />
+      </div>
+      <p>Keep the meaning of your progress. Keep your amounts to yourself.</p>
+      <div className="passport-stats">
+        <div>
+          <small>Verified contribution months</small>
+          <strong>-</strong>
+          <span>Awaiting provider connection</span>
+        </div>
+        <div>
+          <small>Your next milestone</small>
+          <strong>First confirmed month</strong>
+          <span>A registration is the beginning, not a contribution.</span>
+        </div>
+      </div>
+      <div className="passport-empty">
+        <Leaf size={27} />
+        <h3>Your financial story starts here.</h3>
+        <p>
+          AssetPlus activity is not synced to Stride yet. Once confirmed
+          transaction data is connected, your completed months can appear here.
+          Until then, we won’t guess your progress.
+        </p>
+      </div>
+      <details>
+        <summary>What will count toward my passport?</summary>
+        <p>
+          Only confirmed contributions can earn verified credit. Planned,
+          pending or failed payments do not count. Multiple funds in one month
+          still count as one month. Pauses and reversals must be reflected
+          honestly; processing delays need confirmation before a month is marked
+          missed.
+        </p>
+      </details>
+      <div className="launch-actions">
+        <button className="primary" onClick={research}>
+          Research funds first <ArrowRight size={16} />
+        </button>
+        <button className="secondary" onClick={share}>
+          Capture my reason <ArrowRight size={16} />
+        </button>
+      </div>
+      <small>
+        A personal photo or goal journal does not verify an investment.
+      </small>
+    </section>
+  );
 }
-export function ReviewToolkit({review,guide}:{review:()=>void;guide:()=>void}){
- return <section className="review-toolkit"><div className="launch-section-title"><div><span className="eyebrow">A LITTLE SUPPORT, WHEN YOU NEED IT</span><h2>Life changes. Your plan can too.</h2></div><HeartHandshake size={26}/></div><details><summary>My fund is down. What should I review?</summary><p>Check the exact scheme and valuation date first. A short-term NAV change alone cannot tell you whether to hold, sell or invest more.</p><ul><li>Has your goal or the date you need this money changed?</li><li>Do you have accessible savings for essential expenses?</li><li>Does the investment still fit your ability to bear losses?</li></ul><p>Use AssetPlus’s Support Centre or speak with your distributor to review the actual holding. Past recoveries do not guarantee a future recovery.</p><button className="text-button" onClick={review}>Review my starting point <ArrowRight size={15}/></button></details><details><summary>Is it time to increase my SIP?</summary><p>A longer streak is not a reason by itself to invest more. Review changes in income, essential expenses, debt and your emergency buffer. Keeping the amount unchanged is a valid choice.</p><p>Any change must be reviewed and confirmed separately on AssetPlus, subject to its scheme and mandate rules.</p><button className="text-button" onClick={review}>Revisit my budget and goals <ArrowRight size={15}/></button></details><details><summary>I need to pause or had a difficult month.</summary><p>A pause does not erase earlier progress. Check upcoming instructions and pause or cancellation options in AssetPlus. Returning to Stride does not change a mandate or stop a debit.</p><p>If a payment failed or is pending, check its provider status before retrying so you do not accidentally duplicate it.</p></details><div className="launch-guide"><ShieldCheck size={20}/><div><h3>Understand your starting point.</h3><p>Ask Gemini to explain your saved profile, its constraints and what needs a closer look.</p><button className="text-button" onClick={guide}>Open my private guide <ArrowRight size={15}/></button></div></div></section>
+export function ReviewToolkit({
+  review,
+  guide,
+}: {
+  review: () => void;
+  guide: () => void;
+}) {
+  return (
+    <section className="review-toolkit">
+      <div className="launch-section-title">
+        <div>
+          <span className="eyebrow">A LITTLE SUPPORT, WHEN YOU NEED IT</span>
+          <h2>Life changes. Your plan can too.</h2>
+        </div>
+        <HeartHandshake size={26} />
+      </div>
+      <details>
+        <summary>My fund is down. What should I review?</summary>
+        <p>
+          Check the exact scheme and valuation date first. A short-term NAV
+          change alone cannot tell you whether to hold, sell or invest more.
+        </p>
+        <ul>
+          <li>Has your goal or the date you need this money changed?</li>
+          <li>Do you have accessible savings for essential expenses?</li>
+          <li>Does the investment still fit your ability to bear losses?</li>
+        </ul>
+        <p>
+          Use AssetPlus’s Support Centre or speak with your distributor to
+          review the actual holding. Past recoveries do not guarantee a future
+          recovery.
+        </p>
+        <button className="text-button" onClick={review}>
+          Review my starting point <ArrowRight size={15} />
+        </button>
+      </details>
+      <details>
+        <summary>Is it time to increase my SIP?</summary>
+        <p>
+          A longer streak is not a reason by itself to invest more. Review
+          changes in income, essential expenses, debt and your emergency buffer.
+          Keeping the amount unchanged is a valid choice.
+        </p>
+        <p>
+          Any change must be reviewed and confirmed separately on AssetPlus,
+          subject to its scheme and mandate rules.
+        </p>
+        <button className="text-button" onClick={review}>
+          Revisit my budget and goals <ArrowRight size={15} />
+        </button>
+      </details>
+      <details>
+        <summary>I need to pause or had a difficult month.</summary>
+        <p>
+          A pause does not erase earlier progress. Check upcoming instructions
+          and pause or cancellation options in AssetPlus. Returning to Stride
+          does not change a mandate or stop a debit.
+        </p>
+        <p>
+          If a payment failed or is pending, check its provider status before
+          retrying so you do not accidentally duplicate it.
+        </p>
+      </details>
+      <div className="launch-guide">
+        <ShieldCheck size={20} />
+        <div>
+          <h3>Understand your starting point.</h3>
+          <p>
+            Ask Gemini to explain your saved profile, its constraints and what
+            needs a closer look.
+          </p>
+          <button className="text-button" onClick={guide}>
+            Open my private guide <ArrowRight size={15} />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
 }
