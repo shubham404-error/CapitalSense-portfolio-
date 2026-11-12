@@ -2,15 +2,17 @@
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import {
-  ArrowLeft,
   ArrowUpRight,
+  Check,
   ExternalLink,
+  Plus,
   Search,
   ShieldCheck,
+  ShoppingBag,
   X,
 } from "lucide-react";
 import NavChart from "./nav-chart";
-import type { BasketFund } from "./fund-simulator";
+import type { CartFund } from "./fund-cart";
 import { fundOverviews } from "../lib/fund-overviews";
 import { fundCategories } from "../lib/fund-categories";
 import source from "../config/fund-research.json";
@@ -25,9 +27,9 @@ import {
 import { amcBrandForScheme, amcLogoPath } from "../lib/amc-logos";
 
 const launchFunds = source.funds.slice(0, 22);
-const FundSimulator = dynamic(() => import("./fund-simulator"), {
+const FundCart = dynamic(() => import("./fund-cart"), {
   ssr: false,
-  loading: () => <p className="research-loading">Preparing the historical replay…</p>,
+  loading: () => <p className="research-loading">Opening your SIP cart…</p>,
 });
 type ImportedFund = (typeof launchFunds)[number];
 const mappedById = new Map(mapping.funds.map((f) => [f.id, f]));
@@ -41,17 +43,10 @@ const formatDate = (date: string) =>
     timeZone: "Asia/Kolkata",
   });
 
-export default function FundResearch({
-  back,
-  onInvest,
-}: {
-  back: () => void;
-  onInvest: () => void;
-}) {
-  const [compared, setCompared] = useState<NavHistory[]>([]),
-    [basket, setBasket] = useState<BasketFund[]>([]),
-    [showCompare, setShowCompare] = useState(false),
-    [showSimulator, setShowSimulator] = useState(false),
+export default function FundResearch({ onInvest }: { onInvest: () => void }) {
+  const [cart, setCart] = useState<CartFund[]>([]),
+    [cartReady, setCartReady] = useState(false),
+    [showCart, setShowCart] = useState(false),
     [query, setQuery] = useState(""),
     [category, setCategory] = useState("all"),
     [selected, setSelected] = useState<ImportedFund | null>(null),
@@ -104,15 +99,14 @@ export default function FundResearch({
     return () => controller.abort();
   }, [selected?.id, requestVersion]);
   useEffect(() => {
-    const open = selected || showCompare || showSimulator;
+    const open = selected || showCart;
     if (!open) return;
     const old = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const close = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setSelected(null);
-        setShowCompare(false);
-        setShowSimulator(false);
+        setShowCart(false);
       }
     };
     document.addEventListener("keydown", close);
@@ -120,30 +114,75 @@ export default function FundResearch({
       document.body.style.overflow = old;
       document.removeEventListener("keydown", close);
     };
-  }, [selected, showCompare, showSimulator]);
+  }, [selected, showCart]);
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(
+        localStorage.getItem("stride-sip-cart-v1") || "[]",
+      );
+      if (Array.isArray(saved))
+        setCart(
+          saved.filter(
+            (item): item is CartFund =>
+              item &&
+              typeof item.id === "string" &&
+              typeof item.name === "string" &&
+              /^\d{4,9}$/.test(String(item.schemeCode)) &&
+              Number(item.sipAmount) >= 500,
+          ),
+        );
+    } catch {
+      /* Ignore malformed local-only drafts. */
+    }
+    setCartReady(true);
+  }, []);
+  useEffect(() => {
+    if (cartReady)
+      localStorage.setItem("stride-sip-cart-v1", JSON.stringify(cart));
+  }, [cart, cartReady]);
   function open(fund: ImportedFund) {
     setSelected(fund);
     setSnapshot(null);
     setNavError("");
     setFetching(false);
   }
+  function addToCart(fund: ImportedFund) {
+    const mapped = mappedById.get(fund.id);
+    if (!mapped || cart.some((item) => item.id === fund.id)) return;
+    setCart((items) => [
+      ...items,
+      {
+        id: fund.id,
+        name: fund.name,
+        schemeCode: mapped.schemeCode,
+        sipAmount: 5000,
+      },
+    ]);
+  }
 
   return (
     <div className="fund-page">
-      <button className="text-button research-back" onClick={back}>
-        <ArrowLeft size={15} />
-        Explore demo baskets
-      </button>
       <div className="fund-page-heading">
         <div>
           <span className="eyebrow">STRIDE LAUNCH SHORTLIST / MFAPI DATA</span>
           <h1>Find your kind of fund.</h1>
           <p>22 selected funds with direct Regular Growth NAV research.</p>
         </div>
-        <span className="fund-data-badge">
-          <span />
-          MFAPI CONNECTED
-        </span>
+        <div className="research-heading-actions">
+          <span className="fund-data-badge">
+            <span />
+            MFAPI CONNECTED
+          </span>
+          <button
+            className="sip-cart-button"
+            onClick={() => setShowCart(true)}
+            disabled={!cart.length}
+          >
+            <ShoppingBag size={18} />
+            <span>SIP cart</span>
+            <b>{cart.length}</b>
+          </button>
+        </div>
       </div>
       <section className="mapped-categories" aria-label="Fund categories">
         <div className="category-section-heading">
@@ -230,37 +269,48 @@ export default function FundResearch({
         {funds.map((f) => {
           const brand = amcBrandForScheme(f.name),
             mapped = mappedById.has(f.id);
+          const inCart = cart.some((item) => item.id === f.id);
           return (
-            <button key={f.id} onClick={() => open(f)}>
-              {brand ? (
-                <span className="amc-logo">
-                  <img
-                    src={amcLogoPath(brand.logo)}
-                    alt={brand.name + " logo"}
-                    loading="lazy"
-                  />
-                </span>
-              ) : (
-                <span className="amc-monogram">
-                  {f.name.slice(0, 2).toUpperCase()}
-                </span>
-              )}
-              <div>
-                <b>{f.name}</b>
-                {brand && (
-                  <span className="research-amc-name">{brand.name}</span>
+            <article key={f.id} className="research-fund-row">
+              <button className="research-fund-main" onClick={() => open(f)}>
+                {brand ? (
+                  <span className="amc-logo">
+                    <img
+                      src={amcLogoPath(brand.logo)}
+                      alt={brand.name + " logo"}
+                      loading="lazy"
+                    />
+                  </span>
+                ) : (
+                  <span className="amc-monogram">
+                    {f.name.slice(0, 2).toUpperCase()}
+                  </span>
                 )}
-                <span>
-                  {f.categories.map((c) => (
-                    <small key={c}>{c}</small>
-                  ))}
+                <div>
+                  <b>{f.name}</b>
+                  {brand && (
+                    <span className="research-amc-name">{brand.name}</span>
+                  )}
+                  <span>
+                    {f.categories.map((c) => (
+                      <small key={c}>{c}</small>
+                    ))}
+                  </span>
+                </div>
+                <span className="research-row-action">
+                  {mapped ? "View fund data" : "MFAPI unavailable"}{" "}
+                  <ArrowUpRight size={16} />
                 </span>
-              </div>
-              <span className="research-row-action">
-                {mapped ? "View fund data" : "MFAPI unavailable"}{" "}
-                <ArrowUpRight size={16} />
-              </span>
-            </button>
+              </button>
+              <button
+                className={inCart ? "fund-cart-add added" : "fund-cart-add"}
+                disabled={!mapped || inCart}
+                onClick={() => addToCart(f)}
+              >
+                {inCart ? <Check size={16} /> : <Plus size={16} />}
+                {inCart ? "In cart" : "Add to cart"}
+              </button>
+            </article>
           );
         })}
       </div>
@@ -306,115 +356,32 @@ export default function FundResearch({
         </a>
       </div>
 
-      {compared.length > 0 && (
-        <aside
-          className="compare-tray"
-          aria-label="Selected funds for comparison"
-        >
+      {cart.length > 0 && (
+        <aside className="research-basket" aria-label="SIP cart summary">
           <div>
-            {compared.map((h) => (
-              <span key={h.code}>
-                {h.name}
-                <button
-                  aria-label={"Remove " + h.name + " from comparison"}
-                  onClick={() =>
-                    setCompared((items) =>
-                      items.filter((x) => x.code !== h.code),
-                    )
-                  }
-                >
-                  <X size={14} />
-                </button>
-              </span>
-            ))}
+            <span className="eyebrow">YOUR SIP CART</span>
+            <strong>
+              {cart.length} {cart.length === 1 ? "fund" : "funds"} selected
+            </strong>
+            <small>Simulation comes before the WhatsApp setup request.</small>
           </div>
-          <button
-            className="primary"
-            disabled={compared.length < 2}
-            onClick={() => setShowCompare(true)}
-          >
-            Compare {compared.length}/3 funds
-          </button>
-          <small>
-            {compared.length < 2
-              ? "Open one more fund to compare."
-              : "Compare NAV changes over shared published dates."}
-          </small>
-        </aside>
-      )}
-      {basket.length > 0 && (
-        <aside className="research-basket" aria-label="Research basket">
-          <div>
-            <span className="eyebrow">YOUR RESEARCH BASKET</span>
-            <strong>{basket.length}/3 funds ready to replay</strong>
-            <small>
-              Set SIP or one-time amounts and test historical periods.
-            </small>
-          </div>
-          <button className="primary" onClick={() => setShowSimulator(true)}>
-            Run historical simulation <ArrowUpRight size={16} />
+          <button className="primary" onClick={() => setShowCart(true)}>
+            Review SIP cart <ShoppingBag size={16} />
           </button>
         </aside>
       )}
-      {showSimulator && (
-        <FundSimulator
-          basket={basket}
-          onClose={() => setShowSimulator(false)}
+      {showCart && (
+        <FundCart
+          cart={cart}
+          onChange={setCart}
+          onClose={() => setShowCart(false)}
+          onClear={() => {
+            setCart([]);
+            setShowCart(false);
+          }}
           onInvest={onInvest}
-          onRemove={(id) =>
-            setBasket((items) => {
-              const next = items.filter((item) => item.id !== id);
-              if (!next.length) setShowSimulator(false);
-              return next;
-            })
-          }
         />
       )}
-      {showCompare && (
-        <div className="overlay" onClick={() => setShowCompare(false)}>
-          <section
-            className="modal comparison-sheet"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Compare funds"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="close icon-btn"
-              autoFocus
-              aria-label="Close comparison"
-              onClick={() => setShowCompare(false)}
-            >
-              <X />
-            </button>
-            <span className="eyebrow">REGULAR GROWTH · SIDE BY SIDE</span>
-            <h2>Different funds. One perspective.</h2>
-            <NavChart histories={compared} compare />
-            <div className="compare-facts">
-              {compared.map((h) => (
-                <article key={h.code}>
-                  <h3>{h.name}</h3>
-                  <dl>
-                    <dt>Scheme code</dt>
-                    <dd>{h.code}</dd>
-                    <dt>Fund house</dt>
-                    <dd>{h.amc}</dd>
-                    <dt>Latest NAV</dt>
-                    <dd>
-                      ₹{h.nav.toFixed(4)} · {formatDate(h.date)}
-                    </dd>
-                  </dl>
-                </article>
-              ))}
-            </div>
-            <p className="chart-footnote">
-              NAV is a unit price, not a measure of whether a fund is cheap or
-              suitable. No order is placed here.
-            </p>
-          </section>
-        </div>
-      )}
-
       {selected && (
         <div className="overlay" onClick={() => setSelected(null)}>
           <section
@@ -510,36 +477,12 @@ export default function FundResearch({
                 <div className="fund-detail-actions">
                   <button
                     className="primary wide"
-                    disabled={
-                      basket.some((fund) => fund.id === selected.id) ||
-                      basket.length >= 3
-                    }
-                    onClick={() =>
-                      setBasket((items) => [
-                        ...items,
-                        { id: selected.id, name: selected.name, history: snapshot },
-                      ])
-                    }
+                    disabled={cart.some((fund) => fund.id === selected.id)}
+                    onClick={() => addToCart(selected)}
                   >
-                    {basket.some((fund) => fund.id === selected.id)
-                      ? "Added to research basket"
-                      : basket.length >= 3
-                        ? "Basket full (3 funds)"
-                        : "Add to research basket"}
-                  </button>
-                  <button
-                    className="secondary wide"
-                    disabled={
-                      compared.some((h) => h.code === snapshot.code) ||
-                      compared.length >= 3
-                    }
-                    onClick={() => setCompared((items) => [...items, snapshot])}
-                  >
-                    {compared.some((h) => h.code === snapshot.code)
-                      ? "Added to comparison"
-                      : compared.length >= 3
-                        ? "Comparison full (3 funds)"
-                        : "Add to comparison"}
+                    {cart.some((fund) => fund.id === selected.id)
+                      ? "Added to SIP cart"
+                      : "Add to SIP cart"}
                   </button>
                 </div>
                 <dl className="fund-facts">
@@ -581,15 +524,56 @@ export default function FundResearch({
                   <div>
                     <span className="eyebrow">FUND OVERVIEW</span>
                     <h3>Key scheme details</h3>
-                    <small>Changing fields are linked to current official documents.</small>
+                    <small>
+                      Changing fields are linked to current official documents.
+                    </small>
                   </div>
                   <dl>
-                    <div><dt>Benchmark</dt><dd>{fundOverviews[selected.id]?.benchmark || "Check latest factsheet"}</dd></div>
-                    <div><dt>History begins</dt><dd>{formatDate(metrics.inceptionDate)}</dd></div>
-                    <div><dt>Expense ratio</dt><dd><a href={AMFI_TER_DIRECTORY} target="_blank" rel="noreferrer">Check current TER on AMFI</a></dd></div>
-                    <div><dt>AUM / minimum / exit load</dt><dd><a href={FACTSHEET_DIRECTORY} target="_blank" rel="noreferrer">Check latest official factsheet</a></dd></div>
-                    <div><dt>Riskometer / turnover / tax</dt><dd>Verify current scheme documents and your tax position</dd></div>
-                    <div><dt>Plan used here</dt><dd>Regular Growth · scheme {snapshot.code}</dd></div>
+                    <div>
+                      <dt>Benchmark</dt>
+                      <dd>
+                        {fundOverviews[selected.id]?.benchmark ||
+                          "Check latest factsheet"}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>History begins</dt>
+                      <dd>{formatDate(metrics.inceptionDate)}</dd>
+                    </div>
+                    <div>
+                      <dt>Expense ratio</dt>
+                      <dd>
+                        <a
+                          href={AMFI_TER_DIRECTORY}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Check current TER on AMFI
+                        </a>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>AUM / minimum / exit load</dt>
+                      <dd>
+                        <a
+                          href={FACTSHEET_DIRECTORY}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Check latest official factsheet
+                        </a>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Riskometer / turnover / tax</dt>
+                      <dd>
+                        Verify current scheme documents and your tax position
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Plan used here</dt>
+                      <dd>Regular Growth · scheme {snapshot.code}</dd>
+                    </div>
                   </dl>
                 </section>
                 <p>

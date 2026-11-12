@@ -1,8 +1,756 @@
-.research-basket{position:sticky;bottom:18px;z-index:15;margin:24px auto 0;max-width:900px;padding:16px 18px;border:1px solid #d9dfd8;border-radius:18px;background:rgba(255,255,252,.96);box-shadow:0 16px 45px rgba(25,41,32,.14);display:flex;align-items:center;justify-content:space-between;gap:18px;backdrop-filter:blur(14px)}
-.research-basket>div{display:grid;gap:3px}.research-basket strong{font-size:16px}.research-basket small{color:#667068}.research-basket .primary{white-space:nowrap}.fund-detail-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 22px}.fund-overview{margin:24px 0;padding:22px;border-radius:18px;background:#f6f7f2;border:1px solid #e1e5dd}.fund-overview h3{margin:5px 0}.fund-overview>div>small{color:#6f756e}.fund-overview dl{display:grid;grid-template-columns:1fr 1fr;margin:18px 0 0}.fund-overview dl div{padding:13px 0;border-top:1px solid #dfe3dc;display:flex;justify-content:space-between;gap:18px}.fund-overview dl div:nth-child(odd){padding-right:16px}.fund-overview dl div:nth-child(even){padding-left:16px}.fund-overview dt{color:#697069}.fund-overview dd{margin:0;text-align:right;font-weight:650}.fund-overview a{color:#136f55;text-decoration:underline;text-underline-offset:3px}
-.simulator-overlay{padding:24px}.fund-simulator{width:min(1180px,calc(100vw - 48px));max-width:1180px;max-height:calc(100vh - 48px);overflow:auto;padding:34px;border-radius:28px}.fund-simulator>header{height:auto;padding:0 55px 0 0;border:0;background:none;display:block}.fund-simulator>header h2{font-size:clamp(28px,4vw,48px);margin:6px 0}.fund-simulator>header p{color:#687068;max-width:720px}.basket-tabs{display:flex;gap:8px;overflow:auto;margin:24px 0 18px}.basket-tabs button{border:1px solid #dce1da;background:#fff;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:12px;min-width:180px;text-align:left;color:#555}.basket-tabs button[aria-selected=true]{border-color:#146f55;background:#eef7f2;color:#123c30}.basket-tabs button span{flex:1}.basket-tabs svg{flex:none;color:#8b918b}
-.simulator-grid{display:grid;grid-template-columns:320px minmax(0,1fr);border:1px solid #dfe3dc;border-radius:22px;overflow:hidden;background:#fff}.simulator-controls{padding:24px;border-right:1px solid #e5e7e2;background:#fafbf7;display:grid;gap:24px;align-content:start}.segmented{display:flex;padding:4px;background:#edf0ea;border-radius:999px}.segmented button{flex:1;border:0;background:transparent;border-radius:999px;padding:10px;color:#565e58}.segmented button.active{background:#fff;color:#0c6a50;box-shadow:0 2px 10px rgba(27,45,36,.1);font-weight:750}.simulator-controls label{display:grid;gap:10px}.simulator-controls label span{display:flex;justify-content:space-between}.simulator-controls input[type=range]{width:100%;accent-color:#117d5d}.period-chips{display:flex;gap:6px;margin-top:8px}.period-chips button{border:1px solid #d8ddd6;background:#fff;border-radius:999px;padding:7px 12px}.period-chips button.active{background:#123f34;color:#fff;border-color:#123f34}.period-chips button:disabled{opacity:.35}.simulation-summary{margin:0;display:grid;gap:0}.simulation-summary div{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #e5e7e2}.simulation-summary dd{margin:0;font-weight:750}.positive{color:#07865c!important}.negative{color:#b44338!important}
-.simulator-visual{padding:28px;min-width:0}.simulation-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}.simulation-heading>div:first-child{display:grid;gap:6px}.simulation-heading strong{font-size:30px}.metric-toggle{width:220px}.return-callout{margin:18px 0}.return-callout span{display:block;font-size:26px;font-weight:800}.return-callout small{color:#70766f}.simulation-chart{border-radius:16px;background:linear-gradient(180deg,#f3f8f4,#fff);padding:8px}.simulation-chart svg{display:block;width:100%;height:auto}.simulation-chart path.simulation-grid{fill:none;stroke:#d9ded8}.simulation-value-line,.simulation-invested-line{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.simulation-value-line{stroke:#0b9a69}.simulation-invested-line{stroke:#aab2aa;stroke-dasharray:7 7}.simulation-legend{display:flex;gap:16px;align-items:center;padding:4px 10px;color:#626962}.simulation-legend span{display:flex;gap:6px;align-items:center}.simulation-legend i{width:10px;height:10px;border-radius:50%;background:#aab2aa}.simulation-legend i.value{background:#0b9a69}.simulation-legend small{margin-left:auto}.simulation-bars{display:grid;grid-template-columns:180px 1fr;gap:22px;align-items:end;margin:24px 0 0}.simulation-bars article{display:grid;gap:7px}.stack-bar{width:76px;height:130px;background:#edf0ec;display:flex;flex-direction:column-reverse;overflow:hidden;border-radius:8px 8px 2px 2px}.stack-bar i{background:#cbd0cb}.stack-bar b{background:#18a864;min-height:0}.stack-bar b.loss{background:#d45b4f}.benchmark-locked{align-self:stretch;padding:18px;border:1px dashed #cbd2cb;border-radius:14px;background:#fafbf9;align-content:center}.benchmark-locked>div{display:flex;gap:8px;align-items:center;color:#687168}.benchmark-locked strong{font-size:18px}.benchmark-locked small{color:#777e78}
-.simulation-boundary{display:flex;gap:12px;margin:18px 0;padding:16px;border-radius:14px;background:#f3f7f4;color:#45544b}.simulation-boundary svg{flex:none;color:#0f7c5d}.simulation-boundary p{margin:4px 0 0;font-size:13px}.simulation-handoff{display:grid;grid-template-columns:1fr 1.1fr;gap:18px;align-items:stretch;margin-top:22px}.simulation-handoff>div:first-child{padding:22px}.simulation-handoff h3{margin:6px 0}.simulation-handoff .assetplus-entry{margin:0}.simulator-done{margin:18px auto 0}
-@media(max-width:850px){.simulator-grid{grid-template-columns:1fr}.simulator-controls{border-right:0;border-bottom:1px solid #e5e7e2}.simulation-handoff{grid-template-columns:1fr}.fund-overview dl{grid-template-columns:1fr}.fund-overview dl div:nth-child(n){padding-left:0;padding-right:0}.fund-detail-actions{grid-template-columns:1fr}}
-@media(max-width:620px){.simulator-overlay{padding:0}.fund-simulator{width:100vw;max-height:100dvh;height:100dvh;border-radius:0;padding:22px 16px}.research-basket{bottom:76px;margin:18px 10px 0;align-items:stretch;flex-direction:column}.research-basket .primary{width:100%}.simulation-heading{display:grid}.metric-toggle{width:100%}.simulator-visual{padding:20px 14px}.simulation-bars{grid-template-columns:120px 1fr}.simulation-legend{flex-wrap:wrap}.simulation-legend small{width:100%;margin-left:0}.fund-simulator>header h2{font-size:30px}}
+.research-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sip-cart-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #dddeda;
+  background: #fff;
+  border-radius: 999px;
+  padding: 9px 12px;
+  color: #435045;
+  font-weight: 700;
+}
+.sip-cart-button b {
+  display: grid;
+  place-items: center;
+  min-width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #fff;
+  font-size: 10px;
+}
+.research-fund-row {
+  display: flex !important;
+  align-items: stretch;
+  background: #fff;
+  border: 1px solid #e5e1d7;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.research-fund-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: #fff;
+  text-align: left;
+  padding: 14px;
+}
+.research-fund-main > div {
+  flex: 1;
+  min-width: 0;
+}
+.research-fund-main:hover {
+  background: #fbfaf6;
+}
+.fund-cart-add {
+  width: 122px;
+  border: 0;
+  border-left: 1px solid #ebe7df;
+  background: #fafaf7;
+  color: #d84a1d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-weight: 750;
+  font-size: 11px;
+}
+.fund-cart-add:hover {
+  background: #fff0e8;
+}
+.fund-cart-add.added {
+  color: #36735d;
+  background: #edf6f1;
+}
+.research-basket {
+  position: sticky;
+  bottom: 18px;
+  z-index: 15;
+  margin: 24px auto 0;
+  max-width: 900px;
+  padding: 16px 18px;
+  border: 1px solid #d9dfd8;
+  border-radius: 18px;
+  background: rgba(255, 255, 252, 0.97);
+  box-shadow: 0 16px 45px rgba(25, 41, 32, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  backdrop-filter: blur(14px);
+}
+.research-basket > div {
+  display: grid;
+  gap: 3px;
+}
+.research-basket strong {
+  font-size: 16px;
+}
+.research-basket small {
+  color: #667068;
+}
+.fund-detail-actions {
+  margin: 14px 0 22px;
+}
+.fund-overview {
+  margin: 24px 0;
+  padding: 22px;
+  border-radius: 18px;
+  background: #f6f7f2;
+  border: 1px solid #e1e5dd;
+}
+.fund-overview h3 {
+  margin: 5px 0;
+}
+.fund-overview > div > small {
+  color: #6f756e;
+}
+.fund-overview dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 18px 0 0;
+}
+.fund-overview dl div {
+  padding: 13px 0;
+  border-top: 1px solid #dfe3dc;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}
+.fund-overview dl div:nth-child(odd) {
+  padding-right: 16px;
+}
+.fund-overview dl div:nth-child(even) {
+  padding-left: 16px;
+}
+.fund-overview dt {
+  color: #697069;
+}
+.fund-overview dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 650;
+}
+.fund-overview a {
+  color: #136f55;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cart-overlay {
+  padding: 24px;
+}
+.fund-cart {
+  width: min(980px, calc(100vw - 48px));
+  max-width: 980px;
+  max-height: calc(100dvh - 48px);
+  padding: 34px;
+  border-radius: 26px;
+}
+.fund-cart > header.cart-header {
+  height: auto;
+  padding: 0 55px 0 0;
+  border: 0;
+  background: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 15px;
+}
+.cart-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #fff0e8;
+  color: var(--orange);
+  flex: none;
+}
+.cart-header h2 {
+  font-size: clamp(26px, 4vw, 40px);
+  margin: 4px 0;
+}
+.cart-header p {
+  font-size: 12px;
+  max-width: 650px;
+}
+.checkout-progress {
+  list-style: none;
+  padding: 0;
+  margin: 26px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.checkout-progress li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #9a9e98;
+  font-size: 10px;
+  font-weight: 700;
+  position: relative;
+}
+.checkout-progress li:after {
+  content: "";
+  height: 1px;
+  background: #dfe2dc;
+  position: absolute;
+  left: 31px;
+  right: 8px;
+  top: 14px;
+}
+.checkout-progress li:last-child:after {
+  display: none;
+}
+.checkout-progress li span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #eceee9;
+  color: #788078;
+  z-index: 1;
+}
+.checkout-progress li.active {
+  color: #2c5d4d;
+}
+.checkout-progress li.active span {
+  background: #176f54;
+  color: #fff;
+}
+.cart-step {
+  animation: enter 0.18s ease-out;
+}
+.cart-items {
+  display: grid;
+  gap: 8px;
+}
+.cart-items article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px 40px;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #e4e6e1;
+  border-radius: 14px;
+  padding: 14px;
+}
+.cart-items article > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+.cart-items article b {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.cart-items article small {
+  font-size: 9px;
+}
+.cart-items label {
+  display: grid;
+  gap: 5px;
+}
+.cart-items label > span {
+  font-size: 9px;
+  color: #7d847d;
+}
+.cart-items label > div {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d9ddd7;
+  border-radius: 9px;
+  background: #fff;
+  padding-left: 11px;
+}
+.cart-items input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 10px;
+  outline: 0;
+  font-weight: 750;
+}
+.cart-items .icon-btn {
+  color: #a7665b;
+}
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin: 16px 0;
+  padding: 18px;
+  border-radius: 14px;
+  background: #f2f5f0;
+}
+.cart-total span {
+  display: grid;
+}
+.cart-total strong {
+  font-size: 25px;
+  color: #1b5946;
+}
+.cart-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fff0ec;
+  color: #a84638;
+  font-size: 11px;
+}
+.cart-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+}
+.cart-actions .primary:last-child {
+  margin-left: auto;
+}
+.simulation-toolbar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 210px;
+  gap: 20px;
+  align-items: end;
+  padding: 16px;
+  border: 1px solid #e2e5df;
+  border-radius: 14px;
+  background: #fafbf8;
+}
+.simulation-toolbar > label {
+  display: grid;
+  gap: 10px;
+  font-size: 11px;
+}
+.simulation-toolbar label span {
+  display: flex;
+  justify-content: space-between;
+}
+.simulation-toolbar input {
+  width: 100%;
+  accent-color: #177455;
+}
+.period-chips {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+.period-chips button {
+  border: 1px solid #d8ddd6;
+  background: #fff;
+  border-radius: 999px;
+  padding: 7px 12px;
+}
+.period-chips button.active {
+  background: #123f34;
+  color: #fff;
+  border-color: #123f34;
+}
+.segmented {
+  display: flex;
+  padding: 4px;
+  background: #edf0ea;
+  border-radius: 999px;
+}
+.segmented button {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+  padding: 9px;
+  color: #565e58;
+}
+.segmented button.active {
+  background: #fff;
+  color: #0c6a50;
+  box-shadow: 0 2px 10px rgba(27, 45, 36, 0.1);
+  font-weight: 750;
+}
+.simulation-loading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 18px;
+  color: #68756b;
+}
+.spin {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.basket-result {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 16px 0;
+}
+.basket-result > div {
+  padding: 14px;
+  border: 1px solid #e1e5de;
+  border-radius: 12px;
+  display: grid;
+  gap: 4px;
+}
+.basket-result small {
+  font-size: 8px;
+  letter-spacing: 0.8px;
+}
+.basket-result b,
+.basket-result strong {
+  font-size: 16px;
+}
+.positive {
+  color: #07865c !important;
+}
+.negative {
+  color: #b44338 !important;
+}
+.cart-simulation-chart {
+  border: 1px solid #e2e7e1;
+  border-radius: 15px;
+  background: linear-gradient(180deg, #f2f8f4, #fff);
+  padding: 10px;
+}
+.cart-simulation-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.cart-simulation-chart path {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.cart-simulation-chart .axis {
+  stroke: #d9ded8;
+  stroke-width: 1;
+}
+.cart-simulation-chart path.value {
+  stroke: #0b9a69;
+}
+.cart-simulation-chart path.invested {
+  stroke: #aab2aa;
+  stroke-dasharray: 7 7;
+}
+.cart-simulation-chart > div {
+  display: flex;
+  gap: 18px;
+  padding: 5px 10px;
+  font-size: 10px;
+  color: #667067;
+}
+.cart-simulation-chart span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cart-simulation-chart i {
+  width: 9px;
+  height: 9px;
+  background: #aab2aa;
+  border-radius: 50%;
+}
+.cart-simulation-chart i.value {
+  background: #0b9a69;
+}
+.simulated-funds {
+  display: grid;
+  gap: 7px;
+  margin-top: 14px;
+}
+.simulated-funds article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) repeat(3, 110px);
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid #e3e6e1;
+  border-radius: 11px;
+}
+.simulated-funds article > div {
+  display: grid;
+}
+.simulated-funds article > span {
+  display: grid;
+}
+.simulated-funds b {
+  font-size: 11px;
+}
+.simulated-funds small {
+  font-size: 8px;
+}
+.simulation-pending {
+  color: #878f87;
+}
+.simulation-disclaimer,
+.privacy-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px 14px;
+  margin-top: 14px;
+  border-radius: 11px;
+  background: #f2f5f0;
+  color: #59685e;
+  font-size: 10px;
+  line-height: 1.7;
+}
+.simulation-disclaimer svg,
+.privacy-note svg {
+  flex: none;
+  color: #197355;
+}
+.checkout-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.checkout-form label {
+  display: grid;
+  gap: 7px;
+  color: #687068;
+  font-size: 10px;
+  font-weight: 700;
+}
+.checkout-form label:first-child {
+  grid-column: 1/-1;
+}
+.checkout-form input,
+.checkout-form select {
+  width: 100%;
+  border: 1px solid #daddd7;
+  background: #fff;
+  border-radius: 10px;
+  padding: 13px;
+  color: #333;
+}
+.order-review {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.order-review > div {
+  padding: 14px;
+  border: 1px solid #e2e5df;
+  border-radius: 11px;
+  display: grid;
+  gap: 4px;
+}
+.order-review small {
+  font-size: 8px;
+}
+.order-review b,
+.order-review strong {
+  font-size: 13px;
+}
+.review-funds {
+  margin: 15px 0;
+  border-top: 1px solid #e2e5df;
+}
+.review-funds > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 3px;
+  border-bottom: 1px solid #e2e5df;
+}
+.review-funds span {
+  display: grid;
+}
+.review-funds b {
+  font-size: 11px;
+}
+.review-funds small {
+  font-size: 8px;
+}
+.order-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 10px;
+  line-height: 1.7;
+  color: #626b64;
+}
+.order-consent input {
+  width: 17px;
+  height: 17px;
+  accent-color: #157254;
+  flex: none;
+}
+.whatsapp-order {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #168b55;
+  color: #fff;
+  font-weight: 800;
+}
+.whatsapp-order.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.whatsapp-recipient {
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+}
+.whatsapp-opened {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 14px;
+  padding: 13px;
+  border-radius: 10px;
+  background: #edf7f1;
+  color: #35614f;
+  font-size: 11px;
+}
+.whatsapp-opened svg {
+  flex: none;
+}
+@media (max-width: 750px) {
+  .research-heading-actions {
+    align-items: flex-end;
+    flex-direction: column;
+  }
+  .fund-data-badge {
+    order: 2;
+  }
+  .fund-cart-add {
+    width: 100px;
+    font-size: 9px;
+  }
+  .fund-overview dl {
+    grid-template-columns: 1fr;
+  }
+  .fund-overview dl div:nth-child(n) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .simulation-toolbar {
+    grid-template-columns: 1fr;
+  }
+  .basket-result {
+    grid-template-columns: 1fr 1fr;
+  }
+  .simulated-funds article {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .simulated-funds article > div {
+    grid-column: 1/-1;
+  }
+  .checkout-form {
+    grid-template-columns: 1fr;
+  }
+  .checkout-form label:first-child {
+    grid-column: auto;
+  }
+  .order-review {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 620px) {
+  .cart-overlay {
+    padding: 0;
+  }
+  .fund-cart {
+    width: 100vw;
+    max-height: 100dvh;
+    height: 100dvh;
+    border-radius: 0;
+    padding: 25px 16px calc(24px + env(safe-area-inset-bottom));
+  }
+  .fund-cart > header.cart-header {
+    padding-right: 40px;
+  }
+  .cart-icon {
+    width: 38px;
+    height: 38px;
+  }
+  .cart-header h2 {
+    font-size: 26px;
+  }
+  .checkout-progress li {
+    font-size: 0;
+  }
+  .checkout-progress li span {
+    font-size: 10px;
+  }
+  .cart-items article {
+    grid-template-columns: minmax(0, 1fr) 40px;
+  }
+  .cart-items label {
+    grid-column: 1/-1;
+    grid-row: 2;
+  }
+  .cart-items article > .icon-btn {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .cart-actions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+  .cart-actions button,
+  .cart-actions .primary:last-child {
+    width: 100%;
+    margin-left: 0;
+  }
+  .research-basket {
+    bottom: 78px;
+    margin: 18px 7px 0;
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .research-basket .primary {
+    width: 100%;
+  }
+  .research-fund-row {
+    display: grid !important;
+    grid-template-columns: 1fr;
+  }
+  .fund-cart-add {
+    width: 100%;
+    min-height: 42px;
+    border-left: 0;
+    border-top: 1px solid #ebe7df;
+  }
+  .research-row-action {
+    display: none !important;
+  }
+  .basket-result {
+    grid-template-columns: 1fr 1fr;
+  }
+  .simulated-funds article {
+    grid-template-columns: 1fr 1fr;
+  }
+  .simulated-funds article > div {
+    grid-column: 1/-1;
+  }
+  .order-review {
+    grid-template-columns: 1fr 1fr;
+  }
+}

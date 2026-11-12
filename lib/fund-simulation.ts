@@ -2,6 +2,7 @@ import type { NavHistory, NavPoint } from "./mfapi";
 
 export type SimulationMode = "sip" | "lumpsum";
 export type SimulationPoint = { date: string; invested: number; value: number };
+export type SimulationCashflow = { date: string; amount: number };
 export type SimulationResult = {
   startDate: string;
   endDate: string;
@@ -12,6 +13,7 @@ export type SimulationResult = {
   cagr: number | null;
   xirr: number | null;
   points: SimulationPoint[];
+  cashflows: SimulationCashflow[];
   instalments: number;
 };
 
@@ -176,6 +178,7 @@ export function simulateHistory(
         : null,
     xirr: mode === "sip" ? xirr(flows) : null,
     points: series,
+    cashflows: flows,
     instalments,
   };
 }

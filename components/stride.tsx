@@ -6,7 +6,6 @@ import { NextMove, HabitPassport, ReviewToolkit } from "./launch-journey";
 import AssetPlusOnboarding from "./assetplus-onboarding";
 import { investmentProvider } from "../lib/investment-provider";
 import ProfilePage from "./profile-page";
-import FundBrowser from "./fund-browser";
 import FundResearch from "./fund-research";
 import GuidePage from "./guide-page";
 import ShareComposer from "./share-composer";
@@ -60,7 +59,6 @@ type Tab =
   | "Account"
   | "Funds"
   | "AI Guide"
-  | "Fund research"
   | "Invest";
 type Entry = {
   id: number;
@@ -477,18 +475,16 @@ export default function Stride() {
     if (!user || !supabase || !saveConsent || answers.length !== 5) return;
     setBusy(true);
     try {
-      const { error } = await supabase
-        .from("onboarding")
-        .upsert({
-          user_id: user.id,
-          display_name: name.trim(),
-          adult_confirmed: true,
-          consent_version: "2026-11-02",
-          consented_at: new Date().toISOString(),
-          answers,
-          preferences: vibeAnswers,
-          updated_at: new Date().toISOString(),
-        });
+      const { error } = await supabase.from("onboarding").upsert({
+        user_id: user.id,
+        display_name: name.trim(),
+        adult_confirmed: true,
+        consent_version: "2026-11-02",
+        consented_at: new Date().toISOString(),
+        answers,
+        preferences: vibeAnswers,
+        updated_at: new Date().toISOString(),
+      });
       if (error) throw error;
       setProfile(name.trim());
       setCloudSaved(true);
@@ -566,12 +562,7 @@ export default function Stride() {
           ).map(({ label, destination, icon: Icon }) => (
             <button
               key={label}
-              className={
-                tab === destination ||
-                (destination === "Funds" && tab === "Fund research")
-                  ? "nav active"
-                  : "nav"
-              }
+              className={tab === destination ? "nav active" : "nav"}
               onClick={() => setTab(destination)}
             >
               <Icon size={20} />
@@ -715,21 +706,10 @@ export default function Stride() {
               onName={setProfile}
               onIdentity={setProfilePicture}
               onGuide={() => setTab("AI Guide")}
-              onInvest={openInvest}
               circles={() => setTab("Circles")}
             />
           ) : tab === "Funds" ? (
-            <FundResearch
-              back={() => setTab("Fund research")}
-              onInvest={openInvest}
-            />
-          ) : tab === "Fund research" ? (
-            <FundBrowser
-              user={user}
-              profile={() => setTab("Account")}
-              learn={() => setTab("Discover")}
-              research={() => setTab("Funds")}
-            />
+            <FundResearch onInvest={openInvest} />
           ) : (
             <>
               {user && cloudSaved && (
@@ -1037,8 +1017,8 @@ export default function Stride() {
                       >
                         <Layers size={24} />
                         <span>
-                          <b>Explore funds & baskets</b>
-                          <small>A demo of your next investing chapter.</small>
+                          <b>Research the 22 launch funds</b>
+                          <small>Add funds to your SIP cart and simulate the basket.</small>
                         </span>
                         <ArrowUpRight size={20} />
                       </button>
@@ -1184,18 +1164,14 @@ export default function Stride() {
               key={label}
               aria-label={label === "Camera" ? "Capture a moment" : label}
               aria-current={
-                tab === label ||
-                (label === "Funds" &&
-                  (tab === "Fund research" || tab === "Invest"))
+                tab === label || (label === "Funds" && tab === "Invest")
                   ? "page"
                   : undefined
               }
               className={
                 label === "Camera"
                   ? "nav-camera"
-                  : tab === label ||
-                      (label === "Funds" &&
-                        (tab === "Fund research" || tab === "Invest"))
+                  : tab === label || (label === "Funds" && tab === "Invest")
                     ? "orange"
                     : ""
               }
@@ -1544,7 +1520,13 @@ export default function Stride() {
                     >
                       See my investor analytics <ArrowUpRight size={17} />
                     </button>
-                    <button className="primary wide" onClick={() => { setModal(null); setTab("Funds"); }}>
+                    <button
+                      className="primary wide"
+                      onClick={() => {
+                        setModal(null);
+                        setTab("Funds");
+                      }}
+                    >
                       Research the shortlist <ArrowRight size={17} />
                     </button>
                   </>

@@ -6,6 +6,9 @@ const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 process.chdir(root);
 const source=resolve('app/api'),backup=resolve('.stride-pages-api');
 if(existsSync(backup))throw new Error('A prior static build left .stride-pages-api. Restore it to app/api before retrying.');
+// Dev route types still reference server-only API files. They are generated
+// artifacts and must not be included while the API folder is hidden below.
+rmSync(resolve('.next/dev'),{recursive:true,force:true});
 // Pages has no server runtime. Temporarily exclude the API and always restore it.
 renameSync(source,backup);
 let status=1;

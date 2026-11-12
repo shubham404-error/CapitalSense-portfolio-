@@ -60,7 +60,6 @@ type Props = {
   onName: (s: string) => void;
   onIdentity: (s: string) => void;
   onGuide: () => void;
-  onInvest: () => void;
   circles: () => void;
 };
 export default function ProfilePage({
@@ -75,7 +74,6 @@ export default function ProfilePage({
   onName,
   onIdentity,
   onGuide,
-  onInvest,
   circles,
 }: Props) {
   const [profile, setProfile] = useState<Profile>(empty),
