@@ -1,6 +1,6 @@
 # Stride / Capital Sense
 
-Orange, responsive investing-habit web app on `feature/sip-social-app`. Existing public website: `feature/website-v1`. Demo: https://shubham404-error.github.io/CapitalSense-portfolio-/stride/
+Orange, responsive investing-habit web app on `feature/sip-social-app`. Production: https://capitalsense.trade/stride/. The GitHub Pages demo remains available at https://shubham404-error.github.io/CapitalSense-portfolio-/stride/.
 
 ## Develop
 

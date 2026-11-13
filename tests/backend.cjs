@@ -73,7 +73,7 @@ console.log('PASS: real PostgreSQL RLS isolation, cross-user write denial, anony
 let handler;let authenticated=false,record=true,quota=true,quotaCalls=0;
 const env={ALLOWED_ORIGINS:'https://example.com',SUPABASE_URL:'https://test.invalid',SUPABASE_ANON_KEY:'test',SUPABASE_SERVICE_ROLE_KEY:'server-test',GEMINI_API_KEY:'test-placeholder',GEMINI_MODEL:'test-model'};
 const createClient=()=>({auth:{getUser:async()=>({data:{user:authenticated?{id:'user'}:null},error:null})},from:()=>({select:()=>({eq:()=>({single:async()=>({data:record?{adult_confirmed:true,answers:['a','b','c','d','e']}:null,error:null})})})}),rpc:async()=>{quotaCalls++;return {data:quota,error:null}}});
-const code=readFileSync('supabase/functions/guide/index.ts','utf8').replace(/import .*?;\n/,'');
+const code=readFileSync('supabase/functions/guide/index.ts','utf8').replace(/import .*?;\r?\n/,'');
 const js=ts.transpileModule(code,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;
 new Function('Deno','createClient','fetch',js)({env:{get:n=>env[n]},serve:h=>handler=h},createClient,async()=>new Response(JSON.stringify({candidates:[{content:{parts:[{text:'Educational explanation.'}]}}]}),{status:200,headers:{'Content-Type':'application/json'}}));
 const req=(method='POST',origin='https://example.com')=>new Request('https://test.invalid/functions/v1/guide',{method,headers:{origin,authorization:'Bearer test'}});
