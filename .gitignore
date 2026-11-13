@@ -7,3 +7,5 @@ node_modules/
 out/
 .stride-pages-api/
 .codex-tmp/
+.wrangler/
+.wrangler-release*.log

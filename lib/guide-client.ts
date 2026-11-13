@@ -14,6 +14,21 @@ export function isGuideUnavailable(error:unknown){
 
 export async function requestGuide(client:SupabaseClient,signal?:AbortSignal){
  try{
+  if(process.env.NEXT_PUBLIC_GUIDE_PROXY==='true'){
+   const {data:{session},error:sessionError}=await client.auth.getSession();
+   if(sessionError||!session?.access_token)throw new GuideRequestError('Your session has expired. Sign in again.','account',401);
+   const base=process.env.NEXT_PUBLIC_BASE_PATH||'';
+   const response=await fetch(`${base}/api/guide`,{method:'POST',signal,headers:{Authorization:`Bearer ${session.access_token}`,'Content-Type':'application/json'},body:'{}'});
+   const payload=await response.json().catch(()=>null);
+   if(!response.ok){
+    const code=typeof payload?.code==='string'?payload.code:'';
+    const message=typeof payload?.error==='string'?payload.error:response.status===401?'Your session has expired. Sign in again.':response.status===400?'Save a complete starting point before using the guide.':`The guide returned HTTP ${response.status}.`;
+    const unavailable=code==='AI_UNAVAILABLE'||response.status===404||response.status===502||response.status===503;
+    throw new GuideRequestError(message,unavailable?'unavailable':'account',response.status);
+   }
+   if(typeof payload?.text!=='string'||!payload.text.trim())throw new GuideRequestError('The AI provider returned an empty answer.','unavailable',502);
+   return payload.text;
+  }
   const {data,error}=await client.functions.invoke('guide',{body:{},signal,timeout:30000});
   if(error){
    let status:number|undefined;

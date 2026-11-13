@@ -13,7 +13,7 @@
     "preview:worker": "npm run build:worker && wrangler dev",
     "deploy:worker": "npm run build:worker && wrangler deploy",
     "check:worker": "npm run typecheck && npm run test:backend && npm run build:worker && wrangler deploy --dry-run",
-    "test:backend": "node tests/backend.cjs && node tests/rule-guide.cjs && node tests/expense-tracker.cjs && node tests/expense-backend.cjs",
+    "test:backend": "node tests/backend.cjs && node tests/rule-guide.cjs && node tests/expense-tracker.cjs && node tests/expense-backend.cjs && node tests/social-backend.cjs",
     "test:auth": "node tests/auth.cjs",
     "test:mobile": "node tests/mobile.cjs",
     "test:lenses": "node tests/lenses.cjs",

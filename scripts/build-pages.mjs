@@ -17,7 +17,7 @@ let status=1;
 try{
  const result=spawnSync(process.execPath,['node_modules/next/dist/bin/next','build'],{
   stdio:'inherit',
-  env:{...process.env,NEXT_STATIC_EXPORT:'true',APP_BASE_PATH:basePath},
+  env:{...process.env,NEXT_STATIC_EXPORT:'true',APP_BASE_PATH:basePath,NEXT_PUBLIC_GUIDE_PROXY:cliBasePath==='/stride'?'true':process.env.NEXT_PUBLIC_GUIDE_PROXY||'false'},
  });
  if(result.error)throw result.error;
  status=result.status??1;

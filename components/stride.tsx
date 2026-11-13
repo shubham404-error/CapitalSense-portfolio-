@@ -1,14 +1,28 @@
 "use client";
 import Account from "./account";
 import OnboardingHelp from "./onboarding-help";
-import ManualHoldings from "./journey-money";
+import { JourneyInvestments, JourneySpending } from "./journey-money";
 import { NextMove, HabitPassport, ReviewToolkit } from "./launch-journey";
+import Bucks from "./bucks";
 import AssetPlusOnboarding from "./assetplus-onboarding";
 import { investmentProvider } from "../lib/investment-provider";
 import ProfilePage from "./profile-page";
 import FundResearch from "./fund-research";
 import GuidePage from "./guide-page";
 import ShareComposer from "./share-composer";
+import SocialHub from "./social-hub";
+import SocialNotifications from "./social-notifications";
+import MomentManager from "./moment-manager";
+import { compressedSharePhoto } from "../lib/share-post";
+import {
+  addMomentComment,
+  createMoment,
+  listMoments,
+  SocialSchemaUnavailable,
+  toggleMomentCheer,
+  type MomentAudience,
+  type MomentType,
+} from "../lib/social-client";
 import { isGuideUnavailable, requestGuide } from "../lib/guide-client";
 import { setRuleGuideAnswers } from "../lib/rule-guide";
 import LensStudio from "./lens-studio";
@@ -22,6 +36,7 @@ import {
   ArrowRight,
   Bell,
   Bookmark,
+  BookOpen,
   Check,
   ChevronRight,
   Flame,
@@ -32,6 +47,7 @@ import {
   Leaf,
   Lock,
   Menu,
+  MoreHorizontal,
   MessageCircle,
   Plus,
   Send,
@@ -43,6 +59,7 @@ import {
   TrendingUp,
   Users,
   UserRound,
+  Wallet,
   Layers,
   X,
   Zap,
@@ -60,8 +77,10 @@ type Tab =
   | "Funds"
   | "AI Guide"
   | "Invest";
+type JourneySection = "Overview" | "Spending" | "Investments" | "Progress";
 type Entry = {
-  id: number;
+  id: number | string;
+  userId?: string;
   name: string;
   initials: string;
   caption: string;
@@ -70,6 +89,9 @@ type Entry = {
   liked: boolean;
   likes: number;
   time: string;
+  audience?: MomentAudience;
+  momentType?: MomentType;
+  cloud?: boolean;
 };
 const initial: Entry[] = [];
 const vibes = [
@@ -282,7 +304,7 @@ export default function Stride() {
     [selected, setSelected] = useState(""),
     [amount, setAmount] = useState("2500"),
     [joined, setJoined] = useState<string[]>([]),
-    [saved, setSaved] = useState<number[]>([]),
+    [saved, setSaved] = useState<Array<number | string>>([]),
     [shareEntry, setShareEntry] = useState<Entry>(initial[0]),
     [busy, setBusy] = useState(false),
     [explanation, setExplanation] = useState("");
@@ -296,6 +318,14 @@ export default function Stride() {
     [cloudSaved, setCloudSaved] = useState(false);
   const [profilePicture, setProfilePicture] = useState("");
   const [investFrom, setInvestFrom] = useState<Tab>("Funds");
+  const [journeySection, setJourneySection] =
+    useState<JourneySection>("Overview");
+  const [momentAudience, setMomentAudience] =
+    useState<MomentAudience>("private");
+  const [momentType, setMomentType] = useState<MomentType>("reflection");
+  const [socialBusy, setSocialBusy] = useState(false);
+  const [socialLoading, setSocialLoading] = useState(false);
+  const [socialSchemaReady, setSocialSchemaReady] = useState(true);
   useEffect(() => {
     setProfilePicture("");
     if (!user || !supabase) return;
@@ -442,6 +472,184 @@ export default function Stride() {
     };
   }, [modal]);
   const toast = (s: string) => setNotice(s);
+  async function refreshMoments(feed = audience) {
+    if (!user || !supabase) {
+      setSocialLoading(false);
+      return;
+    }
+    setSocialLoading(true);
+    try {
+      const moments = await listMoments(
+        supabase,
+        user.id,
+        feed === "Explore" ? "explore" : "following",
+      );
+      setEntries(
+        moments.map((moment) => ({
+          id: moment.id,
+          userId: moment.userId,
+          name: moment.name,
+          initials: moment.initials,
+          caption: moment.caption,
+          months: moment.months,
+          photo: moment.photo,
+          liked: moment.liked,
+          likes: moment.likes,
+          time: moment.time,
+          audience: moment.audience,
+          momentType: moment.momentType,
+          cloud: true,
+        })),
+      );
+      setSocialSchemaReady(true);
+    } catch (error) {
+      if (error instanceof SocialSchemaUnavailable) setSocialSchemaReady(false);
+      else toast("Could not refresh your moments. Please try again.");
+    } finally {
+      setSocialLoading(false);
+    }
+  }
+  useEffect(() => {
+    if (!user) {
+      setSocialLoading(false);
+      return;
+    }
+    void refreshMoments(audience);
+  }, [user?.id, audience]);
+  function sessionMoment(displayName: string): Entry {
+    return {
+      id: Date.now(),
+      name: displayName,
+      initials: displayName.slice(0, 2).toUpperCase(),
+      caption: caption.trim(),
+      photo: photo || undefined,
+      months: 0,
+      liked: false,
+      likes: 0,
+      time: "Just now",
+      audience: "private",
+      momentType,
+    };
+  }
+  async function saveMoment() {
+    if (!caption.trim() || socialBusy) return;
+    const displayName =
+      profile ||
+      (typeof user?.user_metadata?.full_name === "string"
+        ? user.user_metadata.full_name
+        : "You");
+    setSocialBusy(true);
+    try {
+      if (user && supabase && socialSchemaReady) {
+        const compressed = photo
+          ? await compressedSharePhoto(photo, basePath)
+          : null;
+        const moment = await createMoment(supabase, {
+          userId: user.id,
+          displayName,
+          caption,
+          audience: momentAudience,
+          momentType,
+          photo: compressed,
+        });
+        const savedMoment: Entry = {
+          id: moment.id,
+          userId: moment.userId,
+          name: moment.name,
+          initials: moment.initials,
+          caption: moment.caption,
+          months: moment.months,
+          photo: moment.photo,
+          liked: false,
+          likes: 0,
+          time: moment.time,
+          audience: moment.audience,
+          momentType: moment.momentType,
+          cloud: true,
+        };
+        setAudience(momentAudience === "explore" ? "Explore" : "Following");
+        setEntries((current) => [savedMoment, ...current]);
+        toast(
+          momentAudience === "private"
+            ? "Your private moment is saved to Stride."
+            : momentAudience === "connections"
+              ? "Your moment is shared with accepted connections."
+              : "Your moment is now visible in Explore.",
+        );
+      } else {
+        setEntries((current) => [sessionMoment(displayName), ...current]);
+        toast(
+          user
+            ? "Secure Moments storage is not active yet, so this stayed in your session."
+            : "Your moment was added to this private session. Sign in to keep it across devices.",
+        );
+      }
+      setCaption("");
+      setPhoto("");
+      setMomentAudience("private");
+      setMomentType("reflection");
+      setTab("Feed");
+      setModal(null);
+    } catch (error) {
+      if (error instanceof SocialSchemaUnavailable) {
+        setSocialSchemaReady(false);
+        setEntries((current) => [sessionMoment(displayName), ...current]);
+        setTab("Feed");
+        setModal(null);
+        toast("The secure database update is pending; this moment stayed in your session.");
+      } else {
+        toast(error instanceof Error ? error.message : "Could not save your moment.");
+      }
+    } finally {
+      setSocialBusy(false);
+    }
+  }
+  async function cheerMoment(entry: Entry) {
+    if (entry.cloud && typeof entry.id === "string") {
+      if (!user || !supabase) {
+        setModal("account");
+        return;
+      }
+      try {
+        await toggleMomentCheer(supabase, user.id, entry.id, entry.liked);
+      } catch (error) {
+        toast(error instanceof Error ? error.message : "Could not update your cheer.");
+        return;
+      }
+    }
+    setEntries((current) =>
+      current.map((item) =>
+        item.id === entry.id
+          ? {
+              ...item,
+              liked: !item.liked,
+              likes: item.likes + (item.liked ? -1 : 1),
+            }
+          : item,
+      ),
+    );
+  }
+  async function encourageMoment(message: string) {
+    if (shareEntry?.cloud && typeof shareEntry.id === "string") {
+      if (!user || !supabase) {
+        setModal("account");
+        return;
+      }
+      try {
+        await addMomentComment(supabase, {
+          userId: user.id,
+          momentId: shareEntry.id,
+          displayName: profile || "Stride member",
+          body: message,
+        });
+      } catch (error) {
+        toast(error instanceof Error ? error.message : "Could not send encouragement.");
+        return;
+      }
+    }
+    setModal(null);
+    toast(`${message} Encouragement sent.`);
+  }
   const openInvest = () => {
     setInvestFrom(tab === "Invest" ? "Funds" : tab);
     setModal(null);
@@ -554,10 +762,10 @@ export default function Stride() {
         <nav>
           {(
             [
-              { label: "Home", destination: "My journey", icon: Activity },
-              { label: "Journal", destination: "Feed", icon: Bookmark },
+              { label: "Home", destination: "Feed", icon: Home },
+              { label: "Journey", destination: "My journey", icon: Activity },
               { label: "Research", destination: "Funds", icon: Layers },
-              { label: "Guide", destination: "AI Guide", icon: Sparkles },
+              { label: "Profile", destination: "Account", icon: UserRound },
             ] as const
           ).map(({ label, destination, icon: Icon }) => (
             <button
@@ -569,6 +777,10 @@ export default function Stride() {
               {label}
             </button>
           ))}
+          <button className="nav nav-create" onClick={() => setModal("post")}>
+            <Camera size={20} />
+            Create a moment
+          </button>
         </nav>
         <div className="side-bottom">
           <div className="side-note">
@@ -621,7 +833,6 @@ export default function Stride() {
           </div>
           <div className="breadcrumb">Your future starts with showing up.</div>
           <div className="header-actions">
-            <span className="demo-label">EARLY ACCESS</span>
             <button
               className="text-button"
               onClick={() => (user ? setTab("Account") : setModal("account"))}
@@ -629,11 +840,12 @@ export default function Stride() {
               {!authReady ? "Loading…" : user ? "Account" : "Sign in"}
             </button>
             <button
-              aria-label="Open AI Guide"
-              className="icon-btn guide-header-button"
+              aria-label="Ask Bucks"
+              className="bucks-header-button"
               onClick={() => setTab("AI Guide")}
             >
               <Sparkles size={20} />
+              <span>Ask Bucks</span>
             </button>
             <button
               aria-label="Notifications"
@@ -706,7 +918,17 @@ export default function Stride() {
               onName={setProfile}
               onIdentity={setProfilePicture}
               onGuide={() => setTab("AI Guide")}
-              circles={() => setTab("Circles")}
+              circles={() => {
+                setTab("Circles");
+                window.scrollTo({ top: 0 });
+              }}
+            />
+          ) : tab === "Circles" ? (
+            <SocialHub
+              user={user}
+              displayName={profile}
+              signIn={() => setModal("account")}
+              notify={toast}
             />
           ) : tab === "Funds" ? (
             <FundResearch onInvest={openInvest} />
@@ -731,12 +953,12 @@ export default function Stride() {
                 <div>
                   <div className="eyebrow">
                     {tab === "Feed"
-                      ? "PRIVATE / SESSION JOURNAL"
+                      ? "TODAY WITH BUCKS"
                       : "SMALL STEPS. REAL MOMENTUM."}
                   </div>
                   <h1>
                     {tab === "Feed"
-                      ? "Your personal journal."
+                      ? "Your money, in motion."
                       : tab === "My journey"
                         ? "A future that feels like you."
                         : tab === "Discover"
@@ -745,7 +967,7 @@ export default function Stride() {
                   </h1>
                   <p>
                     {tab === "Feed"
-                      ? "Capture the reason behind your goal. Entries stay in this session unless you explicitly create a public link."
+                      ? "One clear move, your momentum, and the moments that keep the journey meaningful."
                       : tab === "My journey"
                         ? "Your progress is personal. Every small step counts."
                         : tab === "Discover"
@@ -762,7 +984,7 @@ export default function Stride() {
                   <Camera size={22} />
                 </button>
               </div>
-              <div className="columns">
+              <div className={tab === "Feed" ? "columns" : "columns single-view"}>
                 <section className="main-column">
                   {tab === "Feed" ? (
                     <>
@@ -772,7 +994,8 @@ export default function Stride() {
                         account={() => setTab("Account")}
                         research={() => setTab("Funds")}
                       />
-                      <div className="hero-card">
+                      <Bucks onAction={start} />
+                      <div className="hero-card legacy-home-hero" aria-hidden="true">
                         <div className="hero-copy">
                           <span className="pill">
                             <Flame size={14} /> THE SHOWING-UP CLUB
@@ -829,15 +1052,21 @@ export default function Stride() {
                           Amounts stay private. Always.
                         </span>
                       </div>
-                      {(audience === "Following"
-                        ? entries
-                        : entries.slice().reverse()
-                      ).map((e) => (
+                      {!socialSchemaReady && user && (
+                        <div className="social-schema-note" role="status">
+                          Your secure Moments update is ready in code but has not been applied to Supabase yet. New moments stay in this session until it is applied.
+                        </div>
+                      )}
+                      {socialLoading && (
+                        <div className="social-loading" role="status">Opening your moments…</div>
+                      )}
+                      {(audience === "Following" ? entries : user ? entries : []).map((e) => (
                         <article className="post" key={e.id}>
                           <div className="post-top">
                             <span
                               className={
-                                "avatar " + (e.id % 2 ? "peach" : "sage")
+                                "avatar " +
+                                (String(e.id).charCodeAt(0) % 2 ? "peach" : "sage")
                               }
                             >
                               {e.initials}
@@ -845,29 +1074,18 @@ export default function Stride() {
                             <div>
                               <b>{e.name}</b>
                               <small>
-                                {e.time} · <Globe size={10} />
+                                {e.time} · {e.audience === "private" ? <Lock size={10} /> : e.audience === "connections" ? <Users size={10} /> : <Globe size={10} />}
                               </small>
                             </div>
                             <button
-                              aria-label="Save post"
-                              className={
-                                "icon-btn " +
-                                (saved.includes(e.id) ? "orange" : "")
-                              }
-                              onClick={() =>
-                                setSaved(
-                                  saved.includes(e.id)
-                                    ? saved.filter((id) => id !== e.id)
-                                    : [...saved, e.id],
-                                )
-                              }
+                              aria-label="Open Moment controls"
+                              className="icon-btn"
+                              onClick={() => {
+                                setShareEntry(e);
+                                setModal("moment-manager");
+                              }}
                             >
-                              <Bookmark
-                                size={18}
-                                fill={
-                                  saved.includes(e.id) ? "currentColor" : "none"
-                                }
-                              />
+                              <MoreHorizontal size={19} />
                             </button>
                           </div>
                           <p className="caption">{e.caption}</p>
@@ -932,19 +1150,7 @@ export default function Stride() {
                           <div className="post-actions">
                             <button
                               className={e.liked ? "orange" : ""}
-                              onClick={() =>
-                                setEntries(
-                                  entries.map((p) =>
-                                    p.id === e.id
-                                      ? {
-                                          ...p,
-                                          liked: !p.liked,
-                                          likes: p.likes + (p.liked ? -1 : 1),
-                                        }
-                                      : p,
-                                  ),
-                                )
-                              }
+                              onClick={() => void cheerMoment(e)}
                             >
                               <Heart
                                 size={19}
@@ -970,6 +1176,14 @@ export default function Stride() {
                               <Share2 size={18} />
                               Share
                             </button>
+                            <button
+                              aria-label={saved.includes(e.id) ? "Remove saved Moment" : "Save Moment"}
+                              className={saved.includes(e.id) ? "orange" : ""}
+                              onClick={() => setSaved(saved.includes(e.id) ? saved.filter((id) => id !== e.id) : [...saved, e.id])}
+                            >
+                              <Bookmark size={18} fill={saved.includes(e.id) ? "currentColor" : "none"} />
+                              Save
+                            </button>
                           </div>
                         </article>
                       ))}
@@ -989,25 +1203,83 @@ export default function Stride() {
                     </>
                   ) : tab === "My journey" ? (
                     <>
-                      <NextMove
-                        answers={answers}
-                        start={start}
-                        account={() => setTab("Account")}
-                        research={() => setTab("Funds")}
-                      />
-                      <ManualHoldings
-                        key={user?.id || "guest"}
-                        owner={user?.id || "guest"}
-                        signIn={() => setModal("account")}
-                      />
-                      <HabitPassport
-                        research={() => setTab("Funds")}
-                        share={() => setModal("post")}
-                      />
-                      <ReviewToolkit
-                        review={start}
-                        guide={() => setTab("AI Guide")}
-                      />
+                      <nav className="journey-switcher" aria-label="Journey sections">
+                        {(
+                          [
+                            { label: "Overview", icon: Activity },
+                            { label: "Spending", icon: Wallet },
+                            { label: "Investments", icon: Layers },
+                            { label: "Progress", icon: BookOpen },
+                          ] as const
+                        ).map(({ label, icon: Icon }) => (
+                          <button
+                            key={label}
+                            className={journeySection === label ? "active" : ""}
+                            aria-current={journeySection === label ? "page" : undefined}
+                            onClick={() => setJourneySection(label)}
+                          >
+                            <Icon size={17} />
+                            {label}
+                          </button>
+                        ))}
+                      </nav>
+                      {journeySection === "Overview" ? (
+                        <>
+                          <NextMove
+                            answers={answers}
+                            start={start}
+                            account={() => setTab("Account")}
+                            research={() => setTab("Funds")}
+                          />
+                          <section className="journey-overview-grid">
+                            <button onClick={() => setJourneySection("Spending")}>
+                              <span className="journey-overview-icon sage"><Wallet size={20} /></span>
+                              <small>YOUR MONEY SCENE</small>
+                              <h3>Understand where your money is going.</h3>
+                              <p>Track spending and set flexible monthly budgets.</p>
+                              <span className="text-button">Open spending <ArrowRight size={15} /></span>
+                            </button>
+                            <button onClick={() => setJourneySection("Investments")}>
+                              <span className="journey-overview-icon peach"><Layers size={20} /></span>
+                              <small>YOUR STASH</small>
+                              <h3>Keep your investments in one clear view.</h3>
+                              <p>Add existing holdings without exposing them socially.</p>
+                              <span className="text-button">View investments <ArrowRight size={15} /></span>
+                            </button>
+                            <button onClick={() => setJourneySection("Progress")}>
+                              <span className="journey-overview-icon lilac"><BookOpen size={20} /></span>
+                              <small>YOUR MONEY ARC</small>
+                              <h3>See the habits shaping your journey.</h3>
+                              <p>Progress without rankings, pressure, or lost streaks.</p>
+                              <span className="text-button">See progress <ArrowRight size={15} /></span>
+                            </button>
+                          </section>
+                          <Bucks onAction={() => setTab("AI Guide")} compact />
+                        </>
+                      ) : journeySection === "Spending" ? (
+                        <JourneySpending
+                          key={`spending-${user?.id || "guest"}`}
+                          owner={user?.id || "guest"}
+                          signIn={() => setModal("account")}
+                        />
+                      ) : journeySection === "Investments" ? (
+                        <JourneyInvestments
+                          key={`investments-${user?.id || "guest"}`}
+                          owner={user?.id || "guest"}
+                          signIn={() => setModal("account")}
+                        />
+                      ) : (
+                        <>
+                          <HabitPassport
+                            research={() => setTab("Funds")}
+                            share={() => setModal("post")}
+                          />
+                          <ReviewToolkit
+                            review={start}
+                            guide={() => setTab("AI Guide")}
+                          />
+                        </>
+                      )}
                     </>
                   ) : tab === "Discover" ? (
                     <>
@@ -1085,28 +1357,27 @@ export default function Stride() {
                     </>
                   )}
                 </section>
-                <aside className="right-column">
+                {tab === "Feed" && <aside className="right-column">
                   <div className="panel streak-panel">
                     <div className="panel-title">
                       <span>YOUR MOMENTUM</span>
                       <Flame size={18} className="orange" />
                     </div>
-                    <div className="streak-number">
-                      -<span>months</span>
+                    <div className="momentum-state">
+                      <span className="momentum-orbit"><Activity size={23} /></span>
+                      <div><strong>Ready</strong><small>to start moving</small></div>
                     </div>
-                    <p>Contribution status isn’t connected yet.</p>
-                    <div className="week-dots">
-                      {["J", "F", "M", "A", "M", "J"].map((m, i) => (
-                        <span key={i}>{m}</span>
-                      ))}
-                    </div>
+                    <p>Momentum grows from useful actions, not daily check-ins or investment returns.</p>
                     <button
                       className="outline-button"
-                      onClick={() => setTab("My journey")}
+                      onClick={() => {
+                        setJourneySection("Overview");
+                        setTab("My journey");
+                      }}
                     >
-                      Start your journey <ArrowRight size={16} />
+                      See my money arc <ArrowRight size={16} />
                     </button>
-                    <small>Only confirmed contributions will count.</small>
+                    <small>No streaks to lose. No pressure to perform.</small>
                   </div>
                   <div className="panel starting">
                     <span className="round-icon">
@@ -1145,7 +1416,7 @@ export default function Stride() {
                       Disclosures & privacy ↗
                     </button>
                   </footer>
-                </aside>
+                </aside>}
               </div>
             </>
           )}
@@ -1153,16 +1424,19 @@ export default function Stride() {
         <nav className="mobile-nav" aria-label="Main navigation">
           {(
             [
-              { label: "Feed", icon: Home },
-              { label: "My journey", icon: Activity },
+              { label: "Feed", display: "Home", icon: Home },
+              { label: "My journey", display: "Journey", icon: Activity },
               { label: "Camera", icon: Camera },
-              { label: "Funds", icon: Layers },
-              { label: "Account", icon: UserRound },
+              { label: "Funds", display: "Research", icon: Layers },
+              { label: "Account", display: "Profile", icon: UserRound },
             ] as const
-          ).map(({ label, icon: Icon }) => (
+          ).map((item) => {
+            const { label, icon: Icon } = item;
+            const display = "display" in item ? item.display : "Moment";
+            return (
             <button
               key={label}
-              aria-label={label === "Camera" ? "Capture a moment" : label}
+              aria-label={label === "Camera" ? "Capture a moment" : display}
               aria-current={
                 tab === label || (label === "Funds" && tab === "Invest")
                   ? "page"
@@ -1184,15 +1458,10 @@ export default function Stride() {
               }}
             >
               <Icon size={22} />
-              <span>
-                {label === "My journey"
-                  ? "Journey"
-                  : label === "Camera"
-                    ? "Moment"
-                    : label}
-              </span>
+              <span>{display}</span>
             </button>
-          ))}
+            );
+          })}
         </nav>
       </div>
       {notice && (
@@ -1538,6 +1807,24 @@ export default function Stride() {
                 <span className="eyebrow">STRIDE CAMERA</span>
                 <h2>Capture your moment.</h2>
                 <p>Start with the picture, then add the reason behind it.</p>
+                <div className="moment-type-picker" aria-label="Moment type">
+                  {(
+                    [
+                      ["reflection", "Reflection"],
+                      ["small_win", "Small win"],
+                      ["learning", "Learning"],
+                      ["goal", "Goal"],
+                    ] as const
+                  ).map(([value, label]) => (
+                    <button
+                      key={value}
+                      className={momentType === value ? "selected" : ""}
+                      onClick={() => setMomentType(value)}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
                 <label className="field">
                   Your journal note
                   <textarea
@@ -1548,42 +1835,42 @@ export default function Stride() {
                   />
                 </label>
                 <LensStudio autoStart onChange={setPhoto} notify={toast} />
+                <fieldset className="moment-audience">
+                  <legend>Who can see this?</legend>
+                  {(
+                    [
+                      ["private", "Only me", "Saved privately"],
+                      ["connections", "Connections", "Accepted connections only"],
+                      ["explore", "Explore", "Visible to signed-in Stride members"],
+                    ] as const
+                  ).map(([value, label, detail]) => (
+                    <label key={value} className={momentAudience === value ? "selected" : ""}>
+                      <input
+                        type="radio"
+                        name="moment-audience"
+                        value={value}
+                        checked={momentAudience === value}
+                        disabled={!user && value !== "private"}
+                        onChange={() => setMomentAudience(value)}
+                      />
+                      <span><b>{label}</b><small>{detail}</small></span>
+                    </label>
+                  ))}
+                </fieldset>
                 <div className="info">
                   <Lock size={18} />
                   <span>
-                    This entry stays in your current session unless you
-                    explicitly create a public link. It does not confirm a
-                    contribution or verified streak.
+                    {user
+                      ? "Your audience is enforced by the database, not just hidden in the interface. Financial amounts and holdings are never attached."
+                      : "This stays in your current session. Sign in before choosing Connections or Explore. It does not confirm a contribution."}
                   </span>
                 </div>
                 <button
                   className="primary wide"
-                  disabled={!caption.trim()}
-                  onClick={() => {
-                    setEntries([
-                      {
-                        id: Date.now(),
-                        name: profile || "You",
-                        initials: (profile || "YO").slice(0, 2).toUpperCase(),
-                        caption: caption.trim(),
-                        photo: photo || undefined,
-                        months: 0,
-                        liked: false,
-                        likes: 0,
-                        time: "Just now",
-                      },
-                      ...entries,
-                    ]);
-                    setCaption("");
-                    setPhoto("");
-                    setTab("Feed");
-                    setModal(null);
-                    toast(
-                      "Your moment was added to your private session journal.",
-                    );
-                  }}
+                  disabled={!caption.trim() || socialBusy}
+                  onClick={() => void saveMoment()}
                 >
-                  Save journal moment <Send size={17} />
+                  {socialBusy ? "Saving moment…" : "Save moment"} <Send size={17} />
                 </button>
               </>
             )}
@@ -1604,7 +1891,7 @@ export default function Stride() {
               <>
                 <span className="eyebrow">SEND SOME GOOD ENERGY</span>
                 <h2>Cheer on {shareEntry.name.split(" ")[0]}.</h2>
-                <p>Demo reactions appear as a confirmation on your device.</p>
+                <p>{shareEntry?.cloud ? "Your encouragement will be saved with this moment." : "This session moment keeps encouragement on your device."}</p>
                 <div className="options">
                   {[
                     "🌱 One step closer!",
@@ -1614,8 +1901,7 @@ export default function Stride() {
                     <button
                       key={s}
                       onClick={() => {
-                        setModal(null);
-                        toast(s + " - demo encouragement added");
+                        void encourageMoment(s);
                       }}
                     >
                       {s}
@@ -1624,6 +1910,17 @@ export default function Stride() {
                   ))}
                 </div>
               </>
+            )}
+            {modal === "moment-manager" && shareEntry && (
+              <MomentManager
+                moment={shareEntry}
+                user={user}
+                displayName={profile}
+                signIn={() => setModal("account")}
+                notify={toast}
+                close={() => setModal(null)}
+                changed={() => void refreshMoments()}
+              />
             )}
             {modal === "account" && <Account user={user} notify={toast} />}
             {modal === "save" && (
@@ -1673,15 +1970,11 @@ export default function Stride() {
               </>
             )}
             {modal === "notifications" && (
-              <>
-                <span className="eyebrow">A LITTLE BREATHING ROOM</span>
-                <h2>You’re all caught up.</h2>
-                <p>
-                  When real contributions are connected, you’ll find payment
-                  updates and milestone reminders here. We’ll never pretend a
-                  failed payment succeeded.
-                </p>
-              </>
+              <SocialNotifications
+                user={user}
+                signIn={() => setModal("account")}
+                notify={toast}
+              />
             )}
             {(modal === "settings" || modal === "disclosures") && (
               <>
