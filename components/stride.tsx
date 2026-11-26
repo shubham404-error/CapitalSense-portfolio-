@@ -1,4 +1,5 @@
 "use client";
+import StrideWordmark from "./stride-wordmark";
 import Account from "./account";
 import OnboardingHelp from "./onboarding-help";
 import { JourneyInvestments, JourneySpending } from "./journey-money";
@@ -753,12 +754,8 @@ export default function Stride() {
     <div className="app">
       <aside className="sidebar">
         <a className="brand" href={basePath + "/"}>
-          stride
-          <span>
-            <ArrowUpRight size={35} />
-          </span>
+          <StrideWordmark />
         </a>
-        <div className="byline">BY CAPITAL SENSE</div>
         <nav>
           {(
             [
@@ -827,10 +824,9 @@ export default function Stride() {
       </aside>
       <div className="workspace">
         <header>
-          <div className="mobile-brand">
-            stride
-            <ArrowUpRight size={23} />
-          </div>
+          <a className="mobile-brand" href={basePath + "/"}>
+            <StrideWordmark />
+          </a>
           <div className="breadcrumb">Your future starts with showing up.</div>
           <div className="header-actions">
             <button
